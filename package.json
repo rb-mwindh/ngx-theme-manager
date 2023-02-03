@@ -46,6 +46,7 @@
     "preinit": "rimraf node_modules",
     "postinit": "run-s postinit:*",
     "postbuild": "run-s postbuild:*"
+    "postbuild:update-bom": "ts-node tools/update-oss-bom"
   },
   "dependencies": {
     "@angular/animations": "~13.3.0",
@@ -74,17 +75,23 @@
     "@angular/compiler-cli": "^13.0.0",
     "@types/jest": "^27.0.0",
     "@types/jsdom": "^16.0.0",
+    "@types/license-checker": "^25.0.0",
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
+    "colors": "^1.4.0",
     "eslint": "^8.2.0",
     "jest": "^27.0.0",
     "jest-marbles": "^3.0.0",
     "jest-environment-jsdom": "^27.0.0",
+    "license-checker": "^25.0.1",
     "ng-packagr": "^13.0.0",
     "npm-run-all": "^4.1.5",
+    "oss-license-name-to-url": "^1.2.1",
     "prettier": "^2.8.3",
+    "prompt": "^1.3.0",
     "rimraf": "^4.1.1",
+    "ts-node": "^10.9.1",
     "typedoc": "^0.23.24",
     "typescript": "~4.6.4"
   }
