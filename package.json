@@ -33,7 +33,12 @@
   },
   "scripts": {
     "init": "npm install",
+    "----------------------": "",
+    "lint:lib": "ng lint ngx-theme-manager",
+    "test:lib": "ng test ngx-theme-manager",
+    "build:lib": "ng build ngx-theme-manager",
     "build:docs": "typedoc",
+    "----------------------": "",
     "prebuild": "run-s prebuild:*",
     "preinit": "rimraf node_modules",
     "postinit": "run-s postinit:*",
