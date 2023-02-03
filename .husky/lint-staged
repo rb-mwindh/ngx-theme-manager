@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# runs lint-staged which runs the following tools on all staged files
+# - prettier
+# - eslint
+
+npx --no -- lint-staged
