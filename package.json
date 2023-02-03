@@ -46,6 +46,7 @@
     "preinit": "rimraf node_modules",
     "postinit": "run-s postinit:*",
     "postbuild": "run-s postbuild:*"
+    "postbuild:update-package-json": "ts-node tools/update-package-json/in-library.ts",
     "postbuild:update-bom": "ts-node tools/update-oss-bom"
   },
   "dependencies": {
