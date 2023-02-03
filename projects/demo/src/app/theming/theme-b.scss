@@ -1,0 +1,28 @@
+/*!
+ * @@id theme-b
+ * @@displayName Theme B
+ */
+
+:root {
+  --primary-bg: #ffffff;
+  --primary-fg: #000000;
+
+  --contrast-bg: #f5962c;
+  --contrast-fg: #ffffff;
+  --contrast-fg--hover: #bd741f;
+
+  --terminal-header-bg: #3a3a3a;
+  --terminal-header-fg: #c2c3c4;
+  --terminal-body-bg: #0f0f10;
+  --terminal-body-fg: #ffffff;
+
+  --card-bg: #fafafa;
+  --card-fg: var(--contrast-bg);
+  --card-fg--hover: var(--contrast-fg--hover);
+  --card-border: #eeeeee;
+
+  --rocket-bg: #dd0031;
+  --rocket-fg: #ffffff;
+  --rocket-smoke: #f5f5f5;
+  --clouds: #eeeeee;
+}
