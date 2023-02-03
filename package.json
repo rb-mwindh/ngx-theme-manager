@@ -1,5 +1,5 @@
 {
-  "name": "ngx-theme-manager",
+  "name": "@rb-mwindh/ngx-theme-manager",
   "version": "0.0.0",
   "description": "Angular component to switch between different theming stylesheets",
   "keywords": [
@@ -29,6 +29,6 @@
     "registry": "https://artifactory.com/artifactory/api/npm/corelib-npm-local"
   },
   "engines": {
-    "node": "^14.17.0 || ^16.10.0"
+    "node": ">= 16"
   }
 }
