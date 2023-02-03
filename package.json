@@ -1,5 +1,6 @@
 {
   "name": "ngx-theme-manager",
+  "private": false,
   "version": "0.0.0",
   "description": "Angular component to switch between different theming stylesheets",
   "keywords": [
@@ -26,7 +27,7 @@
     "url": "https://github.com/rb-mwindh/ngx-theme-manager.git"
   },
   "publishConfig": {
-    "registry": "https://artifactory.com/artifactory/api/npm/corelib-npm-local"
+    "access": "public"
   },
   "engines": {
     "node": ">= 16"
