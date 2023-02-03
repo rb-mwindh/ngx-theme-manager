@@ -106,7 +106,7 @@ Here is a summary of the steps to follow:
 ```bash
 $ git checkout main
 $ git pull upstream main
-$ yarn run init
+$ npm run init
 ```
 
 3. Create a new topic branch (off the main project development branch) to contain your feature, change or fix:
@@ -198,7 +198,7 @@ $ git add .
 3. Commit your changes using the [Commitizen CLI]
 
 ```bash
-$ yarn run commit
+$ npm run commit
 ```
 
 4. Answer all questions
@@ -217,7 +217,7 @@ $ cd <repo-name>
 # Assign the original repo to a remote called "upstream"
 $ git remote add upstream https://github.com/rb-mwindh/ngx-theme-manager
 # Initialize your workspace (set up commit hooks, etc.)
-$ yarn run init
+$ npm run init
 ```
 
 ### Run the demo app
@@ -227,7 +227,7 @@ This workspace provides a demo application to visually test your changes.
 You may run this application locally to observe the result of your code changes while developing.
 
 ```bash
-$ yarn run start
+$ npm run start
 ```
 
 ### Formatting
@@ -251,7 +251,7 @@ This repository uses [Jest] for testing.
 Before pushing your code changes make sure all **tests pass** and the **coverage is 100%**:
 
 ```bash
-$ yarn run test
+$ npm run test
 ```
 
 ### Commits

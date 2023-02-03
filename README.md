@@ -163,25 +163,25 @@ The `init` script installs all dependencies and sets up the pre-commit hooks.
 **This is mandatory to guarantee the code style and quality!**
 
 ```shell
-yarn run init
+npm run init
 ```
 
 3. Run the demo app
 
 ```shell
-yarn run start
+npm run start
 ```
 
 4. Build the library
 
 ```shell
-yarn run build
+npm run build
 ```
 
 5. Run the unit tests
 
 ```shell
-yarn run test
+npm run test
 ```
 
 ## Contribution Guidelines
