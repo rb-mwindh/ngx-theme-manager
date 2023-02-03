@@ -7,12 +7,9 @@ but only supports their implementation by providing the necessary services and t
 
 ---
 ![License](https://badgen.net/github/license/rb-mwindh/ngx-theme-manager)
-[![Netlify Status](https://api.netlify.com/api/v1/badges/db189810-271e-4f33-bf40-3b3164ba996d/deploy-status)](https://app.netlify.com/sites/ngx-theme-manager/deploys)
 ![latest release](https://badgen.net/github/release/rb-mwindh/ngx-theme-manager)
 ![open issues](https://badgen.net/github/open-issues/rb-mwindh/ngx-theme-manager)
 ---
-![node badge][img:nodejs]
-![npm badge][img:npm]
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -232,9 +229,7 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 
 [license]: https://badgen.net/github/license/rb-mwindh/ngx-theme-manager
 
-[img:nodejs]: https://img.shields.io/badge/node-%5E16.14.0-brightgreen
 
-[img:npm]: https://img.shields.io/badge/npm-%5E8.19.2-brightgreen
 
 [selfhtml:media]: https://wiki.selfhtml.org/wiki/HTML/Attribute/media
 
