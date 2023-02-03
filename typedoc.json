@@ -1,0 +1,14 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "./projects/ngx-theme-manager/src/public-api.ts"
+  ],
+  "entryPointStrategy": "resolve",
+  "skipErrorChecking": true,
+  "out": "docs",
+  "hideGenerator": true,
+  "includeVersion": true,
+  "tsconfig": "./tsconfig.json",
+  "readme": "./projects/ngx-theme-manager/README.md",
+  "categoryOrder": ["Public API", "Services", "InjectionToken", "Functions"]
+}
