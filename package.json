@@ -31,8 +31,27 @@
   "engines": {
     "node": ">= 16"
   },
+  "lint-staged": {
+    "projects/**/*.ts": [
+      "npx --no -- eslint --fix"
+    ],
+    "*": [
+      "npx --no -- prettier --write --ignore-unknown"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
   "scripts": {
     "init": "npm install",
+    "commit": "git-cz",
     "----------------------": "",
     "lint:lib": "ng lint ngx-theme-manager",
     "lint:app": "ng lint demo",
@@ -45,7 +64,8 @@
     "prebuild": "run-s prebuild:*",
     "preinit": "rimraf node_modules",
     "postinit": "run-s postinit:*",
-    "postbuild": "run-s postbuild:*"
+    "postinit:setup-husky": "husky install",
+    "postbuild": "run-s postbuild:*",
     "postbuild:update-package-json": "ts-node tools/update-package-json/in-library.ts",
     "postbuild:update-bom": "ts-node tools/update-oss-bom"
   },
@@ -74,6 +94,8 @@
     "@angular-eslint/template-parser": "^13.5.0",
     "@angular/cli": "^13.0.0",
     "@angular/compiler-cli": "^13.0.0",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
     "@types/jest": "^27.0.0",
     "@types/jsdom": "^16.0.0",
     "@types/license-checker": "^25.0.0",
@@ -81,11 +103,15 @@
     "@typescript-eslint/eslint-plugin": "^5.38.1",
     "@typescript-eslint/parser": "^5.38.1",
     "colors": "^1.4.0",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.2.0",
+    "husky": "^8.0.0",
     "jest": "^27.0.0",
     "jest-marbles": "^3.0.0",
     "jest-environment-jsdom": "^27.0.0",
     "license-checker": "^25.0.1",
+    "lint-staged": "^13.1.0",
     "ng-packagr": "^13.0.0",
     "npm-run-all": "^4.1.5",
     "oss-license-name-to-url": "^1.2.1",
