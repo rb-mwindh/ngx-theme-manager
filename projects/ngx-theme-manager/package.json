@@ -1,0 +1,11 @@
+{
+  "name": "@rb-mwindh/ngx-theme-manager",
+  "version": "0.0.0",
+  "peerDependencies": {
+    "@angular/common": ">=12",
+    "@angular/core": ">=12"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

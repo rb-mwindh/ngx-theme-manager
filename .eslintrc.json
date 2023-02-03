@@ -1,0 +1,53 @@
+// Tutorial used: https://medium.com/acute-angular/migrating-angular-projects-from-tslint-to-eslint-and-prettier-cd87eea9ffcd
+{
+  "root": true,
+  "ignorePatterns": [
+    "projects/**/*",
+    "tools/**/*"
+  ],
+  "overrides": [
+    {
+      "files": [
+        "*.ts"
+      ],
+      "parserOptions": {
+        "project": [
+          "tsconfig.json"
+        ],
+        "createDefaultProgram": true
+      },
+      "extends": [
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/template/process-inline-templates"
+      ],
+      "rules": {
+        "@angular-eslint/component-selector": [
+          "error",
+          {
+            "prefix": "lib",
+            "style": "kebab-case",
+            "type": "element"
+          }
+        ],
+        "@angular-eslint/directive-selector": [
+          "error",
+          {
+            "prefix": "lib",
+            "style": "camelCase",
+            "type": "attribute"
+          }
+        ]
+      },
+      "reportUnusedDisableDirectives": true
+    },
+    {
+      "files": [
+        "*.html"
+      ],
+      "extends": [
+        "plugin:@angular-eslint/template/recommended"
+      ],
+      "rules": {}
+    }
+  ]
+}
