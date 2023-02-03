@@ -52,6 +52,11 @@
   "scripts": {
     "init": "npm install",
     "commit": "git-cz",
+    "start": "ng serve demo",
+    "lint": "run-s lint:lib lint:app",
+    "test": "run-s test:lib test:app",
+    "build": "run-s \"build:lib -- {1}\" \"build:app -- {1}\" build:docs",
+    "build:prod": "npm run build -- -- -c=production",
     "----------------------": "",
     "lint:lib": "ng lint ngx-theme-manager",
     "lint:app": "ng lint demo",
@@ -62,11 +67,13 @@
     "build:docs": "typedoc",
     "----------------------": "",
     "prebuild": "run-s prebuild:*",
+    "prebuild:clean": "rimraf dist",
     "preinit": "rimraf node_modules",
     "postinit": "run-s postinit:*",
     "postinit:setup-husky": "husky install",
     "postbuild": "run-s postbuild:*",
     "postbuild:update-package-json": "ts-node tools/update-package-json/in-library.ts",
+    "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager",
     "postbuild:update-bom": "ts-node tools/update-oss-bom"
   },
   "dependencies": {
