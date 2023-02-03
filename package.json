@@ -29,6 +29,6 @@
     "registry": "https://artifactory.com/artifactory/api/npm/corelib-npm-local"
   },
   "engines": {
-    "node": "^14.17.0 || ^16.10.0"
+    "node": ">= 16"
   }
 }
