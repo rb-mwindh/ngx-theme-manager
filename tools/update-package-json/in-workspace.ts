@@ -6,14 +6,11 @@
 import { copy } from './internal';
 
 const files = {
-  workspacePkg: '../../package.json',
-  libraryPkg: '../../dist/ngx-theme-manager/package.json',
+  projectPkg: '../../projects/ngx-theme-manager/package.json',
+  distPkg: '../../dist/ngx-theme-manager/package.json',
 };
 
-const workspacePkg = require(files.workspacePkg);
-const libraryPkg = require(files.libraryPkg);
+const projectPkg = require(files.projectPkg);
+const distPkg = require(files.distPkg);
 
-copy('version')
-  .from(libraryPkg)
-  .to(workspacePkg)
-  .andWriteTo(files.workspacePkg);
+copy('version').from(distPkg).to(projectPkg).andWriteTo(files.projectPkg);
