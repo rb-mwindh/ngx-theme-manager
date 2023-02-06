@@ -74,8 +74,7 @@
     "postbuild": "run-s postbuild:*",
     "postbuild:update-package-json": "ts-node tools/update-package-json/in-library.ts",
     "postbuild:update-bom": "ts-node tools/update-oss-bom",
-    "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager",
-    "postversion": "typedoc"
+    "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager"
   },
   "dependencies": {
     "@angular/animations": "~13.3.0",
