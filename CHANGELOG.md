@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.0.1...v1.1.0) (2023-02-06)
+
+
+### Features
+
+* **demo:** fix gh-pages url ([b8544be](https://github.com/rb-mwindh/ngx-theme-manager/commit/b8544bec995591d76405daf1005f181dc705f557))
+
 ## [1.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.0.0...v1.0.1) (2023-02-06)
 
 
