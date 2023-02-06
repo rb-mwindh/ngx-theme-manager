@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.0.0...v1.0.1) (2023-02-06)
+
+
+### Bug Fixes
+
+* **workspace:** run typedoc during semantic-release ([f4bf2e2](https://github.com/rb-mwindh/ngx-theme-manager/commit/f4bf2e219e6dc39ac507fa9350ebe8c986903928))
+
 # 1.0.0 (2023-02-06)
 
 
