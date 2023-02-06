@@ -17,7 +17,7 @@ but only supports their implementation by providing the necessary services and t
 ![angular](https://img.shields.io/npm/dependency-version/@rb-mwindh/ngx-theme-manager/peer/@angular/core?color=lightgray&logo=angular)
 
 * [API Docs](https://rb-mwindh.github.io/ngx-theme-manager)
-* [Demo](https://ngx-theme-manager-rb-mwindh.vercel.app/)
+* [Demo](https://ngx-theme-manager.vercel.app/)
 
 ---
 
