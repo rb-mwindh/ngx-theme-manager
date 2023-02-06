@@ -1,0 +1,29 @@
+/*!
+ * @@id theme-c
+ * @@displayName Theme C
+ * @@description This is a dark theme
+ */
+
+:root {
+  --primary-bg: #000000;
+  --primary-fg: #eeeeee;
+
+  --contrast-bg: #bec3ff;
+  --contrast-fg: #393c4d;
+  --contrast-fg--hover: #d7dafd;
+
+  --terminal-header-bg: #9f9f9f;
+  --terminal-header-fg: #121212;
+  --terminal-body-bg: #d7d7d7;
+  --terminal-body-fg: #000000;
+
+  --card-bg: #363636;
+  --card-fg: var(--contrast-bg);
+  --card-fg--hover: var(--contrast-fg--hover);
+  --card-border: #626262;
+
+  --rocket-bg: #6e001e;
+  --rocket-fg: var(--primary-fg);
+  --rocket-smoke: #575757;
+  --clouds: #3b3b3b;
+}

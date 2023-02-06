@@ -1,5 +1,6 @@
 {
   "name": "ngx-theme-manager",
+  "private": false,
   "version": "0.0.0",
   "description": "Angular component to switch between different theming stylesheets",
   "keywords": [
@@ -26,9 +27,112 @@
     "url": "https://github.com/rb-mwindh/ngx-theme-manager.git"
   },
   "publishConfig": {
-    "registry": "https://artifactory.com/artifactory/api/npm/corelib-npm-local"
+    "access": "public"
   },
   "engines": {
-    "node": "^14.17.0 || ^16.10.0"
+    "node": ">= 16"
+  },
+  "lint-staged": {
+    "projects/**/*.ts": [
+      "npx --no -- eslint --fix"
+    ],
+    "*": [
+      "npx --no -- prettier --write --ignore-unknown"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    }
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "scripts": {
+    "init": "npm install",
+    "commit": "git-cz",
+    "start": "ng serve demo",
+    "lint": "run-s lint:lib lint:app",
+    "test": "run-s test:lib test:app",
+    "build": "run-s \"build:lib -- {1}\" \"build:app -- {1}\" build:docs",
+    "build:prod": "npm run build -- -- -c=production",
+    "----------------------": "",
+    "lint:lib": "ng lint ngx-theme-manager",
+    "lint:app": "ng lint demo",
+    "test:lib": "ng test ngx-theme-manager",
+    "test:app": "ng test demo",
+    "build:lib": "ng build ngx-theme-manager",
+    "build:app": "ng build demo",
+    "build:docs": "typedoc",
+    "----------------------": "",
+    "prebuild": "run-s prebuild:*",
+    "prebuild:clean": "rimraf dist",
+    "preinit": "rimraf node_modules",
+    "postinit": "run-s postinit:*",
+    "postinit:setup-husky": "husky install",
+    "postbuild": "run-s postbuild:*",
+    "postbuild:update-package-json": "ts-node tools/update-package-json/in-library.ts",
+    "postbuild:update-bom": "ts-node tools/update-oss-bom",
+    "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager"
+  },
+  "dependencies": {
+    "@angular/animations": "~13.3.0",
+    "@angular/cdk": "~13.3.0",
+    "@angular/common": "~13.3.0",
+    "@angular/compiler": "~13.3.0",
+    "@angular/core": "~13.3.0",
+    "@angular/forms": "~13.3.0",
+    "@angular/platform-browser": "~13.3.0",
+    "@angular/platform-browser-dynamic": "~13.3.0",
+    "@angular/router": "~13.3.0",
+    "material-icons": "^1.13.1",
+    "rxjs": "~7.5.0",
+    "tslib": "^2.3.0",
+    "zone.js": "~0.11.4"
+  },
+  "devDependencies": {
+    "@angular-builders/jest": "^13.0.0",
+    "@angular-devkit/build-angular": "^13.0.0",
+    "@angular-eslint/builder": "^13.5.0",
+    "@angular-eslint/eslint-plugin": "^13.5.0",
+    "@angular-eslint/eslint-plugin-template": "^13.5.0",
+    "@angular-eslint/schematics": "^13.5.0",
+    "@angular-eslint/template-parser": "^13.5.0",
+    "@angular/cli": "^13.0.0",
+    "@angular/compiler-cli": "^13.0.0",
+    "@commitlint/cli": "^17.0.0",
+    "@commitlint/config-conventional": "^17.0.0",
+    "@semantic-release/changelog": "^6.0.0",
+    "@semantic-release/exec": "^6.0.3",
+    "@semantic-release/git": "^10.0.0",
+    "@types/estree": "^0.0.52",
+    "@types/jest": "^27.0.0",
+    "@types/jsdom": "^16.0.0",
+    "@types/license-checker": "^25.0.0",
+    "@types/node": "^12.11.1",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "colors": "^1.4.0",
+    "commitizen": "^4.2.5",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^8.2.0",
+    "husky": "^8.0.0",
+    "jest": "^27.0.0",
+    "jest-marbles": "^3.0.0",
+    "jest-environment-jsdom": "^27.0.0",
+    "license-checker": "^25.0.1",
+    "lint-staged": "^13.1.0",
+    "ng-packagr": "^13.0.0",
+    "npm-run-all": "^4.1.5",
+    "oss-license-name-to-url": "^1.2.1",
+    "prettier": "^2.8.3",
+    "prompt": "^1.3.0",
+    "rimraf": "^4.1.1",
+    "semantic-release": "^19.0.5",
+    "ts-node": "^10.9.1",
+    "typedoc": "^0.23.24",
+    "typescript": "~4.6.4"
   }
 }

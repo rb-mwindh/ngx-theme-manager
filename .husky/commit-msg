@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# verifies that the commit message conforms to the commitizen guidelines
+
+npx --no -- commitlint --edit

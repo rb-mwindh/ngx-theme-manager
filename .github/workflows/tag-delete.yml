@@ -1,0 +1,14 @@
+name: Cleanup deleted Tags
+on:
+  delete:
+
+jobs:
+  cleanup:
+    runs-on: self-hosted
+    if: github.event.ref_type == 'tag'
+
+    steps:
+      #      - uses: hmarr/debug-action@v2
+      - uses: actions/checkout@v3
+      - run: git fetch --prune-tags --prune
+      - run: git tag -l
