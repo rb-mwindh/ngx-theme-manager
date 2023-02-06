@@ -214,7 +214,27 @@ You could also ask contributors to add themselves in this file on their own.
 The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit hook.
 -->
 
-<bom></bom>
+<bom>
+
+| Name | License | Type |
+| --- | --- | --- |
+| [@angular/animations](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/cdk](https://github.com/angular/components) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/common](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/compiler](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/core](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/forms](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/platform-browser](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/router](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [material-icons](https://github.com/marella/material-icons) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
+| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [parse5](https://github.com/inikulin/parse5) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [rxjs](https://github.com/reactivex/rxjs) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
+| [tslib](https://github.com/Microsoft/tslib) | 0BSD | Dependency |
+| [zone.js](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+
+</bom>
 
 ### License
 
