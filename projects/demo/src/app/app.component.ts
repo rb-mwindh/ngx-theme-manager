@@ -12,7 +12,7 @@ export class AppComponent implements OnInit, OnDestroy {
   readonly #destroyed = new Subject<void>();
 
   readonly repoUrl = 'https://github.com/rb-mwindh/ngx-theme-manager';
-  apiDocUrl = '';
+  apiDocUrl = 'https://rb-mwindh.github.io/ngx-theme-manager';
   selection = '';
   heading = '';
 
