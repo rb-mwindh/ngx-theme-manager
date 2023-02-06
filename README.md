@@ -6,9 +6,19 @@ This package does not provide ready-made visual components,
 but only supports their implementation by providing the necessary services and tools.
 
 ---
-![License](https://badgen.net/github/license/rb-mwindh/ngx-theme-manager)
-![latest release](https://badgen.net/github/release/rb-mwindh/ngx-theme-manager)
-![open issues](https://badgen.net/github/open-issues/rb-mwindh/ngx-theme-manager)
+![sponsors](https://img.shields.io/github/sponsors/rb-mwindh)
+![License](https://img.shields.io/github/license/rb-mwindh/ngx-theme-manager?color=blue)
+![latest release](https://img.shields.io/github/v/release/rb-mwindh/ngx-theme-manager?color=brightgreen)
+
+![open issues](https://img.shields.io/github/issues/rb-mwindh/ngx-theme-manager?color=red)
+![open pr](https://img.shields.io/github/issues-pr/rb-mwindh/ngx-theme-manager?color=orange)
+
+![nodejs](https://img.shields.io/node/v/@rb-mwindh/ngx-theme-manager?color=lightgray&logo=nodedotjs)
+![angular](https://img.shields.io/npm/dependency-version/@rb-mwindh/ngx-theme-manager/peer/@angular/core?color=lightgray&logo=angular)
+
+* [API Docs](https://rb-mwindh.github.io/ngx-theme-manager)
+* [Demo](https://ngx-theme-manager-rb-mwindh.vercel.app/)
+
 ---
 
 ## Table of Contents <!-- omit in toc -->
