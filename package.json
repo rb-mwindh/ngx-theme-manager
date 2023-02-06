@@ -56,7 +56,7 @@
     "start": "ng serve demo",
     "lint": "run-s lint:lib lint:app",
     "test": "run-s test:lib test:app",
-    "build": "run-s \"build:lib -- {1}\" \"build:app -- {1}\" build:docs",
+    "build": "run-s \"build:lib -- {1}\" \"build:app -- {1}\"",
     "build:prod": "npm run build -- -- -c=production",
     "----------------------": "",
     "lint:lib": "ng lint ngx-theme-manager",
@@ -65,7 +65,6 @@
     "test:app": "ng test demo",
     "build:lib": "ng build ngx-theme-manager",
     "build:app": "ng build demo",
-    "build:docs": "typedoc",
     "----------------------": "",
     "prebuild": "run-s prebuild:*",
     "prebuild:clean": "rimraf dist",
@@ -75,7 +74,8 @@
     "postbuild": "run-s postbuild:*",
     "postbuild:update-package-json": "ts-node tools/update-package-json/in-library.ts",
     "postbuild:update-bom": "ts-node tools/update-oss-bom",
-    "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager"
+    "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager",
+    "postversion": "typedoc"
   },
   "dependencies": {
     "@angular/animations": "~13.3.0",
