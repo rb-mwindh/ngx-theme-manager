@@ -43,18 +43,13 @@ export class ThemeStyleManagerService {
     this.observer
       .observe(document.head)
       .pipe(
-        map((mutations) => {
-          let needUpdate = false;
-          mutations.forEach((mutation) => {
-            Array.from(mutation.addedNodes).forEach((node) => {
-              if (node.nodeName === 'STYLE') {
-                turnOff(node as HTMLStyleElement);
-                needUpdate = true;
-              }
-            });
-          });
-          return needUpdate;
-        }),
+        map((mutations) =>
+          mutations.some((mutation) =>
+            Array.from(mutation.addedNodes).some(
+              (node) => node.nodeName === 'STYLE',
+            ),
+          ),
+        ),
         filter((newStyles) => !!newStyles),
       )
       .subscribe(() => this.#updateRegistry());
@@ -111,8 +106,10 @@ export class ThemeStyleManagerService {
     )
       .map((el) => ({ el, meta: extractThemeAnnotations(el.textContent) }))
       .forEach(({ el, meta }) => {
-        applyThemeIdentifier(el, meta?.id);
-        this.themeRegistry.register(meta);
+        if (applyThemeIdentifier(el, meta?.id)) {
+          turnOff(el);
+          this.themeRegistry.register(meta);
+        }
       });
   }
 }
@@ -126,18 +123,20 @@ export class ThemeStyleManagerService {
  *
  * @param {HTMLStyleElement} el - The `<style>` element to apply the identifier to
  * @param {string | undefined} id - The theme identifier
+ * @returns {boolean} true, if the style element belongs to a theme
  * @group Functions
  * @internal
  */
 export function applyThemeIdentifier(
   el: HTMLStyleElement,
   id?: string,
-): void {
-  el.toggleAttribute('data-no-theme', !id);
-  if (id) {
+): boolean {
+  if (!!id) {
     el.setAttribute('data-theme', id);
+    return true;
   } else {
-    el.removeAttribute('data-theme');
+    el.toggleAttribute('data-no-theme', true);
+    return false;
   }
 }
 
