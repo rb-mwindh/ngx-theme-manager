@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.1.0...v1.1.1) (2023-02-07)
+
+
+### Bug Fixes
+
+* **theme-style-manager:** don't disable all `<style>` elements on discovery ([eebace3](https://github.com/rb-mwindh/ngx-theme-manager/commit/eebace3fa1cad0f390cc108ee616db721b496276))
+
 # [1.1.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.0.1...v1.1.0) (2023-02-06)
 
 
