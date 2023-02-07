@@ -17,12 +17,14 @@
 <h1>Function applyThemeIdentifier</h1></div>
 <section class="tsd-panel">
 <ul class="tsd-signatures tsd-kind-function">
-<li class="tsd-signature tsd-anchor-link" id="applyThemeIdentifier">apply<wbr/>Theme<wbr/>Identifier<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLStyleElement</span>, id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><a href="#applyThemeIdentifier" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
+<li class="tsd-signature tsd-anchor-link" id="applyThemeIdentifier">apply<wbr/>Theme<wbr/>Identifier<span class="tsd-signature-symbol">(</span>el<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">HTMLStyleElement</span>, id<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span><a href="#applyThemeIdentifier" aria-label="Permalink" class="tsd-anchor-icon"><svg class="icon icon-tabler icon-tabler-link" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none" id="icon-anchor-a"></path><path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" id="icon-anchor-b"></path><path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" id="icon-anchor-c"></path></svg></a></li>
 <li class="tsd-description"><code class="tsd-tag ts-flagInternal">Internal</code> 
 <div class="tsd-comment tsd-typography"><p>Applies a theme identifier to a <code>&lt;style&gt;</code> element.</p>
 <p>If the provided <code>id</code> is truthy, the element receives the attribute
 <code>data-theme</code> set to the given <code>id</code>. Otherwise, the element
 will get the attribute <code>data-no-theme</code> without any value.</p>
+
+<h3>Returns</h3><p>true, if the style element belongs to a theme</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
@@ -35,9 +37,9 @@ will get the attribute <code>data-no-theme</code> without any value.</p>
 <h5><code class="tsd-tag ts-flagOptional">Optional</code> id: <span class="tsd-signature-type">string</span></h5>
 <div class="tsd-comment tsd-typography"><p>The theme identifier</p>
 </div></li></ul></div>
-<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4><aside class="tsd-sources">
+<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/a79316b/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L132">lib/internal/theme-style-manager.service.ts:132</a></li></ul></aside></li></ul></section></div>
+<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/141727b/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L130">lib/internal/theme-style-manager.service.ts:130</a></li></ul></aside></li></ul></section></div>
 <div class="col-4 col-menu menu-sticky-wrap menu-highlight">
 <div class="tsd-navigation settings">
 <details class="tsd-index-accordion"><summary class="tsd-accordion-summary">
