@@ -1,3 +1,15 @@
+# [2.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.1.1...v2.0.0) (2024-03-24)
+
+
+### Features
+
+* **angular:** Angular CLI update for packages - @angular/core@14, @angular/cli@14, @angular-builders/jest@14, @angular-eslint/schematics@14, @angular/cdk@14, @types/jest@28, @types/node@16, jest@28, jest-environment-jsdom@28 ([e9487ad](https://github.com/rb-mwindh/ngx-theme-manager/commit/e9487adadfd6c9ecd926c5a0c0501899eca9cace))
+
+
+### BREAKING CHANGES
+
+* **angular:**
+
 ## [1.1.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.1.0...v1.1.1) (2023-02-07)
 
 
