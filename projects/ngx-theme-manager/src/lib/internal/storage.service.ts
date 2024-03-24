@@ -84,7 +84,7 @@ export class StorageService implements OnDestroy {
   }
 
   /**
-   * An Angular lifecycle hook that removes the storage event listener and completes the {@link #changes$} subject.
+   * An Angular lifecycle hook that removes the storage event listener.
    *
    * @internal
    */
