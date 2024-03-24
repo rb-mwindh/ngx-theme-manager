@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v2.0.1...v3.0.0) (2024-03-24)
+
+
+### Features
+
+* **deps:** bump peer dependencies ([d90d51f](https://github.com/rb-mwindh/ngx-theme-manager/commit/d90d51feb6197697d46d95dbf46c96284a42ec1e))
+
+
+### BREAKING CHANGES
+
+* **deps:** update to Angular v15+
+
 ## [2.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v2.0.0...v2.0.1) (2024-03-24)
 
 
