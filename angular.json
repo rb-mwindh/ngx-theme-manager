@@ -12,7 +12,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/ngx-theme-manager/ng-package.json"
+            "project": "projects/ngx-theme-manager/ng-package.json",
+            "tsConfig": "projects/ngx-theme-manager/tsconfig.lib.json"
           },
           "configurations": {
             "production": {
