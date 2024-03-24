@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v2.0.0...v2.0.1) (2024-03-24)
+
+
+### Bug Fixes
+
+* **deps:** bump peer dependency versions ([cabcd47](https://github.com/rb-mwindh/ngx-theme-manager/commit/cabcd4759d764e8398927f411569644c3448a885))
+
 # [2.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v1.1.1...v2.0.0) (2024-03-24)
 
 
