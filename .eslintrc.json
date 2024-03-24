@@ -1,4 +1,3 @@
-// Tutorial used: https://medium.com/acute-angular/migrating-angular-projects-from-tslint-to-eslint-and-prettier-cd87eea9ffcd
 {
   "root": true,
   "ignorePatterns": [
