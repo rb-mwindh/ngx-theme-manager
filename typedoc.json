@@ -9,6 +9,6 @@
   "hideGenerator": true,
   "includeVersion": true,
   "tsconfig": "./tsconfig.json",
-  "readme": "./projects/ngx-theme-manager/README.md",
+  "readme": "./README.md",
   "categoryOrder": ["Public API", "Services", "InjectionToken", "Functions"]
 }
