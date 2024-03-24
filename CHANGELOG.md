@@ -1,3 +1,10 @@
+## [4.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v4.0.0...v4.0.1) (2024-03-24)
+
+
+### Bug Fixes
+
+* **build:** upgrade semantic-release to v22 ([7cc5f6e](https://github.com/rb-mwindh/ngx-theme-manager/commit/7cc5f6e5ae337b2baee2a6811b9f36360de8bccb))
+
 # [4.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v3.0.0...v4.0.0) (2024-03-24)
 
 
