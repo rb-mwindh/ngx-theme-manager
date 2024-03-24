@@ -26,7 +26,7 @@ export class ThemeTrackingService {
   /**
    * The observable that emits the current theme, shared among subscribers.
    * This observable prevents emitting the same value twice in a row.
-   * It also updates the private {@link #currentTheme} property.
+   * It also updates the private #currentTheme property.
    */
   readonly currentTheme$ = this.#currentTheme$.pipe(
     distinctUntilChanged(),

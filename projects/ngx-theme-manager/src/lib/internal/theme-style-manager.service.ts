@@ -29,7 +29,7 @@ export class ThemeStyleManagerService {
    *
    * Subscribes to the `ContentObserver` to listen for new `<style>` elements
    * added to the document head. If a new `<style>` element is added, the
-   * {@link #updateRegistry} method is called.
+   * `#updateRegistry()` method is called.
    *
    * @param {ContentObserver} observer - The Angular ContentObserver service
    * @param {ThemeRegistryService} themeRegistry - A service to register new themes
