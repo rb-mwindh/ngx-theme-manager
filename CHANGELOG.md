@@ -1,3 +1,10 @@
+## [5.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v5.0.0...v5.0.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **release:** new release required ([3bd6c39](https://github.com/rb-mwindh/ngx-theme-manager/commit/3bd6c39fb186a2a5023d6cbb2672bffa2fe79f9a))
+
 # [5.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v4.0.1...v5.0.0) (2024-03-25)
 
 
