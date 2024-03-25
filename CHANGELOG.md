@@ -1,3 +1,15 @@
+# [5.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v4.0.1...v5.0.0) (2024-03-25)
+
+
+### Features
+
+* **deps:** update peer dependencies ([4f13600](https://github.com/rb-mwindh/ngx-theme-manager/commit/4f13600e31da248f9a5f694c14ddc59e36e1aefb))
+
+
+### BREAKING CHANGES
+
+* **deps:** update to Angular v17+
+
 ## [4.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v4.0.0...v4.0.1) (2024-03-24)
 
 
