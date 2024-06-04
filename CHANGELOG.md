@@ -1,3 +1,53 @@
+## [5.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v5.0.0...v5.0.1) (2024-03-25)
+
+
+### Bug Fixes
+
+* **release:** new release required ([3bd6c39](https://github.com/rb-mwindh/ngx-theme-manager/commit/3bd6c39fb186a2a5023d6cbb2672bffa2fe79f9a))
+
+# [5.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v4.0.1...v5.0.0) (2024-03-25)
+
+
+### Features
+
+* **deps:** update peer dependencies ([4f13600](https://github.com/rb-mwindh/ngx-theme-manager/commit/4f13600e31da248f9a5f694c14ddc59e36e1aefb))
+
+
+### BREAKING CHANGES
+
+* **deps:** update to Angular v17+
+
+## [4.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v4.0.0...v4.0.1) (2024-03-24)
+
+
+### Bug Fixes
+
+* **build:** upgrade semantic-release to v22 ([7cc5f6e](https://github.com/rb-mwindh/ngx-theme-manager/commit/7cc5f6e5ae337b2baee2a6811b9f36360de8bccb))
+
+# [4.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v3.0.0...v4.0.0) (2024-03-24)
+
+
+### Features
+
+* **deps:** update peer dependencies ([8c720a0](https://github.com/rb-mwindh/ngx-theme-manager/commit/8c720a0b035c4503e9010c6a41ca98ccd674910d))
+
+
+### BREAKING CHANGES
+
+* **deps:** update to Angular v16+
+
+# [3.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v2.0.1...v3.0.0) (2024-03-24)
+
+
+### Features
+
+* **deps:** bump peer dependencies ([d90d51f](https://github.com/rb-mwindh/ngx-theme-manager/commit/d90d51feb6197697d46d95dbf46c96284a42ec1e))
+
+
+### BREAKING CHANGES
+
+* **deps:** update to Angular v15+
+
 ## [2.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v2.0.0...v2.0.1) (2024-03-24)
 
 
