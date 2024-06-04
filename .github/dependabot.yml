@@ -7,11 +7,66 @@ updates:
     open-pull-requests-limit: 50
     target-branch: 'main'
     ignore:
-      # For all deps
       - dependency-name: "*"
-      # ignore all major updates
       update-types: ["version-update:semver-major"]
-
+    groups:
+      angular-core:
+        patterns:
+          - "^@angular/animations"
+          - "^@angular/cdk"
+          - "^@angular/common"
+          - "^@angular/compiler"
+          - "^@angular/core"
+          - "^@angular/forms"
+          - "^@angular/platform-browser"
+          - "^@angular/platform-browser-dynamic"
+          - "^@angular/router"
+      angular-tools:
+        patterns:
+          - "^@angular-builders/"
+          - "^@angular-devkit/"
+          - "^@angular-eslint/"
+          - "^@angular/cli"
+          - "^@angular/compiler-cli"
+          - "^ng-packagr"
+          - "^rxjs$"
+          - "^zone.js$"
+      linting:
+        patterns:
+          - "^@typescript-eslint/"
+          - "^eslint"
+          - "^@commitlint/"
+          - "^commitizen"
+          - "^cz-conventional-changelog"
+          - "^lint-staged"
+          - "^prettier"
+      testing:
+        patterns:
+          - "^@types/jest"
+          - "^jest"
+          - "^jest-marbles"
+          - "^jest-environment-jsdom"
+          - "^@types/jsdom"
+      semantic-release:
+        patterns:
+          - "^@semantic-release/"
+          - "^semantic-release$"
+      miscellaneous:
+        patterns:
+          - "^@types/estree"
+          - "^@types/license-checker"
+          - "^@types/node"
+          - "^colors"
+          - "^husky"
+          - "^license-checker"
+          - "^npm-run-all"
+          - "^oss-license-name-to-url"
+          - "^prompt"
+          - "^rimraf"
+          - "^tsx"
+          - "^typedoc"
+          - "^typescript"
+          
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
