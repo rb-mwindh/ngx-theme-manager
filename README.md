@@ -237,6 +237,7 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 | [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
 | [@angular/platform-browser](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
 | [@angular/router](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [entities](https://github.com/fb55/entities) | [BSD-2-Clause](http://opensource.org/licenses/BSD-2-Clause) | Dependency |
 | [material-icons](https://github.com/marella/material-icons) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
 | [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
 | [parse5](https://github.com/inikulin/parse5) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
