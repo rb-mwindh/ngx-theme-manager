@@ -4,9 +4,10 @@ import { Observable, Subject, takeUntil, tap } from 'rxjs';
 import { Theme, ThemeService } from '@rb-mwindh/ngx-theme-manager';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
   readonly #destroyed = new Subject<void>();
