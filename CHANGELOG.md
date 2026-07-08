@@ -1,3 +1,15 @@
+# [18.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v17.0.0...v18.0.0) (2026-07-08)
+
+
+* Angular CLI update for packages - @angular/cdk@18 ([94b06e0](https://github.com/rb-mwindh/ngx-theme-manager/commit/94b06e0c964dbecfe5bb41dae58885b5b772ac65))
+* Angular CLI update for packages - @angular/cli@18, @angular/core@18, @angular-builders/jest@18, @angular-eslint/schematics@18 ([f56b67a](https://github.com/rb-mwindh/ngx-theme-manager/commit/f56b67a397459c426d2c1f50aad0e981cfbf815b))
+
+
+### BREAKING CHANGES
+
+* Upgrade to Angular CDK v18
+* Upgrade to Angular v18
+
 ## [5.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v5.0.0...v5.0.1) (2024-03-25)
 
 
