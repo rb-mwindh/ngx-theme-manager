@@ -1,4 +1,5 @@
 module.exports = {
+  preset: 'jest-preset-angular',
   moduleNameMapper: {
     '@rb-mwindh/ngx-theme-manager':
       '<rootDir>/projects/ngx-theme-manager/src/public-api.ts',
