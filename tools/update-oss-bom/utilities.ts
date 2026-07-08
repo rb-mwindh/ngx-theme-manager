@@ -1,66 +1,74 @@
-/*
- * Copyright 2022. (c) All rights by Robert Bosch GmbH.
- * We reserve all rights of disposal such as copying and passing on to third parties.
- */
-
-import { init, InitOpts, ModuleInfo, ModuleInfos } from 'license-checker';
-import licenseUrl from 'oss-license-name-to-url';
-import { Observable } from 'rxjs';
-
 export interface License {
   name: string;
   url: string | null;
 }
 
-export type Dependency = Omit<ModuleInfo, 'licenses'> & {
+export interface Dependency {
   name: string;
+  version?: string;
+  repository?: string;
   licenses: License | License[] | undefined;
-};
+}
 
 export interface Column {
   label?: string;
   field: keyof Dependency | ((dep?: Dependency) => string);
 }
 
-export class LicenseChecker extends Observable<ModuleInfos> {
-  constructor(opts: InitOpts) {
-    super((subscriber) => {
-      init(opts, (err, ret) => {
-        if (err) {
-          subscriber.error(err);
-        } else {
-          subscriber.next(ret);
-        }
-        subscriber.complete();
-      });
-    });
-  }
+export interface LicenseCheckerResult {
+  [key: string]: {
+    licenses?: string | string[];
+    repository?: string;
+  };
 }
 
-export function normalizeDependencies(deps: ModuleInfos): Dependency[] {
-  return Object.keys(deps).map((dep) => {
-    const atPos = dep.lastIndexOf('@');
-    const name = dep.substring(0, atPos);
-    const version = dep.substring(atPos + 1);
-    return {
-      ...deps[dep],
-      name,
-      version,
-      licenses: resolveLicenses(deps[dep].licenses),
-    };
-  });
+export function normalizeDependencies(
+  result: LicenseCheckerResult,
+): Dependency[] {
+  return Object.entries(result)
+    .map(([key, value]) => {
+      const at = key.lastIndexOf('@');
+
+      return {
+        name: key.substring(0, at),
+        version: key.substring(at + 1),
+        repository: value.repository,
+        licenses: normalizeLicenses(value.licenses),
+      };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
-function resolveLicenses(
-  licenses: string | string[] | undefined,
+function normalizeLicenses(
+  licenses?: string | string[],
 ): License | License[] | undefined {
   if (!licenses) {
     return undefined;
   }
+
   if (Array.isArray(licenses)) {
-    return licenses.map((name) => ({ name, url: licenseUrl(name) }));
+    return licenses.map((license) => ({
+      name: license,
+      url: getSpdxLicenseUrl(license),
+    }));
   }
-  return { name: licenses, url: licenseUrl(licenses) };
+
+  return {
+    name: licenses,
+    url: getSpdxLicenseUrl(licenses),
+  };
+}
+
+function getSpdxLicenseUrl(license: string): string | null {
+  if (!isSimpleLicenseId(license)) {
+    return null;
+  }
+
+  return `https://spdx.org/licenses/${license}.html`;
+}
+
+function isSimpleLicenseId(license: string): boolean {
+  return /^[A-Za-z0-9-.+]+$/.test(license);
 }
 
 export function mdTable(
@@ -68,6 +76,7 @@ export function mdTable(
   columns: Column[],
 ): string {
   const rows = new Array<string>();
+
   rows.push(
     columns
       .map((col) => col.label || col.field)
@@ -96,7 +105,7 @@ function mdTableRow(dep: Dependency, columns: Column[]): string {
         case 'name':
           return `${row} ${mdLink(dep.name, dep.repository)} |`;
         default:
-          return `${row} ${dep[field]} |`;
+          return `${row} ${dep[field] ?? ''} |`;
       }
     }, '|');
 }
@@ -107,13 +116,13 @@ function getLicenseLinks(
   if (!licenses) {
     return '';
   }
+
   if (Array.isArray(licenses)) {
-    const links = [];
-    links.push(
-      ...licenses.map((license) => mdLink(license.name, license.url)),
-    );
-    return links.join(', ');
+    return licenses
+      .map((license) => mdLink(license.name, license.url))
+      .join(', ');
   }
+
   return mdLink(licenses.name, licenses.url);
 }
 
