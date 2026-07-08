@@ -1,9 +1,9 @@
-import { Inject, Injectable } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { ContentObserver } from '@angular/cdk/observers';
-import { filter, map, timer } from 'rxjs';
-import { Theme } from '../theme';
-import { ThemeRegistryService } from './theme-registry.service';
+import { ContentObserver } from "@angular/cdk/observers";
+import { DOCUMENT } from "@angular/common";
+import { inject, Injectable } from "@angular/core";
+import { filter, map, timer } from "rxjs";
+import { Theme } from "../theme";
+import { ThemeRegistryService } from "./theme-registry.service";
 
 /**
  * A service that manages the activation and deactivation of themes.
@@ -24,22 +24,18 @@ import { ThemeRegistryService } from './theme-registry.service';
   providedIn: 'root',
 })
 export class ThemeStyleManagerService {
+  private readonly observer = inject( ContentObserver);
+  private readonly themeRegistry = inject( ThemeRegistryService);
+  private readonly document = inject(DOCUMENT);
+
   /**
    * Creates a new instance.
    *
    * Subscribes to the `ContentObserver` to listen for new `<style>` elements
    * added to the document head. If a new `<style>` element is added, the
    * `#updateRegistry()` method is called.
-   *
-   * @param {ContentObserver} observer - The Angular ContentObserver service
-   * @param {ThemeRegistryService} themeRegistry - A service to register new themes
-   * @param {Document} document - A reference to the current document
    */
-  constructor(
-    private readonly observer: ContentObserver,
-    private readonly themeRegistry: ThemeRegistryService,
-    @Inject(DOCUMENT) private readonly document: Document,
-  ) {
+  constructor() {
     this.observer
       .observe(document.head)
       .pipe(
