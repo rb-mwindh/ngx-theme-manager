@@ -1,3 +1,13 @@
+# [21.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v20.0.0...v21.0.0) (2026-07-08)
+
+
+* Angular CLI update for packages - @angular/cli@21, @angular/core@21, @angular/cdk@21, @angular-builders/jest@21, @angular-eslint/schematics@21 ([a8a2ddc](https://github.com/rb-mwindh/ngx-theme-manager/commit/a8a2ddc0b834b15b32bc61d3fbae9a2fcbb1e548))
+
+
+### BREAKING CHANGES
+
+* Upgrade to Angular v21
+
 # [20.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v19.0.0...v20.0.0) (2026-07-08)
 
 
