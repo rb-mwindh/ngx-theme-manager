@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Theme, ThemeService } from '@rb-mwindh/ngx-theme-manager';
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { Component, inject, OnDestroy, OnInit } from "@angular/core";
+import { Theme, ThemeService } from "@rb-mwindh/ngx-theme-manager";
+import { Observable, Subject, takeUntil, tap } from "rxjs";
 
 @Component({
     selector: 'app-root',
@@ -10,6 +10,9 @@ import { Theme, ThemeService } from '@rb-mwindh/ngx-theme-manager';
     standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy {
+  private readonly themeService = inject(ThemeService);
+  private readonly announcer = inject(LiveAnnouncer);
+
   readonly #destroyed = new Subject<void>();
 
   readonly repoUrl = 'https://github.com/rb-mwindh/ngx-theme-manager';
@@ -21,12 +24,7 @@ export class AppComponent implements OnInit, OnDestroy {
   currentTheme$: Observable<string | null> =
     this.themeService.currentTheme$;
 
-  constructor(
-    private readonly themeService: ThemeService,
-    private readonly announcer: LiveAnnouncer,
-  ) {}
-
-  ngOnDestroy() {
+    ngOnDestroy() {
     this.#destroyed.next();
     this.#destroyed.complete();
   }

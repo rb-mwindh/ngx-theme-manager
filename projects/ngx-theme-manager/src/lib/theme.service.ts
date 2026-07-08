@@ -1,28 +1,7 @@
-import {
-  Inject,
-  Injectable,
-  InjectionToken,
-  OnDestroy,
-  Optional,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import {
-  debounceTime,
-  filter,
-  map,
-  skipWhile,
-  Subject,
-  take,
-  takeUntil,
-  takeWhile,
-  tap,
-} from 'rxjs';
-import {
-  StorageService,
-  ThemeRegistryService,
-  ThemeStyleManagerService,
-  ThemeTrackingService,
-} from './internal';
+import { inject, Injectable, InjectionToken, OnDestroy } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
+import { debounceTime, filter, map, skipWhile, Subject, take, takeUntil, takeWhile, tap } from "rxjs";
+import { StorageService, ThemeRegistryService, ThemeStyleManagerService, ThemeTrackingService } from "./internal";
 
 const PREFIX = 'ngx-theme-manager';
 
@@ -54,6 +33,16 @@ export const QUERY_PARAM = new InjectionToken<string>(
  */
 @Injectable({ providedIn: 'root' })
 export class ThemeService implements OnDestroy {
+
+  private readonly registry = inject(ThemeRegistryService);
+  private readonly tracker = inject(ThemeTrackingService);
+  private readonly manager = inject(ThemeStyleManagerService);
+  private readonly storage = inject(StorageService);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly storageKey = inject(STORAGE_KEY);
+  private readonly queryParam = inject(QUERY_PARAM);
+
   /**
    * Subject for triggering cleanup on service destruction.
    *
@@ -71,28 +60,7 @@ export class ThemeService implements OnDestroy {
    */
   public readonly currentTheme$ = this.tracker.currentTheme$;
 
-  /**
-   * Creates a new instance
-   *
-   * @param {ThemeRegistryService} registry - Service for registering available themes
-   * @param {ThemeTrackingService} tracker - Service for tracking the currently selected theme
-   * @param {ThemeStyleManagerService} manager - Service for theme discovery, activation and deactivation
-   * @param {StorageService} storage - Service for storing the currently selected theme in the browser storage
-   * @param {ActivatedRoute} activatedRoute - Angular service for managing the current route
-   * @param {Router} router - Angular service for navigating between routes
-   * @param {string} storageKey - Key for storing the currently selected theme in browser storage
-   * @param {string} queryParam - Query parameter name for specifying the theme in the route
-   */
-  constructor(
-    private readonly registry: ThemeRegistryService,
-    private readonly tracker: ThemeTrackingService,
-    private readonly manager: ThemeStyleManagerService,
-    private readonly storage: StorageService,
-    private readonly activatedRoute: ActivatedRoute,
-    private readonly router: Router,
-    @Optional() @Inject(STORAGE_KEY) private readonly storageKey?: string,
-    @Optional() @Inject(QUERY_PARAM) private readonly queryParam?: string,
-  ) {
+  constructor() {
     // update the current route, the browser storage and the style elements' media attribute,
     // when the currently selected theme changes
     this.tracker.currentTheme$
@@ -100,7 +68,7 @@ export class ThemeService implements OnDestroy {
         filter(isNotNull),
         tap((theme) => this.#updateRouteParam(theme)),
         tap((theme) => this.#updateStoredTheme(theme)),
-        tap((theme) => manager.use(theme)),
+        tap((theme) => this.manager.use(theme)),
         takeUntil(this.#destroyed),
       )
       .subscribe();

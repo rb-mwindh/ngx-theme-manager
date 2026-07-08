@@ -1,6 +1,6 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
-import { share, Subject, takeUntil } from 'rxjs';
+import { DOCUMENT } from "@angular/common";
+import { inject, Injectable, OnDestroy } from "@angular/core";
+import { share, Subject, takeUntil } from "rxjs";
 
 /**
  * StorageChangeEvent represents the change event of the storage.
@@ -33,6 +33,8 @@ export interface StorageChangeEvent {
  */
 @Injectable({ providedIn: 'root' })
 export class StorageService implements OnDestroy {
+  private readonly document = inject(DOCUMENT);
+
   readonly #destroy$ = new Subject<void>();
 
   /**
@@ -74,8 +76,8 @@ export class StorageService implements OnDestroy {
    *
    * @param {Document} document - the document object provided by Angular's DI.
    */
-  public constructor(@Inject(DOCUMENT) document: Document) {
-    this.#window = (document as any).parentWindow || document.defaultView;
+  public constructor() {
+    this.#window = (this.document as any).parentWindow || this.document.defaultView;
     this.#storage = this.#window.localStorage;
     this.#window.addEventListener(
       'storage',
