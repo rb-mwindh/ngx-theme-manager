@@ -3,9 +3,9 @@
  * We reserve all rights of disposal such as copying and passing on to third parties.
  */
 
-const fs = require('fs');
-const path = require('path');
-const colors = require('colors/safe');
+import fs from "fs";
+import path from "path";
+import { ansi } from "../colors";
 
 export function copy<K extends string | number | symbol>(...keys: K[]) {
   keys = keys || [];
@@ -27,14 +27,14 @@ export function copy<K extends string | number | symbol>(...keys: K[]) {
             try {
               fs.writeFileSync(resolved, JSON.stringify(target, null, 2));
               console.log(
-                colors.green(`Successfully updated %s\nwith keys: %s\n`),
-                colors.blue(resolved),
-                colors.blue(keys.join(', ')),
+                ansi.success`Successfully updated %s\nwith keys: %s\n`,
+                ansi.path`${resolved}`,
+                ansi.path`${keys.join(', ')}`,
               );
             } catch (err) {
               console.log(
-                colors.red(`Failed to update %s\n%o`),
-                colors.blue(resolved),
+                ansi.error`Failed to update %s\n%o`,
+                ansi.path`${resolved}`,
                 err,
               );
               process.exit(-1);
