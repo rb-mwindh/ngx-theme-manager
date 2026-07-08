@@ -34,7 +34,7 @@ jobs:
         run: npm test
 
       - name: Build
-        run: npm run build:prod
+        run: npm run build
 
       - name: Release Library
         run: npx semantic-release
