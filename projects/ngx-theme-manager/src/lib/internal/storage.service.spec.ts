@@ -1,7 +1,7 @@
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import { StorageService } from './storage.service';
-import { cold } from 'jest-marbles';
+import { CommonModule } from "@angular/common";
+import { fakeAsync, flush, TestBed } from "@angular/core/testing";
+import { cold } from "jest-marbles";
+import { StorageService } from "./storage.service";
 
 describe('StorageService', function () {
   let service: StorageService;
@@ -27,7 +27,7 @@ describe('StorageService', function () {
   });
 
   it('should subscribe to "storage" event', function () {
-    expect(window.addEventListener).toBeCalledWith(
+    expect(window.addEventListener).toHaveBeenCalledWith(
       'storage',
       expect.anything(),
     );
@@ -35,7 +35,7 @@ describe('StorageService', function () {
 
   it('should unsubscribe from "storage" event', function () {
     service.ngOnDestroy();
-    expect(window.removeEventListener).toBeCalledWith(
+    expect(window.removeEventListener).toHaveBeenCalledWith(
       'storage',
       expect.anything(),
     );
