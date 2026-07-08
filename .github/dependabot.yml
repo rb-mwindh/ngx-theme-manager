@@ -1,75 +1,80 @@
 version: 2
-updates:
-  - package-ecosystem: 'npm'
-    directory: '/'
+
+multi-ecosystem-groups:
+  maintenance:
     schedule:
-      interval: 'monthly'
-    open-pull-requests-limit: 50
-    target-branch: 'main'
+      interval: monthly
+
+updates:
+  - package-ecosystem: npm
+    directory: /
+    target-branch: main
+    multi-ecosystem-group: maintenance
+    open-pull-requests-limit: 5
+    cooldown:
+      semver-patch-days: 7
+      semver-minor-days: 14
+      semver-major-days: 60
     ignore:
       - dependency-name: "*"
-      update-types: ["version-update:semver-major"]
+        update-types:
+          - "version-update:semver-major"
+
     groups:
-      angular-core:
+      angular:
         patterns:
-          - "^@angular/animations"
-          - "^@angular/cdk"
-          - "^@angular/common"
-          - "^@angular/compiler"
-          - "^@angular/core"
-          - "^@angular/forms"
-          - "^@angular/platform-browser"
-          - "^@angular/platform-browser-dynamic"
-          - "^@angular/router"
-      angular-tools:
-        patterns:
-          - "^@angular-builders/"
-          - "^@angular-devkit/"
-          - "^@angular-eslint/"
-          - "^@angular/cli"
-          - "^@angular/compiler-cli"
-          - "^ng-packagr"
-          - "^rxjs$"
-          - "^zone.js$"
+          - "@angular/*"
+          - "@angular-builders/*"
+          - "@angular-devkit/*"
+          - "@angular-eslint/*"
+          - "ng-packagr"
+          - "typescript"
+          - "rxjs"
+          - "zone.js"
+
       linting:
         patterns:
-          - "^@typescript-eslint/"
-          - "^eslint"
-          - "^@commitlint/"
-          - "^commitizen"
-          - "^cz-conventional-changelog"
-          - "^lint-staged"
-          - "^prettier"
+          - "eslint"
+          - "@typescript-eslint/*"
+          - "prettier"
+          - "lint-staged"
+
       testing:
         patterns:
-          - "^@types/jest"
-          - "^jest"
-          - "^jest-marbles"
-          - "^jest-environment-jsdom"
-          - "^@types/jsdom"
-      semantic-release:
+          - "jest"
+          - "jest-*"
+          - "@types/jest"
+          - "@types/jsdom"
+
+      release:
         patterns:
-          - "^@semantic-release/"
-          - "^semantic-release$"
-      miscellaneous:
+          - "semantic-release"
+          - "@semantic-release/*"
+          - "commitizen"
+          - "cz-conventional-changelog"
+          - "@commitlint/*"
+
+      build-tools:
         patterns:
-          - "^@types/estree"
-          - "^@types/license-checker"
-          - "^@types/node"
-          - "^colors"
-          - "^husky"
-          - "^license-checker"
-          - "^npm-run-all"
-          - "^oss-license-name-to-url"
-          - "^prompt"
-          - "^rimraf"
-          - "^tsx"
-          - "^typedoc"
-          - "^typescript"
-          
-  - package-ecosystem: 'github-actions'
-    directory: '/'
-    schedule:
-      interval: 'monthly'
-    open-pull-requests-limit: 50
-    target-branch: 'main'
+          - "tsx"
+          - "typedoc"
+          - "license-checker"
+          - "@types/license-checker"
+          - "npm-run-all"
+          - "rimraf"
+          - "husky"
+          - "prompt"
+
+      runtime-misc:
+        dependency-type: production
+        patterns:
+          - "material-icons"
+          - "tslib"
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: main
+    multi-ecosystem-group: maintenance
+    open-pull-requests-limit: 5
+    cooldown:
+      default-days: 14
