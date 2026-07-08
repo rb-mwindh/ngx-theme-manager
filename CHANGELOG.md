@@ -1,3 +1,13 @@
+# [20.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v19.0.0...v20.0.0) (2026-07-08)
+
+
+* Angular CLI update for packages - @angular/cli@20, @angular/core@20 ([ad73eed](https://github.com/rb-mwindh/ngx-theme-manager/commit/ad73eed12cf6ff82e2647d770cda53183d2728ca))
+
+
+### BREAKING CHANGES
+
+* Upgrade to Angular v20.
+
 # [19.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v18.0.0...v19.0.0) (2026-07-08)
 
 
