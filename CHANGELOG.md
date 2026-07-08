@@ -1,3 +1,13 @@
+# [19.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v18.0.0...v19.0.0) (2026-07-08)
+
+
+* Angular CLI update for packages - @angular/core@19, @angular/cli@19, @angular-builders/jest@19, @angular-eslint/schematics@19, @angular/cdk@19 ([c4cc3ed](https://github.com/rb-mwindh/ngx-theme-manager/commit/c4cc3eda1076fd7e299d27cf3f787727a517aa25))
+
+
+### BREAKING CHANGES
+
+* Upgrade to Angular v19
+
 # [18.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v17.0.0...v18.0.0) (2026-07-08)
 
 
