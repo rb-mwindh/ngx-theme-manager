@@ -1,9 +1,4 @@
-/*
- * Copyright 2022. (c) All rights by Robert Bosch GmbH.
- * We reserve all rights of disposal such as copying and passing on to third parties.
- */
-
-import { copy } from './internal';
+import { copy } from "./internal";
 
 const files = {
   projectPkg: '../../projects/ngx-theme-manager/package.json',
