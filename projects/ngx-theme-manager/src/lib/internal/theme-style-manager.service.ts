@@ -201,7 +201,7 @@ export function turnOn(element: HTMLStyleElement): void {
  * - id
  * - displayName
  * - description
- * - default
+ * - default / defaultTheme
  *
  * @param source CSS content containing the annotations.
  * @returns The extracted theme metadata or null.
