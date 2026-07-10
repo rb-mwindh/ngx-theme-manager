@@ -139,8 +139,8 @@ theme selection callback like this:
   selector: 'app-root',
   template: `
     <app-theme-picker
-      [themes]="themeService.themes$ | async"
-      [currentTheme]="themeService.currentTheme$ | async"
+      [themes]="themeService.themes()"
+      [currentTheme]="themeService.currentTheme()"
       (select)="themeService.selectTheme($event)"
     ></app-theme-picker>
     
@@ -149,8 +149,7 @@ theme selection callback like this:
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public readonly themeService: ThemeService) {
-  }
+  protected readonly themeService = inject(ThemeService);
 }
 ```
 
