@@ -19,27 +19,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
-      "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "prefix": "lib",
-            "style": "kebab-case",
-            "type": "element"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "prefix": "lib",
-            "style": "camelCase",
-            "type": "attribute"
-          }
-        ],
-        "@angular-eslint/prefer-standalone": [
-          "off"
-        ]
-      }
+      "reportUnusedDisableDirectives": true
     },
     {
       "files": [

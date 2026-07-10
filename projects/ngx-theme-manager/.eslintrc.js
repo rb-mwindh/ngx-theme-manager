@@ -5,7 +5,7 @@
 
 module.exports = {
   extends: '../../.eslintrc.json',
-  ignorePatterns: ['!**/*'],
+  ignorePatterns: ['!**/*', '**/*.spec.ts'],
   overrides: [
     {
       files: ['*.ts'],
