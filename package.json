@@ -30,7 +30,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">= 18"
+    "node": "^18.19.1 || ^20.11.1 || >=22"
   },
   "lint-staged": {
     "projects/**/*.ts": [
