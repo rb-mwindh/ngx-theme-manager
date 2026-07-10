@@ -2,40 +2,52 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "./dist/out-tsc",
-    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "downlevelIteration": true,
     "esModuleInterop": true,
-    "strict": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "importHelpers": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "skipLibCheck": true,
+    "strict": true,
     "sourceMap": true,
-    "declaration": false,
-    "experimentalDecorators": true,
-    "moduleResolution": "bundler",
-    "importHelpers": true,
+    "useDefineForClassFields": false,
     "target": "ES2022",
-    "module": "es2022",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "lib": [
-      "es2022",
-      "dom"
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
     ],
     "paths": {
       "@rb-mwindh/ngx-theme-manager/*": [
-        "projects/ngx-theme-manager/src/lib/*"
+        "./projects/ngx-theme-manager/src/lib/*"
       ],
       "@rb-mwindh/ngx-theme-manager": [
-        "projects/ngx-theme-manager/src/public-api.ts"
+        "./projects/ngx-theme-manager/src/public-api.ts"
       ]
     },
-    "useDefineForClassFields": false
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "references": [
+    { "path": "./projects/demo/tsconfig.app.json" },
+    { "path": "./projects/demo/tsconfig.eslint.json" },
+    { "path": "./projects/demo/tsconfig.spec.json" },
+    { "path": "./projects/ngx-theme-manager/tsconfig.eslint.json" },
+    { "path": "./projects/ngx-theme-manager/tsconfig.lib.json" },
+    { "path": "./projects/ngx-theme-manager/tsconfig.lib.prod.json" },
+    { "path": "./projects/ngx-theme-manager/tsconfig.spec.json" }
+  ]
 }
