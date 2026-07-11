@@ -1,11 +1,6 @@
-/*
- * Copyright 2022. (c) All rights by Robert Bosch GmbH.
- * We reserve all rights of disposal such as copying and passing on to third parties.
- */
-
 module.exports = {
   extends: '../../.eslintrc.json',
-  ignorePatterns: ['!**/*'],
+  ignorePatterns: ['!**/*', '**/*.spec.ts'],
   overrides: [
     {
       files: ['*.ts'],

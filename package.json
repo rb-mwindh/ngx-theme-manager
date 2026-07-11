@@ -30,7 +30,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">= 18"
+    "node": "^18.19.1 || ^20.11.1 || >=22"
   },
   "lint-staged": {
     "projects/**/*.ts": [
@@ -53,10 +53,11 @@
   "scripts": {
     "init": "npm install",
     "commit": "git-cz",
-    "start": "ng serve demo",
+    "typecheck": "run-s typecheck:*",
     "lint": "run-s lint:lib lint:app",
     "test": "run-s test:lib test:app",
     "build": "run-s \"build:lib -- {1}\" \"build:app -- {1}\"",
+    "start": "ng serve demo",
     "----------------------": "",
     "lint:lib": "ng lint ngx-theme-manager",
     "lint:app": "ng lint demo",
@@ -70,10 +71,17 @@
     "postinit": "run-s postinit:*",
     "postinit:setup-husky": "husky install",
     "postbuild": "run-s postbuild:*",
-    "postbuild:update-package-json": "tsx tools/update-package-json/in-library.ts",
+    "postbuild:update-package-json": "tsx tools/update-package-json/to-dist.ts",
     "postbuild:update-bom": "tsx tools/update-oss-bom",
     "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager",
-    "postversion": "tsx tools/update-package-json/in-workspace.ts"
+    "postversion": "tsx tools/update-package-json/to-project.ts",
+    "typecheck:demo_app": "tsc --noEmit -p projects/demo/tsconfig.app.json",
+    "typecheck:demo_eslint": "tsc --noEmit -p projects/demo/tsconfig.eslint.json",
+    "typecheck:demo_spec": "tsc --noEmit -p projects/demo/tsconfig.spec.json",
+    "typecheck:ngx-theme-manager_lib": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.lib.json",
+    "typecheck:ngx-theme-manager_lib-prod": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.lib.prod.json",
+    "typecheck:ngx-theme-manager_eslint": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.eslint.json",
+    "typecheck:ngx-theme-manager_spec": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.spec.json"
   },
   "dependencies": {
     "@angular/animations": "^18.2.14",
