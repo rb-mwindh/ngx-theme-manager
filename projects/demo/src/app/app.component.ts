@@ -1,13 +1,22 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { Observable, Subject, takeUntil, tap } from 'rxjs';
-import { Theme, ThemeService } from '@rb-mwindh/ngx-theme-manager';
+import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { CommonModule } from "@angular/common";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { Theme, ThemeService } from "@rb-mwindh/ngx-theme-manager";
+import { Observable, Subject, takeUntil, tap } from "rxjs";
+import { AppThemePickerComponent } from "./theming/app-theme-picker.component";
+import { AppThemingComponent } from "./theming/app-theming.component";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    AppThemePickerComponent,
+    AppThemingComponent,
+  ],
 })
 export class AppComponent implements OnInit, OnDestroy {
   readonly #destroyed = new Subject<void>();
