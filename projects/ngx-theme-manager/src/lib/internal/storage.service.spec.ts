@@ -1,10 +1,11 @@
-import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { CommonModule } from '@angular/common';
-import { StorageService } from './storage.service';
-import { cold } from 'jest-marbles';
+import { CommonModule } from "@angular/common";
+import { TestBed } from "@angular/core/testing";
+import { Subscription } from "rxjs";
+import { StorageChangeEvent, StorageService } from "./storage.service";
 
-describe('StorageService', function () {
+describe('StorageService', () => {
   let service: StorageService;
+  let subscriptions: Subscription[];
 
   beforeEach(() => {
     jest.spyOn(window, 'addEventListener');
@@ -16,146 +17,338 @@ describe('StorageService', function () {
     });
 
     service = TestBed.inject(StorageService);
+    subscriptions = [];
   });
 
   afterEach(() => {
+    subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+
     localStorage.clear();
+    sessionStorage.clear();
+
+    jest.restoreAllMocks();
   });
 
-  it('should create', function () {
+  it('should create', () => {
     expect(service).toBeDefined();
   });
 
-  it('should subscribe to "storage" event', function () {
-    expect(window.addEventListener).toBeCalledWith(
+  it('should subscribe to the native storage event', () => {
+    expect(window.addEventListener).toHaveBeenCalledWith(
       'storage',
-      expect.anything(),
+      expect.any(Function),
     );
   });
 
-  it('should unsubscribe from "storage" event', function () {
+  it('should unsubscribe from the native storage event on destroy', () => {
     service.ngOnDestroy();
-    expect(window.removeEventListener).toBeCalledWith(
+
+    expect(window.removeEventListener).toHaveBeenCalledWith(
       'storage',
-      expect.anything(),
+      expect.any(Function),
     );
   });
 
-  it('should emit on "storage" event', fakeAsync(() => {
-    const a = {
-      key: 'test_key',
-      oldValue: 'old_value',
-      newValue: 'new_value',
-    };
-    const b = {
-      key: 'test_key',
-      oldValue: 'new_value',
-      newValue: null,
-    };
-    const storageArea = localStorage;
+  it('should complete changes$ on destroy', () => {
+    const complete = jest.fn();
 
-    cold('--a-b', { a, b }).subscribe((value) => {
-      window.dispatchEvent(
-        new StorageEvent('storage', { ...value, storageArea }),
+    subscriptions.push(
+      service.changes$.subscribe({
+        complete,
+      }),
+    );
+
+    service.ngOnDestroy();
+
+    expect(complete).toHaveBeenCalledTimes(1);
+  });
+
+  it('should emit changes from native storage events', () => {
+    const changes: StorageChangeEvent[] = [];
+
+    subscriptions.push(
+      service.changes$.subscribe((change) => {
+        changes.push(change);
+      }),
+    );
+
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'test_key',
+        oldValue: 'old_value',
+        newValue: 'new_value',
+        storageArea: localStorage,
+      }),
+    );
+
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'test_key',
+        oldValue: 'new_value',
+        newValue: null,
+        storageArea: localStorage,
+      }),
+    );
+
+    expect(changes).toEqual([
+      {
+        key: 'test_key',
+        oldValue: 'old_value',
+        newValue: 'new_value',
+      },
+      {
+        key: 'test_key',
+        oldValue: 'new_value',
+        newValue: null,
+      },
+    ]);
+  });
+
+  it('should expose a null key when native storage is cleared', () => {
+    const changes: StorageChangeEvent[] = [];
+
+    subscriptions.push(
+      service.changes$.subscribe((change) => {
+        changes.push(change);
+      }),
+    );
+
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: null,
+        oldValue: null,
+        newValue: null,
+        storageArea: localStorage,
+      }),
+    );
+
+    expect(changes).toEqual([
+      {
+        key: null,
+        oldValue: null,
+        newValue: null,
+      },
+    ]);
+  });
+
+  it('should ignore native events for a different storage area', () => {
+    const changes: StorageChangeEvent[] = [];
+
+    subscriptions.push(
+      service.changes$.subscribe((change) => {
+        changes.push(change);
+      }),
+    );
+
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'test_key',
+        oldValue: null,
+        newValue: 'session_value',
+        storageArea: sessionStorage,
+      }),
+    );
+
+    window.dispatchEvent(
+      new StorageEvent('storage', {
+        key: 'test_key',
+        oldValue: null,
+        newValue: 'local_value',
+        storageArea: localStorage,
+      }),
+    );
+
+    expect(changes).toEqual([
+      {
+        key: 'test_key',
+        oldValue: null,
+        newValue: 'local_value',
+      },
+    ]);
+  });
+
+  describe('setItem', () => {
+    it('should store the provided value', () => {
+      service.setItem('test_key', 'test_value');
+
+      expect(localStorage.getItem('test_key')).toBe('test_value');
+    });
+
+    it('should emit the storage change', () => {
+      const changes: StorageChangeEvent[] = [];
+
+      subscriptions.push(
+        service.changes$.subscribe((change) => {
+          changes.push(change);
+        }),
       );
+
+      service.setItem('test_key', 'a');
+      service.setItem('test_key', 'b');
+
+      expect(changes).toEqual([
+        {
+          key: 'test_key',
+          oldValue: null,
+          newValue: 'a',
+        },
+        {
+          key: 'test_key',
+          oldValue: 'a',
+          newValue: 'b',
+        },
+      ]);
     });
 
-    flush();
+    it('should not emit when the value does not change', () => {
+      const next = jest.fn();
 
-    const expected = cold('--a-b', { a, b });
-    expect(service.changes$).toBeObservable(expected);
-  }));
+      localStorage.setItem('test_key', 'test_value');
 
-  it('should emit on setItem', fakeAsync(() => {
-    const a = {
-      key: 'test_key',
-      oldValue: null,
-      newValue: 'a',
-    };
-    const b = {
-      key: 'test_key',
-      oldValue: 'a',
-      newValue: 'b',
-    };
+      subscriptions.push(
+        service.changes$.subscribe(next),
+      );
 
-    cold('--a-b', { a, b }).subscribe((value) => {
-      service.setItem(value.key, value.newValue);
+      service.setItem('test_key', 'test_value');
+
+      expect(next).not.toHaveBeenCalled();
     });
 
-    flush();
+    it('should not write to storage when the value does not change', () => {
+      localStorage.setItem('test_key', 'test_value');
 
-    const expected = cold('--a-b', { a, b });
-    expect(service.changes$).toBeObservable(expected);
-  }));
+      const setItem = jest.spyOn(
+        Storage.prototype,
+        'setItem',
+      );
 
-  it('should emit on removeItem', fakeAsync(() => {
-    const a = {
-      key: 'test_key',
-      oldValue: null,
-      newValue: 'a',
-    };
-    const b = {
-      key: 'test_key',
-      oldValue: 'a',
-      newValue: null,
-    };
-    const fnA = () => service.setItem(a.key, a.newValue);
-    const fnB = () => service.removeItem(b.key);
+      service.setItem('test_key', 'test_value');
 
-    cold('--a-b', { a: fnA, b: fnB }).subscribe((fn) => fn());
-
-    flush();
-
-    const expected = cold('--a-b', { a, b });
-    expect(service.changes$).toBeObservable(expected);
-  }));
-
-  it('should emit on clear', fakeAsync(() => {
-    cold('--a').subscribe(() => {
-      localStorage.setItem('a', 'a');
-      localStorage.setItem('b', 'b');
-      service.clear();
+      expect(setItem).not.toHaveBeenCalled();
     });
-
-    flush();
-
-    expect(service.changes$).toBeObservable(
-      cold('--(ab)', {
-        a: { key: 'a', oldValue: 'a', newValue: null },
-        b: { key: 'b', oldValue: 'b', newValue: null },
-      }),
-    );
-  }));
-
-  it('should getItem', function () {
-    localStorage.setItem('test_key', 'a');
-    expect(service.getItem('test_key')).toEqual('a');
   });
 
-  it('should ignore different storageArea', fakeAsync(() => {
-    const a = {
-      key: 'test_key',
-      oldValue: null,
-      newValue: 'a',
-      storageArea: sessionStorage,
-    };
-    const b = {
-      key: 'test_key',
-      oldValue: null,
-      newValue: 'a',
-      storageArea: localStorage,
-    };
+  describe('getItem', () => {
+    it('should return a stored value', () => {
+      localStorage.setItem('test_key', 'test_value');
 
-    cold('--a-b', { a, b }).subscribe((data) =>
-      window.dispatchEvent(new StorageEvent('storage', { ...data })),
-    );
+      expect(service.getItem('test_key')).toBe('test_value');
+    });
 
-    flush();
+    it('should return null when the key does not exist', () => {
+      expect(service.getItem('missing_key')).toBeNull();
+    });
+  });
 
-    expect(service.changes$).toBeObservable(
-      cold('----b', {
-        b: { key: b.key, oldValue: b.oldValue, newValue: b.newValue },
-      }),
-    );
-  }));
+  describe('removeItem', () => {
+    it('should remove an existing value', () => {
+      localStorage.setItem('test_key', 'test_value');
+
+      service.removeItem('test_key');
+
+      expect(localStorage.getItem('test_key')).toBeNull();
+    });
+
+    it('should emit the storage change', () => {
+      const changes: StorageChangeEvent[] = [];
+
+      localStorage.setItem('test_key', 'test_value');
+
+      subscriptions.push(
+        service.changes$.subscribe((change) => {
+          changes.push(change);
+        }),
+      );
+
+      service.removeItem('test_key');
+
+      expect(changes).toEqual([
+        {
+          key: 'test_key',
+          oldValue: 'test_value',
+          newValue: null,
+        },
+      ]);
+    });
+
+    it('should not emit when the key does not exist', () => {
+      const next = jest.fn();
+
+      subscriptions.push(
+        service.changes$.subscribe(next),
+      );
+
+      service.removeItem('missing_key');
+
+      expect(next).not.toHaveBeenCalled();
+    });
+
+    it('should not access removeItem when the key does not exist', () => {
+      const removeItem = jest.spyOn(
+        Storage.prototype,
+        'removeItem',
+      );
+
+      service.removeItem('missing_key');
+
+      expect(removeItem).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('clear', () => {
+    it('should clear all stored values', () => {
+      localStorage.setItem('a', 'value_a');
+      localStorage.setItem('b', 'value_b');
+
+      service.clear();
+
+      expect(localStorage.length).toBe(0);
+    });
+
+    it('should emit one change for each removed item', () => {
+      const changes: StorageChangeEvent[] = [];
+
+      localStorage.setItem('a', 'value_a');
+      localStorage.setItem('b', 'value_b');
+
+      subscriptions.push(
+        service.changes$.subscribe((change) => {
+          changes.push(change);
+        }),
+      );
+
+      service.clear();
+
+      expect(changes).toEqual(
+        expect.arrayContaining([
+          {
+            key: 'a',
+            oldValue: 'value_a',
+            newValue: null,
+          },
+          {
+            key: 'b',
+            oldValue: 'value_b',
+            newValue: null,
+          },
+        ]),
+      );
+
+      expect(changes).toHaveLength(2);
+    });
+
+    it('should not emit when storage is already empty', () => {
+      const next = jest.fn();
+
+      subscriptions.push(
+        service.changes$.subscribe(next),
+      );
+
+      service.clear();
+
+      expect(next).not.toHaveBeenCalled();
+    });
+  });
 });

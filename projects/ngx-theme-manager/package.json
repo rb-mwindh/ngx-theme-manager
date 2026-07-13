@@ -1,9 +1,9 @@
 {
   "name": "@rb-mwindh/ngx-theme-manager",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "peerDependencies": {
-    "@angular/common": ">=17",
-    "@angular/core": ">=17"
+    "@angular/common": ">=19",
+    "@angular/core": ">=19"
   },
   "dependencies": {
     "tslib": "^2.3.0"

@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
-import { share, Subject } from 'rxjs';
-import { Theme } from '../theme';
+import { Injectable, Signal } from "@angular/core";
+import { toSignal } from "@angular/core/rxjs-interop";
+import { BehaviorSubject, Observable } from "rxjs";
+import { Theme } from "../theme";
 
 /**
  * RbThemeRegistryService is an injectable service that allows for
@@ -26,12 +27,21 @@ export class ThemeRegistryService {
    *
    * @private
    */
-  readonly #themes$ = new Subject<Theme[]>();
+  readonly #themes$ = new BehaviorSubject<Theme[]>([]);
 
   /**
    * The observable that emits the collection of registered themes when it changes.
    */
-  readonly themes$ = this.#themes$.pipe(share());
+  readonly themes$: Observable<Theme[]> = this.#themes$.asObservable();
+
+  /**
+   * Signal containing all currently registered themes.
+   *
+   * This is the signal-based API for modern Angular applications.
+   */
+  readonly themes: Signal<Theme[]> = toSignal(this.themes$, {
+    requireSync: true,
+  });
 
   /**
    * Registers a new theme and emits the changed collection of themes.
@@ -41,53 +51,97 @@ export class ThemeRegistryService {
    *
    * Themes without ID will be ignored.
    *
-   * @param {Theme | undefined | null} theme - The new theme to register
+   * @param theme - The new theme to register
    */
   register(theme: Theme | undefined | null): void {
     if (!theme?.id) {
       return;
     }
-    const oldValue = this.#dictionary.get(theme.id) || {};
-    this.#dictionary.set(theme.id, { ...oldValue, ...theme });
-    this.#themes$.next([...this.#dictionary.values()]);
+
+    if (this.#register(theme)) {
+      this.#publish();
+    }
+  }
+
+  registerAll(themes: (Theme | undefined | null)[]): void {
+    const changed = themes.reduce(
+      (hasChanged, theme) =>
+        (theme?.id ? this.#register(theme) : false) || hasChanged,
+      false,
+    );
+
+    if (changed) {
+      this.#publish();
+    }
   }
 
   /**
    * Removes the provided theme from the registry and emits the changed collection of themes.
    *
-   * @param {Theme} theme - The theme to remove.
+   * @param theme - The theme to remove.
    */
-  unregister(theme: Theme): void {
-    if (this.#dictionary.delete(theme?.id)) {
-      this.#themes$.next([...this.#dictionary.values()]);
+  unregister(theme: Theme | undefined | null): void {
+    if (theme?.id && this.#dictionary.delete(theme?.id)) {
+      this.#publish();
     }
-  }
-
-  /**
-   * Returns the collection of registered themes.
-   *
-   * @returns {Theme[]} A new array with all currently registered themes
-   * @remarks A new array is created every time this getter is called.
-   */
-  get themes(): Theme[] {
-    return [...this.#dictionary.values()];
   }
 
   /**
    * Returns the theme with the given ID, or null if no such theme is registered.
    *
-   * @param {string | null} id - The ID of the theme to retrieve
+   * @param id - The ID of the theme to retrieve
    */
   get(id: string | null): Theme | null {
-    return this.#dictionary.get(id!) || null;
+    if (!id) {
+      return null;
+    }
+
+    return this.#dictionary.get(id!) ?? null;
   }
 
   /**
    * Returns whether a theme with the given ID is currently registered.
    *
-   * @param {string | null} id - The ID of the theme to check.
+   * @param id - The ID of the theme to check.
    */
   has(id: string | null): boolean {
-    return this.#dictionary.has(id!);
+    return !!id && this.#dictionary.has(id!);
+  }
+
+  /**
+   * Registers or updates a theme without publishing the collection.
+   *
+   * @param theme The theme to register.
+   * @returns Whether the registry was changed.
+   * @private
+   */
+  #register(theme: Theme): boolean {
+    const previous = this.#dictionary.get(theme.id);
+
+    const registeredTheme: Theme = {
+      ...previous,
+      ...theme,
+    };
+
+    if (
+      previous?.id === registeredTheme.id &&
+      previous?.displayName === registeredTheme.displayName &&
+      previous?.description === registeredTheme.description &&
+      previous?.defaultTheme === registeredTheme.defaultTheme
+    ) {
+      return false;
+    }
+
+    this.#dictionary.set(registeredTheme.id, registeredTheme);
+    return true;
+  }
+
+  /**
+   * Publishes a new immutable snapshot of the registered themes.
+   *
+   * @private
+   */
+  #publish(): void {
+    this.#themes$.next([...this.#dictionary.values()]);
   }
 }
