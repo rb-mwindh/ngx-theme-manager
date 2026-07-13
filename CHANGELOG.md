@@ -1,3 +1,14 @@
+# [20.1.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v20.0.0...v20.1.0) (2026-07-13)
+
+
+### Features
+
+* **storage:** harden storage access and change event handling ([f0a8d67](https://github.com/rb-mwindh/ngx-theme-manager/commit/f0a8d67472b46a6622aa04a0eb8de625314dca50))
+* **theme-registry:** expose registered themes as a signal ([9e76916](https://github.com/rb-mwindh/ngx-theme-manager/commit/9e7691689ea16cccc4fcc8034ed75c8db5d05215))
+* **theme-style-manager:** improve theme discovery and lifecycle ([ad04062](https://github.com/rb-mwindh/ngx-theme-manager/commit/ad040621438741cad92bac76c2b83da5569767e2))
+* **theme-tracking:** expose the current theme as a signal ([8aa84d9](https://github.com/rb-mwindh/ngx-theme-manager/commit/8aa84d977f685c53a87164bd34ef8bd868e72f35))
+* **theme:** expose signal-based theme state ([216319f](https://github.com/rb-mwindh/ngx-theme-manager/commit/216319f2b88e99e44910c30c19819695af2e9183))
+
 # [20.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v19.0.0...v20.0.0) (2026-07-08)
 
 
