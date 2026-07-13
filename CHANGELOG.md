@@ -1,3 +1,10 @@
+## [19.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v19.0.0...v19.0.1) (2026-07-13)
+
+
+### Bug Fixes
+
+* **eslint:** exclude spec files from project linting ([c800085](https://github.com/rb-mwindh/ngx-theme-manager/commit/c8000853f38c6292c0a9cccefc7ccb24eb46e86b))
+
 # [19.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v18.0.0...v19.0.0) (2026-07-08)
 
 
