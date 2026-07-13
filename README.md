@@ -56,7 +56,7 @@ the `media` attribute of the associated `<style>` element is simply removed agai
 ### Install the package
 
 ```shell
-npm install ngx-theme-manager --save
+npm install @rb-mwindh/ngx-theme-manager --save
 ```
 
 ### Implement your theme stylesheets
@@ -139,8 +139,8 @@ theme selection callback like this:
   selector: 'app-root',
   template: `
     <app-theme-picker
-      [themes]="themeService.themes$ | async"
-      [currentTheme]="themeService.currentTheme$ | async"
+      [themes]="themeService.themes()"
+      [currentTheme]="themeService.currentTheme()"
       (select)="themeService.selectTheme($event)"
     ></app-theme-picker>
     
@@ -149,8 +149,7 @@ theme selection callback like this:
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public readonly themeService: ThemeService) {
-  }
+  protected readonly themeService = inject(ThemeService);
 }
 ```
 
@@ -221,29 +220,29 @@ You could also ask contributors to add themselves in this file on their own.
 ### 3rd Party Licenses
 
 <!--
-The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit hook.
+The `<bom></bom>` tags will be processed by `tools/update-oss-bom/index.ts` as a pre-commit hook.
 -->
 
 <bom>
 
 | Name | License | Type |
 | --- | --- | --- |
-| [@angular/animations](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/cdk](https://github.com/angular/components) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/common](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/compiler](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/core](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/forms](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/platform-browser](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/router](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [entities](https://github.com/fb55/entities) | [BSD-2-Clause](http://opensource.org/licenses/BSD-2-Clause) | Dependency |
-| [material-icons](https://github.com/marella/material-icons) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
-| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [parse5](https://github.com/inikulin/parse5) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [rxjs](https://github.com/reactivex/rxjs) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
-| [tslib](https://github.com/Microsoft/tslib) | 0BSD | Dependency |
-| [zone.js](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| [@angular/animations](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/cdk](https://github.com/angular/components) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/common](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/compiler](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/core](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/forms](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/platform-browser](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/router](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [entities](https://github.com/fb55/entities) | [BSD-2-Clause](https://spdx.org/licenses/BSD-2-Clause.html) | Dependency |
+| [material-icons](https://github.com/marella/material-icons) | [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) | Dependency |
+| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [parse5](https://github.com/inikulin/parse5) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [rxjs](https://github.com/reactivex/rxjs) | [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) | Dependency |
+| [tslib](https://github.com/Microsoft/tslib) | [0BSD](https://spdx.org/licenses/0BSD.html) | Dependency |
+| [zone.js](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
 
 </bom>
 
@@ -259,8 +258,6 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 [issue::question]: https://github.com/rb-mwindh/ngx-theme-manager/issues/new?template=question.md&title=❓%20
 
 [license]: https://badgen.net/github/license/rb-mwindh/ngx-theme-manager
-
-
 
 [selfhtml:media]: https://wiki.selfhtml.org/wiki/HTML/Attribute/media
 

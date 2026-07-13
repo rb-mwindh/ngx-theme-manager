@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { distinctUntilChanged, share, Subject, tap } from 'rxjs';
+import { Injectable, signal } from "@angular/core";
+import { toObservable } from "@angular/core/rxjs-interop";
 
 /**
  * A service to track the currently active theme.
@@ -10,45 +10,28 @@ import { distinctUntilChanged, share, Subject, tap } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ThemeTrackingService {
   /**
-   * The subject that emits the next value set through {@link currentTheme}.
+   * Signal containing the currently selected theme.
    *
    * @private
    */
-  readonly #currentTheme$ = new Subject<string | null>();
+  readonly #currentTheme = signal<string | null>(null);
 
   /**
-   * A private property to hold the current theme value.
-   *
-   * @private
+   * Observable compatibility API
    */
-  #currentTheme: string | null = null;
+  readonly currentTheme$ = toObservable(this.#currentTheme);
 
   /**
-   * The observable that emits the current theme, shared among subscribers.
-   * This observable prevents emitting the same value twice in a row.
-   * It also updates the private #currentTheme property.
+   * Signal containing the currently selected theme.
    */
-  readonly currentTheme$ = this.#currentTheme$.pipe(
-    distinctUntilChanged(),
-    tap((theme) => (this.#currentTheme = theme)),
-    share(),
-  );
+  readonly currentTheme = this.#currentTheme.asReadonly();
 
   /**
    * Set the current theme.
    *
-   * @param {string | null} arg
+   * @param theme
    */
-  set currentTheme(arg: string | null) {
-    this.#currentTheme$.next(arg);
-  }
-
-  /**
-   * Get the current theme.
-   *
-   * @returns {string | null} The current theme
-   */
-  get currentTheme(): string | null {
-    return this.#currentTheme;
+  setCurrentTheme(theme: string | null): void {
+    this.#currentTheme.set(theme);
   }
 }

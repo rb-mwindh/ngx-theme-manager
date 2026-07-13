@@ -16,8 +16,8 @@
   <div class="spacer"></div>
 
   <app-theme-picker
-    [themes]="themes$ | async"
-    [currentTheme]="currentTheme$ | async"
+    [themes]="themes()"
+    [currentTheme]="currentTheme()"
     (selectionChanged)="selectTheme($event)"
   ></app-theme-picker>
 </div>
@@ -104,12 +104,24 @@
   </div>
 
   <!-- Terminal -->
-  <div class="terminal" [ngSwitch]="selection" [attr.data-heading]="heading">
-    <pre *ngSwitchCase="'install'">{{ install }}</pre>
-    <pre *ngSwitchCase="'new-theme'">{{ newTheme }}</pre>
-    <pre *ngSwitchCase="'create-themes-cmp'">{{ createThemesCmp }}</pre>
-    <pre *ngSwitchCase="'inject-theme-service'">{{ injectThemeService }}</pre>
-    <pre *ngSwitchCase="'use-themes-cmp'">{{ useThemesCmp }}</pre>
+  <div class="terminal" [attr.data-heading]="heading()">
+    @switch (selection()) {
+      @case ('install') {
+        <pre>{{ install }}</pre>
+      }
+      @case ('new-theme') {
+        <pre>{{ newTheme }}</pre>
+      }
+      @case ('create-themes-cmp') {
+        <pre>{{ createThemesCmp }}</pre>
+      }
+      @case ('inject-theme-service') {
+        <pre>{{ injectThemeService }}</pre>
+      }
+      @case ('use-themes-cmp') {
+        <pre>{{ useThemesCmp }}</pre>
+      }
+    }
   </div>
 
   <!-- Footer -->
