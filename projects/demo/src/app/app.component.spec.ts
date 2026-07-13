@@ -1,9 +1,7 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { AppComponent } from "./app.component";
 import { CommonModule } from "@angular/common";
-import { RouterTestingModule } from "@angular/router/testing";
-import { AppThemingComponent } from "./theming/app-theming.component";
-import { AppThemePickerComponent } from "./theming/app-theme-picker.component";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { provideRouter } from "@angular/router";
+import { AppComponent } from "./app.component";
 
 describe('AppComponent', () => {
   let fixture: ComponentFixture<AppComponent>;
@@ -13,13 +11,11 @@ describe('AppComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
-        RouterTestingModule,
-      ],
-      declarations: [
         AppComponent,
-        AppThemingComponent,
-        AppThemePickerComponent,
       ],
+      providers: [
+        provideRouter([]),
+      ]
     });
 
     fixture = TestBed.createComponent(AppComponent);
