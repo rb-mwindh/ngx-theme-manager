@@ -34,7 +34,8 @@
             "lintFilePatterns": [
               "projects/ngx-theme-manager/**/*.ts",
               "projects/ngx-theme-manager/**/*.html"
-            ]
+            ],
+            "eslintConfig": "projects/ngx-theme-manager/eslint.config.js"
           }
         }
       }
@@ -133,7 +134,8 @@
             "lintFilePatterns": [
               "projects/demo/**/*.ts",
               "projects/demo/**/*.html"
-            ]
+            ],
+            "eslintConfig": "projects/demo/eslint.config.js"
           }
         }
       }
