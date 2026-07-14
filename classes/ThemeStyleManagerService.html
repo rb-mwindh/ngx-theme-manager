@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ThemeStyleManagerService | @rb-mwindh/ngx-theme-manager - v1.0.1</title><meta name="description" content="Documentation for @rb-mwindh/ngx-theme-manager"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
-<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">@rb-mwindh/ngx-theme-manager - v1.0.1</a>
+<!DOCTYPE html><html class="default" lang="en" data-base="../"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>ThemeStyleManagerService | @rb-mwindh/ngx-theme-manager - v21.1.0</title><meta name="description" content="Documentation for @rb-mwindh/ngx-theme-manager"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="../assets/style.css"/><link rel="stylesheet" href="../assets/highlight.css"/><script defer src="../assets/main.js"></script><script async src="../assets/icons.js" id="tsd-icons-script"></script><script async src="../assets/search.js" id="tsd-search-script"></script><script async src="../assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="../index.html" class="title">@rb-mwindh/ngx-theme-manager - v21.1.0</a>
 <div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
 <div id="tsd-search-status" aria-live="polite" aria-atomic="true">
@@ -11,16 +11,13 @@
 <li><a href="" aria-current="page">ThemeStyleManagerService</a></li></ul>
 <h1>Class ThemeStyleManagerService<code class="tsd-tag">Internal</code></h1></div>
 <section class="tsd-panel tsd-comment">
-<div class="tsd-comment tsd-typography"><p>A service that manages the activation and deactivation of themes.</p>
-<p>The service uses the <code>ContentObserver</code> service to observe changes in the <code>&lt;head&gt;</code> element
-and updates the <a href="ThemeRegistryService.html" class="tsd-kind-class">internal theme registry</a>
-when new <code>&lt;style&gt;</code> elements are added to the DOM.</p>
-<p>Themes are identified by the <code>data-theme</code> attribute on the <code>&lt;style&gt;</code> element.</p>
-<p>The service provides a method <code>use</code> to activate a theme with a given ID
-and deactivate all other themes.</p>
+<div class="tsd-comment tsd-typography"><p>Manages the activation and deactivation of theme style elements.</p>
+<p>The service observes the document head and registers style elements
+containing theme annotations.</p>
+<p>Themes are identified by a data-theme attribute on their style elements.</p>
 </div></section><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/61ec2a324295512548402203d997a397090b026c/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L26">internal/theme-style-manager.service.ts:26</a></li></ul></aside>
+<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/2fe65ae0fa3498bc1c379065288915468f86f085/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L22">internal/theme-style-manager.service.ts:22</a></li></ul></aside>
 <section class="tsd-panel-group tsd-index-group">
 <section class="tsd-panel tsd-index-panel">
 <details class="tsd-index-content tsd-accordion" open><summary class="tsd-accordion-summary tsd-index-summary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
@@ -43,14 +40,12 @@ and deactivate all other themes.</p>
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="constructorthemestylemanagerservice"><span class="tsd-signature-keyword">new</span> <span class="tsd-kind-constructor-signature">ThemeStyleManagerService</span><span class="tsd-signature-symbol">()</span><span class="tsd-signature-symbol">:</span> <a href="" class="tsd-signature-type tsd-kind-class">ThemeStyleManagerService</a><a href="#constructorthemestylemanagerservice" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Creates a new instance.</p>
-<p>Subscribes to the <code>ContentObserver</code> to listen for new <code>&lt;style&gt;</code> elements
-added to the document head. If a new <code>&lt;style&gt;</code> element is added, the
-<code>#updateRegistry()</code> method is called.</p>
+<div class="tsd-comment tsd-typography"><p>Creates the service, scans existing styles and observes subsequently
+inserted styles.</p>
 </div>
 <h4 class="tsd-returns-title">Returns <a href="" class="tsd-signature-type tsd-kind-class">ThemeStyleManagerService</a></h4><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/61ec2a324295512548402203d997a397090b026c/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L38">internal/theme-style-manager.service.ts:38</a></li></ul></aside></div></li></ul></section></section></details>
+<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/2fe65ae0fa3498bc1c379065288915468f86f085/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L55">internal/theme-style-manager.service.ts:55</a></li></ul></aside></div></li></ul></section></section></details>
 <details class="tsd-panel-group tsd-member-group tsd-accordion" open><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>
 <h2 class="tsd-anchor-link" id="methods-1">Methods<a href="#methods-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h2></summary>
 <section>
@@ -60,27 +55,22 @@ added to the document head. If a new <code>&lt;style&gt;</code> element is added
 <li class="">
 <div class="tsd-signature tsd-anchor-link" id="use-1"><span class="tsd-kind-call-signature">use</span><span class="tsd-signature-symbol">(</span><span class="tsd-kind-parameter">theme</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">void</span><a href="#use-1" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></div>
 <div class="tsd-description">
-<div class="tsd-comment tsd-typography"><p>Activates the theme with the given ID and deactivates all other themes.</p>
+<div class="tsd-comment tsd-typography"><p>Activates all style elements belonging to the provided theme and
+deactivates all other theme style elements.</p>
 </div>
 <div class="tsd-parameters">
 <h4 class="tsd-parameters-title">Parameters</h4>
 <ul class="tsd-parameter-list">
 <li><span><span class="tsd-kind-parameter">theme</span>: <span class="tsd-signature-type">string</span></span>
-<div class="tsd-comment tsd-typography"><p>The theme to activate</p>
+<div class="tsd-comment tsd-typography"><p>The theme ID to activate.</p>
 </div></li></ul></div>
 <h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 <div class="tsd-comment tsd-typography">
-<div class="tsd-tag-see">
-<h4 class="tsd-anchor-link" id="see">See<a href="#see" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><ul>
-<li>turnOn</li>
-<li>turnOff</li>
-</ul>
-</div>
 <div class="tsd-tag-remarks">
-<h4 class="tsd-anchor-link" id="remarks">Remarks<a href="#remarks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>A theme may consist of 1 or more <code>&lt;style&gt;</code> elements.</p>
+<h4 class="tsd-anchor-link" id="remarks">Remarks<a href="#remarks" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="../assets/icons.svg#icon-anchor"></use></svg></a></h4><p>A theme may consist of one or more style elements.</p>
 </div></div><aside class="tsd-sources">
 <ul>
-<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/61ec2a324295512548402203d997a397090b026c/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L62">internal/theme-style-manager.service.ts:62</a></li></ul></aside></div></li></ul></section></section></details></div>
+<li>Defined in <a href="https://github.com/rb-mwindh/ngx-theme-manager/blob/2fe65ae0fa3498bc1c379065288915468f86f085/projects/ngx-theme-manager/src/lib/internal/theme-style-manager.service.ts#L83">internal/theme-style-manager.service.ts:83</a></li></ul></aside></div></li></ul></section></section></details></div>
 <div class="col-sidebar">
 <div class="page-menu">
 <div class="tsd-navigation settings">
@@ -101,7 +91,7 @@ added to the document head. If a new <code>&lt;style&gt;</code> element is added
 <details open class="tsd-accordion tsd-page-navigation-section"><summary class="tsd-accordion-summary" data-key="section-Methods"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true"><use href="../assets/icons.svg#icon-chevronDown"></use></svg>Methods</summary>
 <div><a href="#use"><svg class="tsd-kind-icon" viewBox="0 0 24 24" aria-label="Method"><use href="../assets/icons.svg#icon-2048"></use></svg><span>use</span></a></div></details></div></details></div>
 <div class="site-menu">
-<nav class="tsd-navigation"><a href="../modules.html">@rb-mwindh/ngx-theme-manager - v1.0.1</a>
+<nav class="tsd-navigation"><a href="../modules.html">@rb-mwindh/ngx-theme-manager - v21.1.0</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
 <li>Loading...</li></ul></nav></div></div></div><footer></footer>
 <div class="overlay"></div></body></html>

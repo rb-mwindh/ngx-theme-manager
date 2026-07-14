@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@rb-mwindh/ngx-theme-manager - v1.0.1</title><meta name="description" content="Documentation for @rb-mwindh/ngx-theme-manager"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
-<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@rb-mwindh/ngx-theme-manager - v1.0.1</a>
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@rb-mwindh/ngx-theme-manager - v21.1.0</title><meta name="description" content="Documentation for @rb-mwindh/ngx-theme-manager"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@rb-mwindh/ngx-theme-manager - v21.1.0</a>
 <div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
 <div id="tsd-search-status" aria-live="polite" aria-atomic="true">
@@ -7,7 +7,7 @@
 <div class="container container-main">
 <div class="col-content">
 <div class="tsd-page-title">
-<h1>@rb-mwindh/ngx-theme-manager - v1.0.1</h1></div>
+<h1>@rb-mwindh/ngx-theme-manager - v21.1.0</h1></div>
 <div class="tsd-panel tsd-typography"><h1 id="ngx-theme-manager" class="tsd-anchor-link">ngx-theme-manager<a href="#ngx-theme-manager" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
 <p><code>@rb-mwindh/ngx-theme-manager</code> provides the basics tools for a robust theme-switcher implementation.</p>
 <p>This package does not provide ready-made visual components,
@@ -27,8 +27,20 @@ but only supports their implementation by providing the necessary services and t
 <hr>
 <h2 id="table-of-contents" class="tsd-anchor-link">Table of Contents <!-- omit in toc --><a href="#table-of-contents" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <ul>
+<li><a href="#compatibility">Compatibility</a></li>
 <li><a href="#how-it-works">How it works</a></li>
-<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#getting-started">Getting Started</a>
+<ul>
+<li><a href="#install-the-package">Install the package</a></li>
+<li><a href="#implement-your-theme-stylesheets">Implement your theme stylesheets</a></li>
+<li><a href="#load-your-theme-stylesheets">Load your theme stylesheets</a></li>
+<li><a href="#implement-your-theme-picker-component">Implement your theme-picker component</a></li>
+<li><a href="#signals-and-observables">Signals and Observables</a></li>
+<li><a href="#initial-theme-selection">Initial theme selection</a></li>
+<li><a href="#configure-synchronization">Configure synchronization</a></li>
+</ul>
+</li>
+<li><a href="#migrating-to-the-signal-based-api">Migrating to the signal-based API</a></li>
 <li><a href="#building-and-testing">Building and Testing</a></li>
 <li><a href="#contribution-guidelines">Contribution Guidelines</a></li>
 <li><a href="#get-help">Get help</a></li>
@@ -42,74 +54,242 @@ but only supports their implementation by providing the necessary services and t
 </ul>
 </li>
 </ul>
+<h2 id="compatibility" class="tsd-anchor-link">Compatibility<a href="#compatibility" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>As of v18, the package major version follows the supported Angular major version.</p>
+<table>
+<thead>
+<tr>
+<th>Package version</th>
+<th>Angular version</th>
+<th>Development runtime</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>21.x</code></td>
+<td>Angular <code>21.x</code></td>
+<td>Node.js <code>^20.19.0</code>, <code>^22.12.0</code> or <code>^24.0.0</code></td>
+</tr>
+<tr>
+<td><code>20.x</code></td>
+<td>Angular <code>20.x</code></td>
+<td>See the corresponding release metadata</td>
+</tr>
+<tr>
+<td><code>19.x</code></td>
+<td>Angular <code>19.x</code></td>
+<td>See the corresponding release metadata</td>
+</tr>
+<tr>
+<td><code>18.x</code></td>
+<td>Angular <code>18.x</code></td>
+<td>See the corresponding release metadata</td>
+</tr>
+</tbody>
+</table>
+<p>The published package declares <code>@angular/common</code> and <code>@angular/core</code> version <code>21</code> or newer as peer dependencies.
+The Node.js versions above apply to this repository's development, build and release tooling.</p>
 <h2 id="how-it-works" class="tsd-anchor-link">How it works<a href="#how-it-works" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
-<p>This implementation is based on the regular way Angular loads styles for components.
-Since theme styles are usually global styles, theme components will normally use <code>ViewEncapsulation.None</code>.</p>
-<p>Since Angular does not provide a direct way to access the <code>&lt;style&gt;</code> element associated with a component,
-the <code>@rb-mwindh/ngx-theme-manager</code> applies a little trick:
-Style elements provided as themes should carry annotations in the form of <a href="#known-annotations">predefined CSS comments</a>.
-These annotations are searched throughout all <code>&lt;style&gt;</code> elements of the application using regular expressions
-and are registered in the theme registry. Also, an additional attribute (<code>data-theme=&quot;&lt;id&gt;&quot;</code>) is added to the
-corresponding style elements, which is used as a query selector.</p>
-<p>Hereafter, the ThemeService leverages the <a href="https://wiki.selfhtml.org/wiki/HTML/Attribute/media"><code>media</code> attribute</a> to enable or disable the styles of a theme.
-For inactive themes, the <code>media=&quot;none&quot;</code> attribute is added to the associated <code>&lt;style&gt;</code> element. For active themes,
-the <code>media</code> attribute of the associated <code>&lt;style&gt;</code> element is simply removed again.</p>
+<p>This implementation is based on the regular way Angular loads component styles.
+Since theme styles are usually global styles, theme components normally use <code>ViewEncapsulation.None</code>.</p>
+<p>Angular does not provide a direct way to access the <code>&lt;style&gt;</code> element associated with a component.
+Therefore, <code>@rb-mwindh/ngx-theme-manager</code> identifies theme styles through predefined annotations in CSS comments.</p>
+<p>The library scans the application's <code>&lt;style&gt;</code> elements, registers annotated themes
+and adds a <code>data-theme=&quot;&lt;id&gt;&quot;</code> attribute to the corresponding elements.
+It then uses the <a href="https://wiki.selfhtml.org/wiki/HTML/Attribute/media"><code>media</code> attribute</a> to activate or deactivate each theme:</p>
+<ul>
+<li>inactive theme styles receive <code>media=&quot;none&quot;</code></li>
+<li>active theme styles have their <code>media</code> attribute removed</li>
+</ul>
+<p>Newly added styles are discovered automatically. This also supports themes loaded after application startup.</p>
 <h2 id="getting-started" class="tsd-anchor-link">Getting Started<a href="#getting-started" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <h3 id="install-the-package" class="tsd-anchor-link">Install the package<a href="#install-the-package" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">ngx-theme-manager</span><span class="hl-1"> </span><span class="hl-3">--save</span>
+<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">install</span><span class="hl-1"> </span><span class="hl-2">@rb-mwindh/ngx-theme-manager</span><span class="hl-1"> </span><span class="hl-3">--save</span>
 </code><button type="button">Copy</button></pre>
 
 <h3 id="implement-your-theme-stylesheets" class="tsd-anchor-link">Implement your theme stylesheets<a href="#implement-your-theme-stylesheets" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<p><code>@rb-mwindh/ngx-theme-manager</code> identifies your stylesheets (css/scss/...) as themes through annotations
-in css comments. To prevent your annotations from being disposed at build time
-by minification, you should use the css comment format <code>/*! ... */</code>.</p>
+<p><code>@rb-mwindh/ngx-theme-manager</code> identifies CSS, SCSS and other compiled stylesheets as themes
+through annotations in CSS comments. Use the <code>/*! ... */</code> comment format so the annotations
+remain available after production minification.</p>
 <blockquote>
 <p>... By default, multi-line comments be stripped from the compiled CSS
 in compressed mode. <strong>If a comment begins with /*!, though, it will
 always be included in the CSS output.</strong> ...</p>
-<p>_from <a href="https://sass-lang.com/documentation/syntax/comments_">https://sass-lang.com/documentation/syntax/comments_</a></p>
+<p><em>See the <a href="https://sass-lang.com/documentation/syntax/comments">Sass documentation on comments</a></em></p>
 </blockquote>
 <p>Known annotations are:</p>
-<ul>
-<li><code>@@id</code> - required, any character until end-of-line</li>
-<li><code>@@displayName</code> - optional, defaults to <code>&lt;@@id&gt;</code>, any character until end-of-line</li>
-<li><code>@@description</code> - optional, any character until end-of-line</li>
-<li><code>@@default</code> - optional, no value, value is <code>true</code> when given, or <code>false</code> when omitted</li>
-</ul>
-<pre><code class="scss">/*!
- * @@id my-theme-id
- * @@displayName My Fantastic Theme
- * @@description This is my fantastic theme with magic colors
- * @@default
- */
-
-// add all your theme styles below this line, e.g.
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-@import "some-other-library/theme.css";
+<table>
+<thead>
+<tr>
+<th>Annotation</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@@id</code></td>
+<td>yes</td>
+<td>Unique theme identifier; reads until the end of the line</td>
+</tr>
+<tr>
+<td><code>@@displayName</code></td>
+<td>no</td>
+<td>User-facing name; defaults to the theme ID</td>
+</tr>
+<tr>
+<td><code>@@description</code></td>
+<td>no</td>
+<td>Optional user-facing description</td>
+</tr>
+<tr>
+<td><code>@@default</code></td>
+<td>no</td>
+<td>Marks the theme as the default theme; does not take a value</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="scss"><span class="hl-4">/*!</span><br/><span class="hl-4"> * @@id my-theme-id</span><br/><span class="hl-4"> * @@displayName My Fantastic Theme</span><br/><span class="hl-4"> * @@description This is my fantastic theme with magic colors</span><br/><span class="hl-4"> * @@default</span><br/><span class="hl-4"> */</span><br/><br/><span class="hl-4">// add all your theme styles below this line, e.g.</span><br/><span class="hl-5">@import</span><span class="hl-1"> </span><span class="hl-2">&#39;@angular/material/prebuilt-themes/indigo-pink.css&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">@import</span><span class="hl-1"> </span><span class="hl-2">&#39;some-other-library/theme.css&#39;</span><span class="hl-1">;</span>
 </code><button type="button">Copy</button></pre>
 
-<h3 id="loading-your-theme-stylesheets" class="tsd-anchor-link">Loading your theme stylesheets<a href="#loading-your-theme-stylesheets" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<p>By using an Angular component to load your stylesheets, you make the
-Angular compiler pick up and compile your stylesheets automatically.</p>
-<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-themes&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">template:</span><span class="hl-1"> </span><span class="hl-2">&#39;&#39;</span><span class="hl-1">, </span><span class="hl-5">// no template needed</span><br/><span class="hl-1">  </span><span class="hl-4">styleUrls:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-2">&#39;assets/themes/theme-a.scss&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">&#39;assets/themes/theme-b.scss&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">&#39;assets/themes/theme-c.scss&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  ], </span><span class="hl-5">// load all theme stylesheets here</span><br/><span class="hl-1">  </span><span class="hl-4">encapsulation:</span><span class="hl-1"> </span><span class="hl-4">ViewEncapsulation</span><span class="hl-1">.</span><span class="hl-4">None</span><span class="hl-1">, </span><span class="hl-5">// make the styles global</span><br/><span class="hl-1">})</span><br/><span class="hl-6">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">AppThemesComponent</span><span class="hl-1"> { </span><span class="hl-5">/* no implementation needed */</span><span class="hl-1"> }</span>
+<h3 id="load-your-theme-stylesheets" class="tsd-anchor-link">Load your theme stylesheets<a href="#load-your-theme-stylesheets" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Use an Angular component to make the compiler pick up and compile the theme stylesheets.
+The component must use <code>ViewEncapsulation.None</code> so the styles are global.</p>
+<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-6">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-themes&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">template:</span><span class="hl-1"> </span><span class="hl-2">&#39;&#39;</span><span class="hl-1">, </span><span class="hl-4">// no template needed</span><br/><span class="hl-1">  </span><span class="hl-6">styleUrls:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-2">&#39;assets/themes/theme-a.scss&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">&#39;assets/themes/theme-b.scss&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-2">&#39;assets/themes/theme-c.scss&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  ], </span><span class="hl-4">// load all theme stylesheets here</span><br/><span class="hl-1">  </span><span class="hl-6">encapsulation:</span><span class="hl-1"> </span><span class="hl-6">ViewEncapsulation</span><span class="hl-1">.</span><span class="hl-6">None</span><span class="hl-1">, </span><span class="hl-4">// make the styles global</span><br/><span class="hl-1">})</span><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">AppThemesComponent</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-4">/* no implementation needed */</span><br/><span class="hl-1">}</span>
 </code><button type="button">Copy</button></pre>
 
-<p>This way, loading the theme stylesheets is easily done by using
-your AppThemesComponent, preferably at the top of your AppComponent.</p>
-<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-root&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">template:</span><span class="hl-1"> </span><span class="hl-2">`</span><br/><span class="hl-2">    &lt;app-themes&gt;&lt;/app-themes&gt;</span><br/><span class="hl-2">    </span><br/><span class="hl-2">    &lt;!-- you app template here --&gt;</span><br/><span class="hl-2">  `</span><span class="hl-1">,</span><br/><span class="hl-1">})</span><br/><span class="hl-6">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">AppComponent</span><span class="hl-1">() { ... }</span>
+<p>Import and render this component near the root of the application so theme styles are available throughout the application.</p>
+<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-6">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-root&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">template:</span><span class="hl-1"> </span><span class="hl-2">`</span><br/><span class="hl-2">    &lt;app-themes&gt;&lt;/app-themes&gt;</span><br/><br/><span class="hl-2">    &lt;!-- your app template here --&gt;</span><br/><span class="hl-2">  `</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">imports:</span><span class="hl-1"> [</span><span class="hl-6">AppThemesComponent</span><span class="hl-1">],</span><br/><span class="hl-1">})</span><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">AppComponent</span><span class="hl-1"> { ... }</span>
 </code><button type="button">Copy</button></pre>
 
 <h3 id="implement-your-theme-picker-component" class="tsd-anchor-link">Implement your theme-picker component<a href="#implement-your-theme-picker-component" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
-<p>The desired look-and-feel of your visual theme-picker component usually is very
-specific for the respective project. Thus, I've decided not to implement any
-visual stuff, but instead provide you with the required data.</p>
-<p>Assuming, you've implemented a theme picker component named <code>app-theme-picker</code>,
-you would provide it with the available themes, the current theme and a
-theme selection callback like this:</p>
-<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-root&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">template:</span><span class="hl-1"> </span><span class="hl-2">`</span><br/><span class="hl-2">    &lt;app-theme-picker</span><br/><span class="hl-2">      [themes]=&quot;themeService.themes$ | async&quot;</span><br/><span class="hl-2">      [currentTheme]=&quot;themeService.currentTheme$ | async&quot;</span><br/><span class="hl-2">      (select)=&quot;themeService.selectTheme($event)&quot;</span><br/><span class="hl-2">    &gt;&lt;/app-theme-picker&gt;</span><br/><span class="hl-2">    </span><br/><span class="hl-2">    &lt;!-- you app template here --&gt;</span><br/><span class="hl-2">  `</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">styleUrls:</span><span class="hl-1"> [</span><span class="hl-2">&#39;./app.component.scss&#39;</span><span class="hl-1">],</span><br/><span class="hl-1">})</span><br/><span class="hl-6">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">AppComponent</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">constructor</span><span class="hl-1">(</span><span class="hl-3">public</span><span class="hl-1"> </span><span class="hl-3">readonly</span><span class="hl-1"> </span><span class="hl-4">themeService</span><span class="hl-1">: </span><span class="hl-7">ThemeService</span><span class="hl-1">) {</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+<p>The package intentionally does not prescribe the appearance of a theme picker.
+It exposes the registered themes, the current theme and a method for changing the selection.</p>
+<p>Assuming an application provides an <code>app-theme-picker</code> component, it can be connected to <code>ThemeService</code> as follows:</p>
+<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-6">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-root&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">imports:</span><span class="hl-1"> [</span><span class="hl-6">AppThemePickerComponent</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-6">template:</span><span class="hl-1"> </span><span class="hl-2">`</span><br/><span class="hl-2">    &lt;app-theme-picker</span><br/><span class="hl-2">      [themes]=&quot;themeService.themes()&quot;</span><br/><span class="hl-2">      [currentTheme]=&quot;themeService.currentTheme()&quot;</span><br/><span class="hl-2">      (selectionChanged)=&quot;themeService.selectTheme($event)&quot;</span><br/><span class="hl-2">    /&gt;</span><br/><span class="hl-2">  `</span><span class="hl-1">,</span><br/><span class="hl-1">})</span><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">AppComponent</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">readonly</span><span class="hl-1"> </span><span class="hl-6">themeService</span><span class="hl-1"> = </span><span class="hl-0">inject</span><span class="hl-1">(</span><span class="hl-6">ThemeService</span><span class="hl-1">);</span><br/><span class="hl-1">}</span>
 </code><button type="button">Copy</button></pre>
 
+<p><code>selectTheme()</code> accepts a registered theme ID. Passing <code>null</code> clears the current in-memory selection.
+Unknown theme IDs are ignored once themes have been registered.</p>
+<h3 id="signals-and-observables" class="tsd-anchor-link">Signals and Observables<a href="#signals-and-observables" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>Signals are the preferred API for current Angular applications.</p>
+<table>
+<thead>
+<tr>
+<th>State</th>
+<th>Signal API</th>
+<th>Observable compatibility API</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Registered themes</td>
+<td><code>themeService.themes()</code></td>
+<td><code>themeService.themes$</code></td>
+</tr>
+<tr>
+<td>Current theme ID</td>
+<td><code>themeService.currentTheme()</code></td>
+<td><code>themeService.currentTheme$</code></td>
+</tr>
+</tbody>
+</table>
+<p>The Observable APIs remain available for applications that use RxJS-based state handling or the <code>async</code> pipe.</p>
+<pre><code class="typescript"><span class="hl-1">@</span><span class="hl-0">Component</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-6">selector:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-current-theme&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">imports:</span><span class="hl-1"> [</span><span class="hl-6">AsyncPipe</span><span class="hl-1">],</span><br/><span class="hl-1">  </span><span class="hl-6">template:</span><span class="hl-1"> </span><span class="hl-2">`Current theme: {{ themeService.currentTheme$ | async }}`</span><span class="hl-1">,</span><br/><span class="hl-1">})</span><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-3">class</span><span class="hl-1"> </span><span class="hl-7">CurrentThemeComponent</span><span class="hl-1"> {</span><br/><span class="hl-1">  </span><span class="hl-3">readonly</span><span class="hl-1"> </span><span class="hl-6">themeService</span><span class="hl-1"> = </span><span class="hl-0">inject</span><span class="hl-1">(</span><span class="hl-6">ThemeService</span><span class="hl-1">);</span><br/><span class="hl-1">}</span>
+</code><button type="button">Copy</button></pre>
+
+<h3 id="initial-theme-selection" class="tsd-anchor-link">Initial theme selection<a href="#initial-theme-selection" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>After the first themes have been discovered, the initial selection is resolved in this order:</p>
+<table>
+<thead>
+<tr>
+<th>Priority</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Valid theme ID from the configured URL query parameter</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Valid theme ID from the configured browser storage entry</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Theme annotated with <code>@@default</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>First registered theme</td>
+</tr>
+</tbody>
+</table>
+<p>Unknown route or storage values are ignored. If no themes are registered, the current theme remains <code>null</code>.</p>
+<h3 id="configure-synchronization" class="tsd-anchor-link">Configure synchronization<a href="#configure-synchronization" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h3>
+<p>By default, the selected theme is synchronized with:</p>
+<table>
+<thead>
+<tr>
+<th>Integration</th>
+<th>Default value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Browser storage key</td>
+<td><code>ngx-theme-manager/current-theme</code></td>
+</tr>
+<tr>
+<td>URL query parameter</td>
+<td><code>theme</code></td>
+</tr>
+</tbody>
+</table>
+<p>Both integrations are optional. Angular Router itself is also optional;
+applications without Router can use the package without additional configuration.</p>
+<p>Use <code>provideThemeManager()</code> to customize the storage key and query parameter:</p>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">ApplicationConfig</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@angular/core&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">provideThemeManager</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@rb-mwindh/ngx-theme-manager&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">appConfig</span><span class="hl-1">: </span><span class="hl-7">ApplicationConfig</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-6">providers:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-0">provideThemeManager</span><span class="hl-1">({</span><br/><span class="hl-1">      </span><span class="hl-6">storageKey:</span><span class="hl-1"> </span><span class="hl-2">&#39;my-application/current-theme&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-6">queryParam:</span><span class="hl-1"> </span><span class="hl-2">&#39;app-theme&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">    }),</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">};</span>
+</code><button type="button">Copy</button></pre>
+
+<p>To disable either integration, provide <code>null</code> or an empty string:</p>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">ApplicationConfig</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@angular/core&#39;</span><span class="hl-1">;</span><br/><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">provideThemeManager</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@rb-mwindh/ngx-theme-manager&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-5">export</span><span class="hl-1"> </span><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">appConfig</span><span class="hl-1">: </span><span class="hl-7">ApplicationConfig</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-6">providers:</span><span class="hl-1"> [</span><br/><span class="hl-1">    </span><span class="hl-0">provideThemeManager</span><span class="hl-1">({</span><br/><span class="hl-1">      </span><span class="hl-6">storageKey:</span><span class="hl-1"> </span><span class="hl-2">&#39;&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">      </span><span class="hl-6">queryParam:</span><span class="hl-1"> </span><span class="hl-3">null</span><span class="hl-1">,</span><br/><span class="hl-1">    }),</span><br/><span class="hl-1">  ],</span><br/><span class="hl-1">};</span>
+</code><button type="button">Copy</button></pre>
+
+<p>Only specify the options you want to customize. All omitted options retain their default values.</p>
+<h2 id="migrating-to-the-signal-based-api" class="tsd-anchor-link">Migrating to the signal-based API<a href="#migrating-to-the-signal-based-api" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>The signal-based state API can replace template subscriptions
+without requiring a breaking migration. The Observable APIs remain supported.</p>
+<table>
+<thead>
+<tr>
+<th>Previous Observable usage</th>
+<th>Preferred signal usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>themeService.themes$ | async</code></td>
+<td><code>themeService.themes()</code></td>
+</tr>
+<tr>
+<td><code>themeService.currentTheme$ | async</code></td>
+<td><code>themeService.currentTheme()</code></td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Theme</code> interface now exposes immutable metadata.
+Construct theme metadata as readonly data and replace objects
+instead of mutating individual properties.</p>
+<pre><code class="typescript"><span class="hl-5">import</span><span class="hl-1"> { </span><span class="hl-6">Theme</span><span class="hl-1"> } </span><span class="hl-5">from</span><span class="hl-1"> </span><span class="hl-2">&#39;@rb-mwindh/ngx-theme-manager&#39;</span><span class="hl-1">;</span><br/><br/><span class="hl-3">const</span><span class="hl-1"> </span><span class="hl-8">darkTheme</span><span class="hl-1">: </span><span class="hl-7">Theme</span><span class="hl-1"> = {</span><br/><span class="hl-1">  </span><span class="hl-6">id:</span><span class="hl-1"> </span><span class="hl-2">&#39;dark&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">displayName:</span><span class="hl-1"> </span><span class="hl-2">&#39;Dark&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">description:</span><span class="hl-1"> </span><span class="hl-2">&#39;Dark application theme&#39;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-6">defaultTheme:</span><span class="hl-1"> </span><span class="hl-3">true</span><span class="hl-1">,</span><br/><span class="hl-1">};</span>
+</code><button type="button">Copy</button></pre>
+
+<p>The demo application uses standalone APIs and signals,
+but the library does not require a specific application bootstrap style.</p>
 <h2 id="building-and-testing" class="tsd-anchor-link">Building and Testing<a href="#building-and-testing" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
+<p>This repository requires one of the supported Node.js versions
+listed in the <a href="#compatibility">compatibility table</a>.</p>
 <ol>
 <li>Clone the repository</li>
 </ol>
@@ -117,13 +297,15 @@ theme selection callback like this:</p>
 </code><button type="button">Copy</button></pre>
 
 <ol start="2">
-<li>Initialize the workspace</li>
+<li>Install the dependencies</li>
 </ol>
-<p>The <code>init</code> script installs all dependencies and sets up the pre-commit hooks.</p>
-<p><strong>This is mandatory to guarantee the code style and quality!</strong></p>
-<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">init</span>
+<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">ci</span>
 </code><button type="button">Copy</button></pre>
 
+<p><code>npm ci</code> installs the exact dependency versions recorded in <code>package-lock.json</code>.
+This is the recommended way to install dependencies for development and testing.</p>
+<p>During installation, npm automatically runs the <code>prepare</code> script, which configures
+the repository's Husky Git hooks. No separate initialization command is required.</p>
 <ol start="3">
 <li>Run the demo app</li>
 </ol>
@@ -137,9 +319,9 @@ theme selection callback like this:</p>
 </code><button type="button">Copy</button></pre>
 
 <ol start="5">
-<li>Run the unit tests</li>
+<li>Run the local validation pipeline:</li>
 </ol>
-<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">test</span>
+<pre><code class="shell"><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">typecheck</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">lint</span><br/><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-2">run</span><span class="hl-1"> </span><span class="hl-2">test</span>
 </code><button type="button">Copy</button></pre>
 
 <h2 id="contribution-guidelines" class="tsd-anchor-link">Contribution Guidelines<a href="#contribution-guidelines" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
@@ -278,14 +460,19 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 <div class="tsd-accordion-details"><a href="#ngx-theme-manager"><span>ngx-<wbr/>theme-<wbr/>manager</span></a>
 <ul>
 <li><a href="#table-of-contents"><span>Table of <wbr/>Contents </span></a></li>
+<li><a href="#compatibility"><span>Compatibility</span></a></li>
 <li><a href="#how-it-works"><span>How it works</span></a></li>
 <li><a href="#getting-started"><span>Getting <wbr/>Started</span></a></li>
 <li>
 <ul>
 <li><a href="#install-the-package"><span>Install the package</span></a></li>
 <li><a href="#implement-your-theme-stylesheets"><span>Implement your theme stylesheets</span></a></li>
-<li><a href="#loading-your-theme-stylesheets"><span>Loading your theme stylesheets</span></a></li>
-<li><a href="#implement-your-theme-picker-component"><span>Implement your theme-<wbr/>picker component</span></a></li></ul></li>
+<li><a href="#load-your-theme-stylesheets"><span>Load your theme stylesheets</span></a></li>
+<li><a href="#implement-your-theme-picker-component"><span>Implement your theme-<wbr/>picker component</span></a></li>
+<li><a href="#signals-and-observables"><span>Signals and <wbr/>Observables</span></a></li>
+<li><a href="#initial-theme-selection"><span>Initial theme selection</span></a></li>
+<li><a href="#configure-synchronization"><span>Configure synchronization</span></a></li></ul></li>
+<li><a href="#migrating-to-the-signal-based-api"><span>Migrating to the signal-<wbr/>based <wbr/>API</span></a></li>
 <li><a href="#building-and-testing"><span>Building and <wbr/>Testing</span></a></li>
 <li><a href="#contribution-guidelines"><span>Contribution <wbr/>Guidelines</span></a></li>
 <li><a href="#get-help"><span>Get help</span></a></li>
@@ -297,7 +484,7 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 <li><a href="#3rd-party-licenses"><span>3rd <wbr/>Party <wbr/>Licenses</span></a></li>
 <li><a href="#license"><span>License</span></a></li></ul></li></ul></div></details></div>
 <div class="site-menu">
-<nav class="tsd-navigation"><a href="modules.html">@rb-mwindh/ngx-theme-manager - v1.0.1</a>
+<nav class="tsd-navigation"><a href="modules.html">@rb-mwindh/ngx-theme-manager - v21.1.0</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
 <li>Loading...</li></ul></nav></div></div></div><footer></footer>
 <div class="overlay"></div></body></html>
