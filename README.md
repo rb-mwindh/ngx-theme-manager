@@ -56,7 +56,7 @@ the `media` attribute of the associated `<style>` element is simply removed agai
 ### Install the package
 
 ```shell
-npm install ngx-theme-manager --save
+npm install @rb-mwindh/ngx-theme-manager --save
 ```
 
 ### Implement your theme stylesheets
@@ -139,8 +139,8 @@ theme selection callback like this:
   selector: 'app-root',
   template: `
     <app-theme-picker
-      [themes]="themeService.themes$ | async"
-      [currentTheme]="themeService.currentTheme$ | async"
+      [themes]="themeService.themes()"
+      [currentTheme]="themeService.currentTheme()"
       (select)="themeService.selectTheme($event)"
     ></app-theme-picker>
     
@@ -149,8 +149,7 @@ theme selection callback like this:
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public readonly themeService: ThemeService) {
-  }
+  readonly themeService = inject(ThemeService);
 }
 ```
 
@@ -251,7 +250,6 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 
 ![License](https://badgen.net/github/license/rb-mwindh/ngx-theme-manager)
 
-
 [wiki::faq]: https://github.com/rb-mwindh/ngx-theme-manager/wiki/FAQ
 
 [wiki::troubleshooting]: https://github.com/rb-mwindh/ngx-theme-manager/wiki/Troubleshooting
@@ -259,8 +257,6 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 [issue::question]: https://github.com/rb-mwindh/ngx-theme-manager/issues/new?template=question.md&title=❓%20
 
 [license]: https://badgen.net/github/license/rb-mwindh/ngx-theme-manager
-
-
 
 [selfhtml:media]: https://wiki.selfhtml.org/wiki/HTML/Attribute/media
 

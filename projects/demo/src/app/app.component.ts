@@ -50,7 +50,7 @@ export class AppComponent {
     this.announcer.announce(`${theme || 'no'} theme selected.`, 3000);
   }
 
-  readonly install = `npm install ngx-theme-manager --save`;
+  readonly install = `npm install @rb-mwindh/ngx-theme-manager --save`;
 
   readonly newTheme = `
 /*!
