@@ -143,7 +143,6 @@ export class ThemeStyleManagerService {
  * @param element The style element to update.
  * @param id The discovered theme ID.
  * @returns Whether the style element belongs to a theme.
- * @group Functions
  * @internal
  */
 export function applyThemeIdentifier(
@@ -163,7 +162,6 @@ export function applyThemeIdentifier(
  * Deactivates a style element.
  *
  * @param element The style element to deactivate.
- * @group Functions
  * @internal
  */
 export function turnOff(element: HTMLStyleElement): void {
@@ -174,7 +172,6 @@ export function turnOff(element: HTMLStyleElement): void {
  * Activates a style element.
  *
  * @param element The style element to activate.
- * @group Functions
  * @internal
  */
 export function turnOn(element: HTMLStyleElement): void {
@@ -195,7 +192,6 @@ export function turnOn(element: HTMLStyleElement): void {
  *
  * @param source CSS content containing the annotations.
  * @returns The extracted theme metadata or null.
- * @group Functions
  * @internal
  */
 export function extractThemeAnnotations(
@@ -234,7 +230,6 @@ export function extractThemeAnnotations(
  *
  * @param match Regular expression result.
  * @returns The trimmed captured value or undefined.
- * @group Functions
  * @internal
  */
 export function unwrap(

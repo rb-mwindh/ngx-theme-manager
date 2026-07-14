@@ -4,9 +4,6 @@ import { Subject } from "rxjs";
 
 /**
  * Represents a change to the configured browser storage.
- *
- * @interface
- * @group Public API
  */
 export interface StorageChangeEvent {
   /**
@@ -30,8 +27,6 @@ export interface StorageChangeEvent {
 
 /**
  * Document extension used by older browser implementations.
- *
- * @internal
  */
 interface DocumentWithParentWindow extends Document {
   parentWindow?: Window;
@@ -39,8 +34,6 @@ interface DocumentWithParentWindow extends Document {
 
 /**
  * No-operation storage implementation used when localStorage is unavailable.
- *
- * @internal
  */
 const NOOP_STORAGE: Storage = {
   get length(): number {

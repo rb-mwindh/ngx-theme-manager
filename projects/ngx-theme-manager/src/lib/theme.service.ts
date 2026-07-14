@@ -11,8 +11,6 @@ const PREFIX = 'ngx-theme-manager';
  * Storage key used to persist the currently selected theme.
  *
  * Provide null or an empty string to disable storage synchronization.
- *
- * @group InjectionToken
  */
 export const STORAGE_KEY = new InjectionToken<string | null>(
   `${PREFIX}/STORAGE_KEY`,
@@ -26,8 +24,6 @@ export const STORAGE_KEY = new InjectionToken<string | null>(
  *
  * Provide null or an empty string to disable query-parameter
  * synchronization.
- *
- * @group InjectionToken
  */
 export const QUERY_PARAM = new InjectionToken<string | null>(
   `${PREFIX}/QUERY_PARAM`,
@@ -42,7 +38,6 @@ export const QUERY_PARAM = new InjectionToken<string | null>(
  * The service exposes signal-based APIs for modern Angular applications and
  * observable APIs for observable-based and legacy applications.
  *
- * @group Services
  * @group Public API
  */
 @Injectable({ providedIn: 'root' })

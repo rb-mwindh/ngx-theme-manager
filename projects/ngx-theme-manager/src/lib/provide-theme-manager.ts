@@ -1,5 +1,5 @@
 import { EnvironmentProviders, makeEnvironmentProviders } from "@angular/core";
-import { QUERY_PARAM, STORAGE_KEY } from "@rb-mwindh/ngx-theme-manager";
+import { QUERY_PARAM, STORAGE_KEY } from "./theme.service";
 
 export interface ThemeManagerConfig {
   storageKey?: string | null;
@@ -21,6 +21,8 @@ export interface ThemeManagerConfig {
  * @example
  * // In your app configuration:
  * provideThemeManager({ storageKey: 'my-theme', queryParam: 'theme' })
+ *
+ * @group Public API
  */
 export function provideThemeManager(config?: ThemeManagerConfig): EnvironmentProviders {
   return makeEnvironmentProviders([
