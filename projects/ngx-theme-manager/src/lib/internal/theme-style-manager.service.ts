@@ -1,9 +1,9 @@
-import { ContentObserver } from "@angular/cdk/observers";
-import { DOCUMENT } from "@angular/common";
-import { DestroyRef, inject, Injectable } from "@angular/core";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { Theme } from "../theme";
-import { ThemeRegistryService } from "./theme-registry.service";
+import { ContentObserver } from '@angular/cdk/observers';
+import { DOCUMENT } from '@angular/common';
+import { DestroyRef, inject, Injectable } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { Theme } from '../theme';
+import { ThemeRegistryService } from './theme-registry.service';
 
 /**
  * Manages the activation and deactivation of theme style elements.
@@ -58,7 +58,17 @@ export class ThemeStyleManagerService {
     this.#observer
       .observe(this.#document.head)
       .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe(() => {
+      .subscribe((mutations) => {
+        const hasNewStyle = mutations.some((mutation) =>
+          Array.from(mutation.addedNodes).some(
+            (node) => node.nodeName === 'STYLE',
+          ),
+        );
+
+        if (!hasNewStyle) {
+          return;
+        }
+
         this.#updateRegistry();
       });
   }
@@ -208,12 +218,9 @@ export function extractThemeAnnotations(
   }
 
   const displayName =
-    unwrap(/@@displayName\s+([^\r\n]+)$/m.exec(source)) ??
-    id;
+    unwrap(/@@displayName\s+([^\r\n]+)$/m.exec(source)) ?? id;
 
-  const description = unwrap(
-    /@@description\s+([^\r\n]+)$/m.exec(source),
-  );
+  const description = unwrap(/@@description\s+([^\r\n]+)$/m.exec(source));
 
   const defaultTheme = /@@default(?:Theme)?(?:\s|$)/m.test(source);
 
@@ -232,9 +239,7 @@ export function extractThemeAnnotations(
  * @returns The trimmed captured value or undefined.
  * @internal
  */
-export function unwrap(
-  match: RegExpExecArray | null,
-): string | undefined {
+export function unwrap(match: RegExpExecArray | null): string | undefined {
   const value = match?.[1]?.trim();
   return value || undefined;
 }

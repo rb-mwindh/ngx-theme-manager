@@ -139,7 +139,9 @@ describe('ThemeStyleManagerService', () => {
        */
     `);
 
-    observerChanges$.next([]);
+    observerChanges$.next([
+      { addedNodes: [style] } as unknown as MutationRecord,
+    ]);
 
     expect(style.getAttribute('data-theme')).toBe('light');
     expect(style.media).toBe('none');
