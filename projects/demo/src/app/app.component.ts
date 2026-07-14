@@ -1,12 +1,6 @@
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  effect,
-  inject,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ThemeService } from '@rb-mwindh/ngx-theme-manager';
 import { AppThemePickerComponent } from './theming/app-theme-picker.component';
@@ -16,7 +10,6 @@ import { AppThemingComponent } from './theming/app-theming.component';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     RouterOutlet,

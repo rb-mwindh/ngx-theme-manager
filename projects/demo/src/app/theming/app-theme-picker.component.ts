@@ -1,9 +1,4 @@
-import {
-  Component,
-  input,
-  output,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Theme } from '@rb-mwindh/ngx-theme-manager';
 
 @Component({
@@ -19,7 +14,6 @@ import { Theme } from '@rb-mwindh/ngx-theme-manager';
       </button>
     }
   `,
-  changeDetection: ChangeDetectionStrategy.Eager,
   styles: [
     `
       :host {
