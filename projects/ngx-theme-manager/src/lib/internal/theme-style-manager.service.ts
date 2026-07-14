@@ -1,21 +1,17 @@
 import { ContentObserver } from "@angular/cdk/observers";
 import { DOCUMENT } from "@angular/common";
-import { inject, Injectable } from "@angular/core";
-import { filter, map, timer } from "rxjs";
+import { DestroyRef, inject, Injectable } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { Theme } from "../theme";
 import { ThemeRegistryService } from "./theme-registry.service";
 
 /**
- * A service that manages the activation and deactivation of themes.
+ * Manages the activation and deactivation of theme style elements.
  *
- * The service uses the `ContentObserver` service to observe changes in the `<head>` element
- * and updates the {@link ThemeRegistryService internal theme registry}
- * when new `<style>` elements are added to the DOM.
+ * The service observes the document head and registers style elements
+ * containing theme annotations.
  *
- * Themes are identified by the `data-theme` attribute on the `<style>` element.
- *
- * The service provides a method `use` to activate a theme with a given ID
- * and deactivate all other themes.
+ * Themes are identified by a data-theme attribute on their style elements.
  *
  * @internal
  * @group Services
@@ -24,179 +20,226 @@ import { ThemeRegistryService } from "./theme-registry.service";
   providedIn: 'root',
 })
 export class ThemeStyleManagerService {
-  private readonly observer = inject( ContentObserver);
-  private readonly themeRegistry = inject( ThemeRegistryService);
-  private readonly document = inject(DOCUMENT);
+  /**
+   * Observes changes to the document head.
+   *
+   * @private
+   */
+  readonly #observer = inject(ContentObserver);
 
   /**
-   * Creates a new instance.
+   * Registry receiving discovered theme metadata.
    *
-   * Subscribes to the `ContentObserver` to listen for new `<style>` elements
-   * added to the document head. If a new `<style>` element is added, the
-   * `#updateRegistry()` method is called.
+   * @private
+   */
+  readonly #themeRegistry = inject(ThemeRegistryService);
+
+  /**
+   * Injected document.
+   *
+   * @private
+   */
+  readonly #document = inject(DOCUMENT);
+
+  /**
+   * Provides the lifetime used by observable subscriptions
+   *
+   * @private
+   */
+  readonly #destroyRef = inject(DestroyRef);
+
+  /**
+   * Creates the service, scans existing styles and observes subsequently
+   * inserted styles.
    */
   constructor() {
-    this.observer
-      .observe(document.head)
-      .pipe(
-        map((mutations) =>
-          mutations.some((mutation) =>
-            Array.from(mutation.addedNodes).some(
-              (node) => node.nodeName === 'STYLE',
-            ),
-          ),
-        ),
-        filter((newStyles) => !!newStyles),
-      )
-      .subscribe(() => this.#updateRegistry());
+    this.#updateRegistry();
+
+    this.#observer
+      .observe(this.#document.head)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe(() => {
+        this.#updateRegistry();
+      });
   }
 
   /**
-   * Activates the theme with the given ID and deactivates all other themes.
+   * Activates all style elements belonging to the provided theme and
+   * deactivates all other theme style elements.
    *
-   * @param {string} theme - The theme to activate
-   * @see turnOn
-   * @see turnOff
-   * @remarks A theme may consist of 1 or more `<style>` elements.
+   * @param theme The theme ID to activate.
+   * @remarks A theme may consist of one or more style elements.
    */
   use(theme: string): void {
-    // INFO: [author: NWD8FE, since: 2023/01/26]
-    //  running asynchronously, to give #updateRegistries
-    //  the chance to run first.
-    timer(0).subscribe(() => {
-      const styles = this.#getAllThemeStyles();
-      styles.forEach((el) => {
-        const id = el.getAttribute('data-theme');
-        (theme === id ? turnOn : turnOff)(el);
-      });
+    /*
+     * Process any previously undiscovered styles before selecting the theme.
+     * This avoids relying on asynchronous timer scheduling.
+     */
+    this.#updateRegistry();
+
+    this.#getAllThemeStyles().forEach((element) => {
+      const id = element.getAttribute('data-theme');
+
+      if (id === theme) {
+        turnOn(element);
+      } else {
+        turnOff(element);
+      }
     });
   }
 
   /**
-   * Get all theme `<style>` elements in the document head.
+   * Returns all registered theme style elements from the document head.
    *
    * @private
    */
   #getAllThemeStyles(): HTMLStyleElement[] {
     return Array.from(
-      this.document.head.querySelectorAll('style[data-theme]'),
+      this.#document.head.querySelectorAll<HTMLStyleElement>(
+        'style[data-theme]',
+      ),
     );
   }
 
   /**
-   * Updates the internal theme registry.
+   * Detects and registers all unprocessed style elements.
    *
-   * Identifies all `<style>` elements without the `data-no-theme` and `data-theme` attributes.
-   * Extracts the theme annotations from the elements' text content and applies the
-   * `data-theme` or `data-no-theme` attribute depending on the discovered theme id.
+   * Style elements containing a valid theme ID receive a data-theme
+   * attribute. All other processed style elements receive a data-no-theme
+   * attribute so they are not parsed repeatedly.
    *
    * @private
-   * @see extractThemeAnnotations
-   * @see applyThemeIdentifier
    */
-  #updateRegistry() {
-    Array.from(
-      this.document.head.querySelectorAll<HTMLStyleElement>(
+  #updateRegistry(): void {
+    const discoveredThemes = Array.from(
+      this.#document.head.querySelectorAll<HTMLStyleElement>(
         'style:not([data-no-theme]):not([data-theme])',
       ),
     )
-      .map((el) => ({ el, meta: extractThemeAnnotations(el.textContent) }))
-      .forEach(({ el, meta }) => {
-        if (applyThemeIdentifier(el, meta?.id)) {
-          turnOff(el);
-          this.themeRegistry.register(meta);
+      .map((element) => ({
+        element,
+        theme: extractThemeAnnotations(element.textContent),
+      }))
+      .flatMap(({ element, theme }) => {
+        if (!applyThemeIdentifier(element, theme?.id)) {
+          return [];
         }
+
+        turnOff(element);
+
+        return theme ? [theme] : [];
       });
+
+    this.#themeRegistry.registerAll(discoveredThemes);
   }
 }
 
 /**
- * Applies a theme identifier to a `<style>` element.
+ * Applies a theme identifier to a style element.
  *
- * If the provided `id` is truthy, the element receives the attribute
- * `data-theme` set to the given `id`. Otherwise, the element
- * will get the attribute `data-no-theme` without any value.
+ * If the provided ID is present, the element receives a data-theme
+ * attribute. Otherwise, it receives a data-no-theme attribute.
  *
- * @param {HTMLStyleElement} el - The `<style>` element to apply the identifier to
- * @param {string | undefined} id - The theme identifier
- * @returns {boolean} true, if the style element belongs to a theme
+ * @param element The style element to update.
+ * @param id The discovered theme ID.
+ * @returns Whether the style element belongs to a theme.
  * @group Functions
  * @internal
  */
 export function applyThemeIdentifier(
-  el: HTMLStyleElement,
+  element: HTMLStyleElement,
   id?: string,
 ): boolean {
-  if (!!id) {
-    el.setAttribute('data-theme', id);
+  if (id) {
+    element.setAttribute('data-theme', id);
     return true;
-  } else {
-    el.toggleAttribute('data-no-theme', true);
-    return false;
   }
+
+  element.toggleAttribute('data-no-theme', true);
+  return false;
 }
 
 /**
- * Turn off a style element by setting its `media` attribute to `none`.
+ * Deactivates a style element.
  *
- * @param {HTMLStyleElement} el - The style element to turn off.
+ * @param element The style element to deactivate.
  * @group Functions
  * @internal
  */
-export function turnOff(el: HTMLStyleElement): void {
-  el.media = 'none';
+export function turnOff(element: HTMLStyleElement): void {
+  element.media = 'none';
 }
 
 /**
- * Turn on a style element by removing its `media` attribute.
+ * Activates a style element.
  *
- * @param {HTMLStyleElement} el - The style element to turn on.
+ * @param element The style element to activate.
  * @group Functions
  * @internal
  */
-export function turnOn(el: HTMLStyleElement): void {
-  el.removeAttribute('media');
+export function turnOn(element: HTMLStyleElement): void {
+  element.removeAttribute('media');
 }
 
 /**
- * Extracts theme annotations from a given string.
+ * Extracts theme annotations from CSS content.
  *
- * **Format:** `@@<annotationName> value` (until end of line)
+ * Format: @@&lt;annotationName&gt; value
  *
- * Possible annotation names:
- * - `id`: a unique identifier for the theme
- * - `displayName`: a human-readable name for the theme
- * - `description`: a short description of the theme
- * - `defaultTheme`: a boolean flag indicating if this is the default theme
+ * Supported annotations:
  *
- * @param {string} s The string to extract annotations from.
- * @returns {Theme | null} An object containing the extracted annotations, or null if no annotations were found.
+ * - id
+ * - displayName
+ * - description
+ * - default / defaultTheme
+ *
+ * @param source CSS content containing the annotations.
+ * @returns The extracted theme metadata or null.
  * @group Functions
  * @internal
  */
 export function extractThemeAnnotations(
-  s: undefined | null | string,
+  source: string | undefined | null,
 ): Theme | null {
-  if (!s) {
+  if (!source) {
     return null;
   }
-  const id = unwrap(/@@id\s+([^\r\n]+)$/m.exec(s));
+
+  const id = unwrap(/@@id\s+([^\r\n]+)$/m.exec(source));
+
   if (!id) {
     return null;
   }
-  const displayName = unwrap(/@@displayName\s+([^\r\n]+)$/m.exec(s)) || id;
-  const description = unwrap(/@@description\s+([^\r\n]+)$/m.exec(s));
-  const defaultTheme = /@@default/m.test(s);
-  return { id, displayName, description, defaultTheme };
+
+  const displayName =
+    unwrap(/@@displayName\s+([^\r\n]+)$/m.exec(source)) ??
+    id;
+
+  const description = unwrap(
+    /@@description\s+([^\r\n]+)$/m.exec(source),
+  );
+
+  const defaultTheme = /@@default(?:Theme)?(?:\s|$)/m.test(source);
+
+  return {
+    id,
+    displayName,
+    description,
+    defaultTheme,
+  };
 }
 
 /**
- * Unwrap a match from a regular expression, returning the first captured group as a string.
+ * Returns the first captured group of a regular expression match.
  *
- * @param {RegExpExecArray} match - The match to unwrap.
+ * @param match Regular expression result.
+ * @returns The trimmed captured value or undefined.
  * @group Functions
  * @internal
  */
-export function unwrap(match: RegExpExecArray | null): string | undefined {
-  return (match && match[1] && match[1].trim()) || undefined;
+export function unwrap(
+  match: RegExpExecArray | null,
+): string | undefined {
+  const value = match?.[1]?.trim();
+  return value || undefined;
 }
