@@ -28,6 +28,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
+            "tsConfig": "tsconfig.spec.json",
             "zoneless": false
           }
         },
@@ -131,6 +132,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
+            "tsConfig": "tsconfig.spec.json",
             "zoneless": false
           }
         },
