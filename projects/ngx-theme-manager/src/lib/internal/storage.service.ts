@@ -1,164 +1,275 @@
 import { DOCUMENT } from "@angular/common";
-import { inject, Injectable, OnDestroy } from "@angular/core";
-import { share, Subject, takeUntil } from "rxjs";
+import { DestroyRef, inject, Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
 /**
- * StorageChangeEvent represents the change event of the storage.
+ * Represents a change to the configured browser storage.
  *
  * @interface
  * @group Public API
  */
 export interface StorageChangeEvent {
   /**
-   * The key of the item that was changed.
+   * The key of the item that changed.
+   *
+   * The value is null when the complete storage was cleared by a native
+   * storage event.
    */
-  key: string;
+  readonly key: string | null;
 
   /**
-   * The value of the item before the change.
+   * The value before the change.
    */
-  oldValue: string | null;
+  readonly oldValue: string | null;
 
   /**
-   * The value of the item after the change.
+   * The value after the change.
    */
-  newValue: string | null;
+  readonly newValue: string | null;
 }
 
 /**
- * RbStorageService is a service that provides an observable stream of storage change events.
+ * Document extension used by older browser implementations.
+ *
+ * @internal
+ */
+interface DocumentWithParentWindow extends Document {
+  parentWindow?: Window;
+}
+
+/**
+ * No-operation storage implementation used when localStorage is unavailable.
+ *
+ * @internal
+ */
+const NOOP_STORAGE: Storage = {
+  get length(): number {
+    return 0;
+  },
+
+  clear(): void {
+    // intentionally empty
+  },
+
+  getItem(): null {
+    return null;
+  },
+
+  key(): null {
+    return null;
+  },
+
+  removeItem(): void {
+    // intentionally empty
+  },
+
+  setItem(): void {
+    // intentionally empty
+  },
+};
+
+/**
+ * Provides access to localStorage and an observable stream of storage changes.
+ *
+ * No signal is exposed because storage changes are events rather than
+ * application state.
  *
  * @internal
  * @group Services
  */
 @Injectable({ providedIn: 'root' })
-export class StorageService implements OnDestroy {
-  private readonly document = inject(DOCUMENT);
-
-  readonly #destroy$ = new Subject<void>();
+export class StorageService {
+  /**
+   * Injected document.
+   *
+   * @private
+   */
+  readonly #document = inject(DOCUMENT);
 
   /**
-   * The browser's local storage object.
+   * Registers cleanup Logic for this service's injection context.
    *
-   * @readonly
+   * @private
+   */
+  readonly #destroyRef = inject(DestroyRef);
+
+  /**
+   * Browser window associated with the injected document.
+   *
+   * @private
+   */
+  readonly #window: Window | undefined;
+
+  /**
+   * Browser storage used by this service.
+   *
+   * Falls back to a no-operation implementation when localStorage is not
+   * available.
+   *
    * @private
    */
   readonly #storage: Storage;
 
   /**
-   * The browser's window object.
+   * Internal event source for storage changes.
    *
-   * @readonly
    * @private
    */
-  readonly #window: Window;
+  readonly #changesSubject = new Subject<StorageChangeEvent>();
 
   /**
-   * The Subject receiving the storage change events.
-   *
-   * @readonly
-   * @private
+   * Observable stream of storage change events.
    */
-  readonly #changes$ = new Subject<StorageChangeEvent>();
+  readonly changes$ = this.#changesSubject.asObservable();
 
   /**
-   * The observable stream of storage change events, shared among subscribers.
-   *
-   * @readonly
+   * Creates the service and registers the native storage event listener.
    */
-  public readonly changes$ = this.#changes$.pipe(
-    share(),
-    takeUntil(this.#destroy$),
-  );
+  constructor() {
+    const document = this.#document as DocumentWithParentWindow;
 
-  /**
-   * Creates an instance of RbStorageService.
-   *
-   * @param {Document} document - the document object provided by Angular's DI.
-   */
-  public constructor() {
-    this.#window = (this.document as any).parentWindow || this.document.defaultView;
-    this.#storage = this.#window.localStorage;
-    this.#window.addEventListener(
+    this.#window =
+      document.parentWindow ??
+      document.defaultView ??
+      undefined;
+
+    this.#storage = getLocalStorage(this.#window);
+
+    this.#window?.addEventListener(
       'storage',
-      this.#storageEventListener.bind(this),
+      this.#storageEventListener,
     );
+
+    this.#destroyRef.onDestroy(() => {
+      this.#window?.removeEventListener(
+        'storage',
+        this.#storageEventListener,
+      );
+
+      this.#changesSubject.complete();
+    });
   }
 
   /**
-   * An Angular lifecycle hook that removes the storage event listener.
+   * Stores a value.
    *
-   * @internal
-   */
-  ngOnDestroy() {
-    this.#window.removeEventListener(
-      'storage',
-      this.#storageEventListener.bind(this),
-    );
-    this.#destroy$.next();
-    this.#destroy$.complete();
-  }
-
-  /**
-   * Sets a key-value pair in the local storage and emits a change event.
+   * No event is emitted when the new value equals the existing value.
    *
-   * @param {string} key - The key to set
-   * @param {string} newValue - The value to set
+   * @param key The key to set.
+   * @param newValue The value to store.
    */
-  public setItem(key: string, newValue: string): void {
+  setItem(key: string, newValue: string): void {
     const oldValue = this.#storage.getItem(key);
+
+    if (oldValue === newValue) {
+      return;
+    }
+
     this.#storage.setItem(key, newValue);
-    this.#changes$.next({ key, oldValue, newValue });
+    this.#changesSubject.next({
+      key,
+      oldValue,
+      newValue,
+    });
   }
 
   /**
-   * Gets the value of a key in the local storage.
+   * Returns a stored value.
    *
-   * @param {string} key - The key to get the value of
-   * @returns {(string | null)} The value of the key or null if it does not exist
+   * @param key The key to retrieve.
+   * @returns The stored value or null.
    */
-  public getItem(key: string): string | null {
+  getItem(key: string): string | null {
     return this.#storage.getItem(key);
   }
 
   /**
-   * Removes the value of a key from the local storage and emits a change event.
+   * Removes a stored value.
    *
-   * @param {string} key - The key to remove
+   * No event is emitted when the key does not exist.
+   *
+   * @param key The key to remove.
    */
-  public removeItem(key: string): void {
+  removeItem(key: string): void {
     const oldValue = this.#storage.getItem(key);
-    this.#storage.removeItem(key);
-    this.#changes$.next({ key, oldValue, newValue: null });
-  }
 
-  /**
-   * Clears all keys from the local storage and emits a change event for each removed key.
-   */
-  public clear(): void {
-    const changes: StorageChangeEvent[] = [];
-    for (let i = 0; i < this.#storage.length; i++) {
-      const key = this.#storage.key(i)!; // I'm sure it's never null!
-      const oldValue = this.#storage.getItem(key);
-      changes.push({ key, oldValue, newValue: null });
-    }
-    this.#storage.clear();
-    changes.forEach((change) => this.#changes$.next(change));
-  }
-
-  /**
-   * The storage event handler that takes a native StorageEvent and emits a {@link StorageChangeEvent}.
-   *
-   * @param {StorageEvent} event - The native event to handle
-   * @private
-   */
-  #storageEventListener(event: StorageEvent): void {
-    if (event.storageArea != this.#storage) {
+    if (oldValue === null) {
       return;
     }
 
-    const key = event.key!;
-    const { oldValue, newValue } = event;
-    this.#changes$.next({ key, oldValue, newValue });
+    this.#storage.removeItem(key);
+    this.#changesSubject.next({
+      key,
+      oldValue,
+      newValue: null,
+    });
+  }
+
+  /**
+   * Clears all stored values and emits one change event for each removed key.
+   */
+  clear(): void {
+    const changes: StorageChangeEvent[] = [];
+
+    for (let index = 0; index < this.#storage.length; index++) {
+      const key = this.#storage.key(index);
+
+      if (key === null) {
+        continue;
+      }
+
+      changes.push({
+        key,
+        oldValue: this.#storage.getItem(key),
+        newValue: null,
+      });
+    }
+
+    this.#storage.clear();
+
+    changes.forEach((change) => {
+      this.#changesSubject.next(change);
+    });
+  }
+
+  /**
+   * Handles native storage events from other browser contexts.
+   *
+   * @param event The native storage event.
+   * @private
+   */
+  readonly #storageEventListener = (
+    event: StorageEvent,
+  ): void => {
+    if (event.storageArea !== this.#storage) {
+      return;
+    }
+
+    this.#changesSubject.next({
+      key: event.key,
+      oldValue: event.oldValue,
+      newValue: event.newValue,
+    });
+  };
+}
+
+/**
+ * Returns the window's localStorage implementation.
+ *
+ * Accessing localStorage may throw in restricted browser environments.
+ * In that case, a no-operation implementation is returned.
+ *
+ * @param window Browser window.
+ * @internal
+ */
+function getLocalStorage(window: Window | undefined): Storage {
+  if (!window) {
+    return NOOP_STORAGE;
+  }
+
+  try {
+    return window.localStorage;
+  } catch {
+    return NOOP_STORAGE;
   }
 }
