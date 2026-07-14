@@ -3,8 +3,16 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "rootDir": "../..",
-    "outDir": "../../out-tsc/app",
+    "outDir": "../../out-tsc/app"
   },
   "files": ["./src/main.ts", "./src/polyfills.ts"],
-  "include": ["./src/**/*.d.ts"]
+  "include": ["./src/**/*.d.ts"],
+  "angularCompilerOptions": {
+    "extendedDiagnostics": {
+      "checks": {
+        "nullishCoalescingNotNullable": "suppress",
+        "optionalChainNotNullable": "suppress"
+      }
+    }
+  }
 }
