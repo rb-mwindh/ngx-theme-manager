@@ -1,5 +1,8 @@
-import { EnvironmentProviders, makeEnvironmentProviders } from "@angular/core";
-import { QUERY_PARAM, STORAGE_KEY } from "./theme.service";
+import {
+  EnvironmentProviders,
+  makeEnvironmentProviders,
+} from '@angular/core';
+import { QUERY_PARAM, STORAGE_KEY } from './theme.service';
 
 export interface ThemeManagerConfig {
   storageKey?: string | null;
@@ -7,7 +10,7 @@ export interface ThemeManagerConfig {
 }
 
 /**
- * Provides the necessary configuration for the `NgxThemeManager`.
+ * Provides configuration for the ngx-theme-manager theme services.
  *
  * @param config - Configuration options for the theme manager.
  * @param config.storageKey - The key used to persist the current theme in storage.
@@ -24,13 +27,25 @@ export interface ThemeManagerConfig {
  *
  * @group Public API
  */
-export function provideThemeManager(config?: ThemeManagerConfig): EnvironmentProviders {
+export function provideThemeManager(
+  config?: ThemeManagerConfig,
+): EnvironmentProviders {
   return makeEnvironmentProviders([
     ...(config?.storageKey !== undefined
-      ? [{ provide: STORAGE_KEY, useValue: config.storageKey === '' ? null : config.storageKey }]
+      ? [
+          {
+            provide: STORAGE_KEY,
+            useValue: config.storageKey === '' ? null : config.storageKey,
+          },
+        ]
       : []),
     ...(config?.queryParam !== undefined
-      ? [{ provide: QUERY_PARAM, useValue: config.queryParam === '' ? null : config.queryParam }]
+      ? [
+          {
+            provide: QUERY_PARAM,
+            useValue: config.queryParam === '' ? null : config.queryParam,
+          },
+        ]
       : []),
   ]);
 }

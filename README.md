@@ -147,11 +147,11 @@ Import and render this component near the root of the application so theme style
   template: `
     <app-themes></app-themes>
 
-    <!-- you app template here -->
+    <!-- your app template here -->
   `,
-  imports: [ AppThemesComponent ],
+  imports: [AppThemesComponent],
 })
-export class AppComponent() { ... }
+export class AppComponent { ... }
 ```
 
 ### Implement your theme-picker component
