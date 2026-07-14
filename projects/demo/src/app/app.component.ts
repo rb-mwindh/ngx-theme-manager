@@ -1,51 +1,49 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { Component, inject, OnDestroy, OnInit } from "@angular/core";
-import { Theme, ThemeService } from "@rb-mwindh/ngx-theme-manager";
-import { Observable, Subject, takeUntil, tap } from "rxjs";
+import { CommonModule } from "@angular/common";
+import { Component, effect, inject, signal } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
+import { ThemeService } from "@rb-mwindh/ngx-theme-manager";
+import { AppThemePickerComponent } from "./theming/app-theme-picker.component";
+import { AppThemingComponent } from "./theming/app-theming.component";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss'],
-    standalone: false
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    AppThemePickerComponent,
+    AppThemingComponent,
+  ],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent {
   private readonly themeService = inject(ThemeService);
   private readonly announcer = inject(LiveAnnouncer);
 
-  readonly #destroyed = new Subject<void>();
-
   readonly repoUrl = 'https://github.com/rb-mwindh/ngx-theme-manager';
-  apiDocUrl = 'https://rb-mwindh.github.io/ngx-theme-manager';
-  selection = '';
-  heading = '';
+  readonly apiDocUrl = 'https://rb-mwindh.github.io/ngx-theme-manager';
 
-  themes$: Observable<Theme[]> = this.themeService.themes$;
-  currentTheme$: Observable<string | null> =
-    this.themeService.currentTheme$;
+  readonly selection = signal('');
+  readonly heading = signal('');
 
-    ngOnDestroy() {
-    this.#destroyed.next();
-    this.#destroyed.complete();
-  }
+  readonly themes = this.themeService.themes;
+  readonly currentTheme = this.themeService.currentTheme;
 
-  ngOnInit() {
+  constructor() {
     this.updateTerminal('install', 'shell');
-    this.themeService.currentTheme$
-      .pipe(
-        tap((theme) => this.#announce(theme)),
-        takeUntil(this.#destroyed),
-      )
-      .subscribe();
+    effect(() => {
+      this.#announce(this.currentTheme());
+    });
   }
 
   selectTheme(theme: string) {
     this.themeService.selectTheme(theme);
   }
 
-  updateTerminal(selection: string, heading?: string) {
-    this.selection = selection;
-    this.heading = heading || '';
+  updateTerminal(selection: string, heading = '') {
+    this.selection.set(selection);
+    this.heading.set(heading);
   }
 
   #announce(theme: string | undefined | null) {
