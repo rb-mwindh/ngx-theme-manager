@@ -1,5 +1,5 @@
-<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@rb-mwindh/ngx-theme-manager - v21.1.0</title><meta name="description" content="Documentation for @rb-mwindh/ngx-theme-manager"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
-<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@rb-mwindh/ngx-theme-manager - v21.1.0</a>
+<!DOCTYPE html><html class="default" lang="en" data-base="./"><head><meta charset="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>@rb-mwindh/ngx-theme-manager - v22.0.0</title><meta name="description" content="Documentation for @rb-mwindh/ngx-theme-manager"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script defer src="assets/main.js"></script><script async src="assets/icons.js" id="tsd-icons-script"></script><script async src="assets/search.js" id="tsd-search-script"></script><script async src="assets/navigation.js" id="tsd-nav-script"></script></head><body><script>document.documentElement.dataset.theme = localStorage.getItem("tsd-theme") || "os";document.body.style.display="none";setTimeout(() => window.app?app.showPage():document.body.style.removeProperty("display"),500)</script><header class="tsd-page-toolbar">
+<div class="tsd-toolbar-contents container"><a href="index.html" class="title">@rb-mwindh/ngx-theme-manager - v22.0.0</a>
 <div id="tsd-toolbar-links"></div><button id="tsd-search-trigger" class="tsd-widget" aria-label="Search"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><use href="assets/icons.svg#icon-search"></use></svg></button><dialog id="tsd-search" aria-label="Search"><input role="combobox" id="tsd-search-input" aria-controls="tsd-search-results" aria-autocomplete="list" aria-expanded="true" autocapitalize="off" autocomplete="off" placeholder="Search the docs" maxLength="100"/>
 <ul role="listbox" id="tsd-search-results"></ul>
 <div id="tsd-search-status" aria-live="polite" aria-atomic="true">
@@ -7,7 +7,7 @@
 <div class="container container-main">
 <div class="col-content">
 <div class="tsd-page-title">
-<h1>@rb-mwindh/ngx-theme-manager - v21.1.0</h1></div>
+<h1>@rb-mwindh/ngx-theme-manager - v22.0.0</h1></div>
 <div class="tsd-panel tsd-typography"><h1 id="ngx-theme-manager" class="tsd-anchor-link">ngx-theme-manager<a href="#ngx-theme-manager" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h1>
 <p><code>@rb-mwindh/ngx-theme-manager</code> provides the basics tools for a robust theme-switcher implementation.</p>
 <p>This package does not provide ready-made visual components,
@@ -66,6 +66,11 @@ but only supports their implementation by providing the necessary services and t
 </thead>
 <tbody>
 <tr>
+<td><code>22.x</code></td>
+<td>Angular <code>22.x</code></td>
+<td>Node.js <code>^22.22.3</code>, <code>^24.15.0</code> or <code>^26.0.0</code></td>
+</tr>
+<tr>
 <td><code>21.x</code></td>
 <td>Angular <code>21.x</code></td>
 <td>Node.js <code>^20.19.0</code>, <code>^22.12.0</code> or <code>^24.0.0</code></td>
@@ -73,21 +78,21 @@ but only supports their implementation by providing the necessary services and t
 <tr>
 <td><code>20.x</code></td>
 <td>Angular <code>20.x</code></td>
-<td>See the corresponding release metadata</td>
+<td>Node.js <code>^20.19.0</code>, <code>^22.12.0</code> or <code>^24.0.0</code></td>
 </tr>
 <tr>
 <td><code>19.x</code></td>
 <td>Angular <code>19.x</code></td>
-<td>See the corresponding release metadata</td>
+<td>Node.js <code>^18.19.1</code>, <code>^20.11.1</code> or <code>^22.0.0</code></td>
 </tr>
 <tr>
 <td><code>18.x</code></td>
 <td>Angular <code>18.x</code></td>
-<td>See the corresponding release metadata</td>
+<td>Node.js <code>^18.19.1</code>, <code>^20.11.1</code> or <code>^22.0.0</code></td>
 </tr>
 </tbody>
 </table>
-<p>The published package declares <code>@angular/common</code> and <code>@angular/core</code> version <code>21</code> or newer as peer dependencies.
+<p>The published package declares <code>@angular/common</code> and <code>@angular/core</code> version <code>22</code> or newer as peer dependencies.
 The Node.js versions above apply to this repository's development, build and release tooling.</p>
 <h2 id="how-it-works" class="tsd-anchor-link">How it works<a href="#how-it-works" aria-label="Permalink" class="tsd-anchor-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="assets/icons.svg#icon-anchor"></use></svg></a></h2>
 <p>This implementation is based on the regular way Angular loads component styles.
@@ -359,82 +364,87 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 <tbody>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/animations</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/components">@angular/cdk</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/common</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/compiler</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/core</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/forms</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
-<td>Dependency</td>
-</tr>
-<tr>
-<td><a href="https://github.com/angular/angular">@angular/platform-browser-dynamic</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/platform-browser</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
+<td>Dependency</td>
+</tr>
+<tr>
+<td><a href="https://github.com/angular/angular">@angular/platform-browser-dynamic</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">@angular/router</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
+<td>Dependency</td>
+</tr>
+<tr>
+<td><a href="https://github.com/standard-schema/standard-schema">@standard-schema/spec</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/fb55/entities">entities</a></td>
-<td><a href="http://opensource.org/licenses/BSD-2-Clause">BSD-2-Clause</a></td>
+<td><a href="https://spdx.org/licenses/BSD-2-Clause.html">BSD-2-Clause</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/marella/material-icons">material-icons</a></td>
-<td><a href="http://opensource.org/licenses/Apache-2.0">Apache-2.0</a></td>
+<td><a href="https://spdx.org/licenses/Apache-2.0.html">Apache-2.0</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/rb-mwindh/ngx-theme-manager">ngx-theme-manager</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/inikulin/parse5">parse5</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/reactivex/rxjs">rxjs</a></td>
-<td><a href="http://opensource.org/licenses/Apache-2.0">Apache-2.0</a></td>
+<td><a href="https://spdx.org/licenses/Apache-2.0.html">Apache-2.0</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/Microsoft/tslib">tslib</a></td>
-<td>0BSD</td>
+<td><a href="https://spdx.org/licenses/0BSD.html">0BSD</a></td>
 <td>Dependency</td>
 </tr>
 <tr>
 <td><a href="https://github.com/angular/angular">zone.js</a></td>
-<td><a href="http://opensource.org/licenses/MIT">MIT</a></td>
+<td><a href="https://spdx.org/licenses/MIT.html">MIT</a></td>
 <td>Dependency</td>
 </tr>
 </tbody>
@@ -484,7 +494,7 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 <li><a href="#3rd-party-licenses"><span>3rd <wbr/>Party <wbr/>Licenses</span></a></li>
 <li><a href="#license"><span>License</span></a></li></ul></li></ul></div></details></div>
 <div class="site-menu">
-<nav class="tsd-navigation"><a href="modules.html">@rb-mwindh/ngx-theme-manager - v21.1.0</a>
+<nav class="tsd-navigation"><a href="modules.html">@rb-mwindh/ngx-theme-manager - v22.0.0</a>
 <ul class="tsd-small-nested-navigation" id="tsd-nav-container">
 <li>Loading...</li></ul></nav></div></div></div><footer></footer>
 <div class="overlay"></div></body></html>
