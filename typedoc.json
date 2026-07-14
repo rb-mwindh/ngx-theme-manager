@@ -8,7 +8,18 @@
   "out": "docs",
   "hideGenerator": true,
   "includeVersion": true,
-  "tsconfig": "./tsconfig.json",
+  "tsconfig": "./projects/ngx-theme-manager/tsconfig.lib.prod.json",
   "readme": "./README.md",
-  "categoryOrder": ["Public API", "Services", "InjectionToken", "Functions"]
+  "categoryOrder": ["Public API", "Services", "InjectionToken", "Functions"],
+  "highlightLanguages": [
+    "bash",
+    "shell",
+    "css",
+    "sass",
+    "scss",
+    "html",
+    "json",
+    "javascript",
+    "typescript"
+  ]
 }
