@@ -28,6 +28,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
+            "tsConfig": "tsconfig.spec.json",
             "zoneless": false
           }
         },
@@ -37,7 +38,8 @@
             "lintFilePatterns": [
               "projects/ngx-theme-manager/**/*.ts",
               "projects/ngx-theme-manager/**/*.html"
-            ]
+            ],
+            "eslintConfig": "projects/ngx-theme-manager/eslint.config.js"
           }
         }
       }
@@ -130,6 +132,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
+            "tsConfig": "tsconfig.spec.json",
             "zoneless": false
           }
         },
@@ -139,7 +142,8 @@
             "lintFilePatterns": [
               "projects/demo/**/*.ts",
               "projects/demo/**/*.html"
-            ]
+            ],
+            "eslintConfig": "projects/demo/eslint.config.js"
           }
         }
       }

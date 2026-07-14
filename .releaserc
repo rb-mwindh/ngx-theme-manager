@@ -12,6 +12,12 @@
         "dist/*.tgz"
       ]
     }],
+    ["@semantic-release/exec", {
+      "prepareCmd": "npm run update:bom"
+    }],
+    ["@semantic-release/exec", {
+      "successCmd": "echo \"version=${nextRelease.version}\" >> \"$GITHUB_OUTPUT\""
+    }],
     ["@semantic-release/git", {
       "assets": [
         "CHANGELOG.md",

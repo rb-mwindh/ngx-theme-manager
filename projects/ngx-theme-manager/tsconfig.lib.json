@@ -2,11 +2,8 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../out-tsc/lib",
-    "declaration": true,
-    "declarationMap": true,
-    "inlineSources": true,
-    "lib": ["es2022"]
+    "rootDir": "../..",
+    "outDir": "../../out-tsc/lib"
   },
-  "exclude": ["**/*.spec.ts"]
+  "exclude": ["./src/**/*.spec.ts"]
 }

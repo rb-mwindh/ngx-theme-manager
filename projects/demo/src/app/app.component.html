@@ -16,8 +16,8 @@
   <div class="spacer"></div>
 
   <app-theme-picker
-    [themes]="themes$ | async"
-    [currentTheme]="currentTheme$ | async"
+    [themes]="themes()"
+    [currentTheme]="currentTheme()"
     (selectionChanged)="selectTheme($event)"
   ></app-theme-picker>
 </div>
@@ -170,8 +170,8 @@
   </div>
 
   <!-- Terminal -->
-  <div class="terminal" [attr.data-heading]="heading">
-    @switch (selection) {
+  <div class="terminal" [attr.data-heading]="heading()">
+    @switch (selection()) {
       @case ('install') {
         <pre>{{ install }}</pre>
       }

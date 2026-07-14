@@ -30,7 +30,7 @@
     "access": "public"
   },
   "engines": {
-    "node": ">= 18"
+    "node": "^20.19.0 || ^22.12.0 || ^24.0.0"
   },
   "lint-staged": {
     "projects/**/*.ts": [
@@ -46,13 +46,15 @@
     ]
   },
   "scripts": {
-    "init": "npm install",
-    "commit": "git-cz",
-    "start": "ng serve demo",
+    "prepare": "husky",
+    "typecheck": "run-s typecheck:*",
     "lint": "run-s lint:lib lint:app",
     "test": "run-s test:lib test:app",
     "build": "run-s \"build:lib -- {1}\" \"build:app -- {1}\"",
+    "start": "ng serve demo",
+    "commit": "git-cz",
     "----------------------": "",
+    "update:bom": "tsx tools/update-oss-bom",
     "lint:lib": "ng lint ngx-theme-manager",
     "lint:app": "ng lint demo",
     "test:lib": "ng test ngx-theme-manager",
@@ -61,14 +63,16 @@
     "build:app": "ng build demo",
     "prebuild": "run-s prebuild:*",
     "prebuild:clean": "rimraf dist",
-    "preinit": "rimraf node_modules",
-    "postinit": "run-s postinit:*",
-    "postinit:setup-husky": "husky install",
     "postbuild": "run-s postbuild:*",
-    "postbuild:update-package-json": "tsx tools/update-package-json/in-library.ts",
-    "postbuild:update-bom": "tsx tools/update-oss-bom",
+    "postbuild:update-package-json": "tsx tools/update-package-json/to-dist.ts",
     "postbuild:copy-repo-docs": "npx -y copyfiles *.md LICENSE* dist/ngx-theme-manager",
-    "postversion": "tsx tools/update-package-json/in-workspace.ts"
+    "typecheck:demo_app": "tsc --noEmit -p projects/demo/tsconfig.app.json",
+    "typecheck:demo_eslint": "tsc --noEmit -p projects/demo/tsconfig.eslint.json",
+    "typecheck:demo_spec": "tsc --noEmit -p projects/demo/tsconfig.spec.json",
+    "typecheck:ngx-theme-manager_lib": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.lib.json",
+    "typecheck:ngx-theme-manager_lib-prod": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.lib.prod.json",
+    "typecheck:ngx-theme-manager_eslint": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.eslint.json",
+    "typecheck:ngx-theme-manager_spec": "tsc --noEmit -p projects/ngx-theme-manager/tsconfig.spec.json"
   },
   "dependencies": {
     "@angular/animations": "^21.2.17",
@@ -87,22 +91,17 @@
   },
   "devDependencies": {
     "@angular-builders/jest": "^21.0.4",
-    "@angular-eslint/builder": "^21.4.0",
-    "@angular-eslint/eslint-plugin": "^21.4.0",
-    "@angular-eslint/eslint-plugin-template": "^21.4.0",
-    "@angular-eslint/schematics": "^21.4.0",
-    "@angular-eslint/template-parser": "^21.4.0",
     "@angular/build": "^21.2.18",
     "@angular/cli": "^21.2.18",
     "@angular/compiler-cli": "^21.2.17",
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.39.5",
     "@types/jest": "^30.0.0",
     "@types/jsdom": "^21.1.7",
     "@types/license-checker": "^25.0.6",
     "@types/node": "^20.19.43",
-    "@typescript-eslint/eslint-plugin": "^8.33.1",
-    "@typescript-eslint/parser": "^8.33.1",
+    "angular-eslint": "19.8.1",
     "commitizen": "^4.3.2",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.28.0",
@@ -119,7 +118,8 @@
     "rimraf": "^5.0.10",
     "tsx": "^4.23.0",
     "typedoc": "^0.28.20",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "typescript-eslint": "8.60.1"
   },
   "overrides": {
     "sockjs": {

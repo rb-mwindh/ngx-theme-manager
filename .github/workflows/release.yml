@@ -34,6 +34,9 @@ jobs:
       - name: Install Dependencies
         run: npm ci
 
+      - name: Typecheck
+        run: npm run typecheck
+
       - name: Lint
         run: npm run lint
 
@@ -54,6 +57,9 @@ jobs:
     name: Release
     needs: build
     runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.release.outputs.version }}
 
     permissions:
       contents: write
@@ -92,6 +98,7 @@ jobs:
             @semantic-release/npm
 
       - name: Release Library
+        id: release
         run: npx semantic-release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -117,6 +124,10 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Update version in package.json
+        run: |
+          npm pkg set version="${{ needs.release.outputs.version }}" --prefix projects/ngx-theme-manager
 
       - name: Generate docs
         run: npx typedoc
