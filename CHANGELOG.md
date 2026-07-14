@@ -1,3 +1,20 @@
+# [21.1.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v21.0.0...v21.1.0) (2026-07-14)
+
+
+### Bug Fixes
+
+* **theme-style-manager:** update registry only for added style elements ([d49d409](https://github.com/rb-mwindh/ngx-theme-manager/commit/d49d409a8ebb30de818953ee7f19daac388a321b))
+
+
+### Features
+
+* **providers:** add `provideThemeManager` helper ([0d3509d](https://github.com/rb-mwindh/ngx-theme-manager/commit/0d3509d360ab281ba619e875d1d68ea05f8bb1b8))
+* **storage:** harden storage access and change event handling ([7d43802](https://github.com/rb-mwindh/ngx-theme-manager/commit/7d43802efb865b652dc842d83fb64aa936579cc9))
+* **theme-registry:** expose registered themes as a signal ([bb2c694](https://github.com/rb-mwindh/ngx-theme-manager/commit/bb2c694da8aa19e044dbee7ec235cc8fd40f4b91))
+* **theme-style-manager:** simplify theme discovery lifecycle ([21dfae9](https://github.com/rb-mwindh/ngx-theme-manager/commit/21dfae9dc92b8ca59225a0b3ee0525581bfc65a7))
+* **theme-tracking:** expose the current theme as a signal ([46d309c](https://github.com/rb-mwindh/ngx-theme-manager/commit/46d309c6c3d36852d05a993ded9d8b81cfb1305c))
+* **theme:** expose signal-based theme state ([89c979b](https://github.com/rb-mwindh/ngx-theme-manager/commit/89c979bb61833768e651b7bbec01cb97f0cc5652))
+
 # [21.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v20.0.0...v21.0.0) (2026-07-08)
 
 
