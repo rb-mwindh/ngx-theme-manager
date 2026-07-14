@@ -4,3 +4,4 @@ export { type StorageChangeEvent, StorageService } from './lib/internal/storage.
 export { ThemeTrackingService } from './lib/internal/theme-tracking.service';
 export { ThemeRegistryService } from './lib/internal/theme-registry.service';
 export { ThemeStyleManagerService } from './lib/internal/theme-style-manager.service';
+export { type ThemeManagerConfig, provideThemeManager } from './lib/provide-theme-manager';
