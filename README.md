@@ -6,6 +6,7 @@ This package does not provide ready-made visual components,
 but only supports their implementation by providing the necessary services and tools.
 
 ---
+
 ![sponsors](https://img.shields.io/github/sponsors/rb-mwindh)
 ![License](https://img.shields.io/github/license/rb-mwindh/ngx-theme-manager?color=blue)
 ![latest release](https://img.shields.io/github/v/release/rb-mwindh/ngx-theme-manager?color=brightgreen)
@@ -16,8 +17,8 @@ but only supports their implementation by providing the necessary services and t
 ![nodejs](https://img.shields.io/node/v/@rb-mwindh/ngx-theme-manager?color=lightgray&logo=nodedotjs)
 ![angular](https://img.shields.io/npm/dependency-version/@rb-mwindh/ngx-theme-manager/peer/@angular/core?color=lightgray&logo=angular)
 
-* [API Docs](https://rb-mwindh.github.io/ngx-theme-manager)
-* [Demo](https://ngx-theme-manager.vercel.app/)
+- [API Docs](https://rb-mwindh.github.io/ngx-theme-manager)
+- [Demo](https://ngx-theme-manager.vercel.app/)
 
 ---
 
@@ -58,7 +59,6 @@ As of v18, the package major version follows the supported Angular major version
 The published package declares `@angular/common` and `@angular/core` version `21` or newer as peer dependencies.
 The Node.js versions above apply to this repository's development, build and release tooling.
 
-
 ## How it works
 
 This implementation is based on the regular way Angular loads component styles.
@@ -91,9 +91,9 @@ through annotations in CSS comments. Use the `/*! ... */` comment format so the 
 remain available after production minification.
 
 > ... By default, multi-line comments be stripped from the compiled CSS
-> in compressed mode. **If a comment begins with /*!, though, it will
+> in compressed mode. **If a comment begins with /\*!, though, it will
 > always be included in the CSS output.** ...
-> 
+>
 > _See the [Sass documentation on comments][sass-comments]_
 
 Known annotations are:
@@ -114,8 +114,8 @@ Known annotations are:
  */
 
 // add all your theme styles below this line, e.g.
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
-@import "some-other-library/theme.css";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'some-other-library/theme.css';
 ```
 
 ### Load your theme stylesheets
@@ -134,7 +134,9 @@ The component must use `ViewEncapsulation.None` so the styles are global.
   ], // load all theme stylesheets here
   encapsulation: ViewEncapsulation.None, // make the styles global
 })
-export class AppThemesComponent { /* no implementation needed */ }
+export class AppThemesComponent {
+  /* no implementation needed */
+}
 ```
 
 Import and render this component near the root of the application so theme styles are available throughout the application.
@@ -144,7 +146,7 @@ Import and render this component near the root of the application so theme style
   selector: 'app-root',
   template: `
     <app-themes></app-themes>
-    
+
     <!-- you app template here -->
   `,
   imports: [ AppThemesComponent ],
@@ -300,15 +302,17 @@ git clone https://github.com/rb-mwindh/ngx-theme-manager.git <workspace>
 cd <workspace>
 ```
 
-2. Initialize the workspace
-
-The `init` script installs all dependencies and sets up the pre-commit hooks.
-
-**This is mandatory to guarantee the code style and quality!**
+2. Install the dependencies
 
 ```shell
-npm run init
+npm ci
 ```
+
+`npm ci` installs the exact dependency versions recorded in `package-lock.json`.
+This is the recommended way to install dependencies for development and testing.
+
+During installation, npm automatically runs the `prepare` script, which configures
+the repository's Husky Git hooks. No separate initialization command is required.
 
 3. Run the demo app
 
@@ -365,24 +369,24 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 
 <bom>
 
-| Name | License | Type |
-| --- | --- | --- |
-| [@angular/animations](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/cdk](https://github.com/angular/components) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/common](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/compiler](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/core](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/forms](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/platform-browser](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [@angular/router](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [entities](https://github.com/fb55/entities) | [BSD-2-Clause](http://opensource.org/licenses/BSD-2-Clause) | Dependency |
-| [material-icons](https://github.com/marella/material-icons) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
-| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [parse5](https://github.com/inikulin/parse5) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
-| [rxjs](https://github.com/reactivex/rxjs) | [Apache-2.0](http://opensource.org/licenses/Apache-2.0) | Dependency |
-| [tslib](https://github.com/Microsoft/tslib) | 0BSD | Dependency |
-| [zone.js](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT) | Dependency |
+| Name                                                                    | License                                                     | Type       |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------- | ---------- |
+| [@angular/animations](https://github.com/angular/angular)               | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/cdk](https://github.com/angular/components)                   | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/common](https://github.com/angular/angular)                   | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/compiler](https://github.com/angular/angular)                 | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/core](https://github.com/angular/angular)                     | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/forms](https://github.com/angular/angular)                    | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/platform-browser](https://github.com/angular/angular)         | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [@angular/router](https://github.com/angular/angular)                   | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [entities](https://github.com/fb55/entities)                            | [BSD-2-Clause](http://opensource.org/licenses/BSD-2-Clause) | Dependency |
+| [material-icons](https://github.com/marella/material-icons)             | [Apache-2.0](http://opensource.org/licenses/Apache-2.0)     | Dependency |
+| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager)     | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [parse5](https://github.com/inikulin/parse5)                            | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
+| [rxjs](https://github.com/reactivex/rxjs)                               | [Apache-2.0](http://opensource.org/licenses/Apache-2.0)     | Dependency |
+| [tslib](https://github.com/Microsoft/tslib)                             | 0BSD                                                        | Dependency |
+| [zone.js](https://github.com/angular/angular)                           | [MIT](http://opensource.org/licenses/MIT)                   | Dependency |
 
 </bom>
 
@@ -391,15 +395,9 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 ![License](https://badgen.net/github/license/rb-mwindh/ngx-theme-manager)
 
 [wiki::faq]: https://github.com/rb-mwindh/ngx-theme-manager/wiki/FAQ
-
 [wiki::troubleshooting]: https://github.com/rb-mwindh/ngx-theme-manager/wiki/Troubleshooting
-
 [issue::question]: https://github.com/rb-mwindh/ngx-theme-manager/issues/new?template=question.md&title=❓%20
-
 [license]: https://badgen.net/github/license/rb-mwindh/ngx-theme-manager
-
 [selfhtml:media]: https://wiki.selfhtml.org/wiki/HTML/Attribute/media
-
 [known-annotations]: #known-annotations
-
 [sass-comments]: https://sass-lang.com/documentation/syntax/comments
