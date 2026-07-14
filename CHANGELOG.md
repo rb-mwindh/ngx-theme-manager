@@ -1,3 +1,19 @@
+# [22.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v21.1.0...v22.0.0) (2026-07-14)
+
+
+* chore(package)!: drop Node.js 20 and add Node.js 26 support ([bd81c03](https://github.com/rb-mwindh/ngx-theme-manager/commit/bd81c034fba1cf3b9c3f53b7b7c80d76f429fc4b))
+
+
+### chore
+
+* **package:** require Angular 22 as peer dependency ([b9e3fbb](https://github.com/rb-mwindh/ngx-theme-manager/commit/b9e3fbb66d70a6034af0f39ff8f0f2c203fe2942))
+
+
+### BREAKING CHANGES
+
+* **package:** drops support for Angular v21. Requires Angular v22 now.
+* Node.js 20 is no longer supported. Node.js 22.22.3 or later is now required.
+
 # [21.1.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v21.0.0...v21.1.0) (2026-07-14)
 
 

@@ -370,25 +370,26 @@ The `<bom></bom>` tags will be processed by `tools/oss-bom.ts` as a pre-commit h
 
 <bom>
 
-| Name                                                                        | License                                                     | Type       |
-| --------------------------------------------------------------------------- | ----------------------------------------------------------- | ---------- |
-| [@angular/animations](https://github.com/angular/angular)                   | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/cdk](https://github.com/angular/components)                       | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/common](https://github.com/angular/angular)                       | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/compiler](https://github.com/angular/angular)                     | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/core](https://github.com/angular/angular)                         | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/forms](https://github.com/angular/angular)                        | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/platform-browser](https://github.com/angular/angular)             | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/platform-browser-dynamic](https://github.com/angular/angular)     | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@angular/router](https://github.com/angular/angular)                       | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [@standard-schema/spec](https://github.com/standard-schema/standard-schema) | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [entities](https://github.com/fb55/entities)                                | [BSD-2-Clause](https://spdx.org/licenses/BSD-2-Clause.html) | Dependency |
-| [material-icons](https://github.com/marella/material-icons)                 | [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)     | Dependency |
-| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager)         | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [parse5](https://github.com/inikulin/parse5)                                | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
-| [rxjs](https://github.com/reactivex/rxjs)                                   | [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html)     | Dependency |
-| [tslib](https://github.com/Microsoft/tslib)                                 | [0BSD](https://spdx.org/licenses/0BSD.html)                 | Dependency |
-| [zone.js](https://github.com/angular/angular)                               | [MIT](https://spdx.org/licenses/MIT.html)                   | Dependency |
+| Name | License | Type |
+| --- | --- | --- |
+| [@angular/animations](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/cdk](https://github.com/angular/components) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/common](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/compiler](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/core](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/forms](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/platform-browser](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/platform-browser-dynamic](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@angular/router](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [@standard-schema/spec](https://github.com/standard-schema/standard-schema) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [entities](https://github.com/fb55/entities) | [BSD-2-Clause](https://spdx.org/licenses/BSD-2-Clause.html) | Dependency |
+| [material-icons](https://github.com/marella/material-icons) | [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) | Dependency |
+| [ngx-theme-manager](https://github.com/rb-mwindh/ngx-theme-manager) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [parse5](https://github.com/inikulin/parse5) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [rxjs](https://github.com/reactivex/rxjs) | [Apache-2.0](https://spdx.org/licenses/Apache-2.0.html) | Dependency |
+| [tslib](https://github.com/Microsoft/tslib) | [0BSD](https://spdx.org/licenses/0BSD.html) | Dependency |
+| [zod](https://github.com/colinhacks/zod) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
+| [zone.js](https://github.com/angular/angular) | [MIT](https://spdx.org/licenses/MIT.html) | Dependency |
 
 </bom>
 
