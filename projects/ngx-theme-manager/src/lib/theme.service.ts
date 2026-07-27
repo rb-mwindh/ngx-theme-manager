@@ -1,7 +1,8 @@
+import { Location } from "@angular/common";
 import { DestroyRef, effect, inject, Injectable, InjectionToken } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { ActivatedRoute, Router } from "@angular/router";
-import { filter, map } from "rxjs";
+import { NavigationEnd, Router } from "@angular/router";
+import { distinctUntilChanged, filter, map } from "rxjs";
 import { StorageService, ThemeRegistryService, ThemeStyleManagerService, ThemeTrackingService } from "./internal";
 import { Theme } from "./theme";
 
@@ -42,7 +43,6 @@ export const QUERY_PARAM = new InjectionToken<string | null>(
  */
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-
   /**
    * Internal registry containing all discovered themes.
    *
@@ -71,15 +71,7 @@ export class ThemeService {
    */
   readonly #storage = inject(StorageService);
 
-  /**
-   * Current activated route.
-   *
-   * The router integration is optional so the theme manager can also be used
-   * in applications without Angular Router.
-   *
-   * @private
-   */
-  readonly #activatedRoute = inject(ActivatedRoute, {
+  readonly #location = inject(Location, {
     optional: true,
   });
 
@@ -195,7 +187,7 @@ export class ThemeService {
         return;
       }
 
-      const initialTheme  = this.#resolveInitialTheme(themes);
+      const initialTheme = this.#resolveInitialTheme(themes);
       if (initialTheme !== null) {
         this.#tracker.setCurrentTheme(initialTheme);
       }
@@ -233,11 +225,7 @@ export class ThemeService {
       .pipe(
         filter(({ key }) => key === storageKey),
         map(({ newValue }) => newValue),
-        filter(
-          (theme) =>
-            theme === null ||
-            this.#registry.has(theme),
-        ),
+        filter((theme) => theme === null || this.#registry.has(theme)),
         takeUntilDestroyed(this.#destroyRef),
       )
       .subscribe((theme) => {
@@ -255,23 +243,22 @@ export class ThemeService {
    * @private
    */
   #observeRouteChanges(): void {
-    const queryParam = this.#queryParam;
-    const activatedRoute = this.#activatedRoute;
+    const router = this.#router;
 
-    if (!queryParam || !activatedRoute) {
+    if (!router) {
       return;
     }
 
-    activatedRoute.queryParamMap.pipe(
-      map((params) => params.get(queryParam)),
-      filter(isNotNull),
-      filter((theme) => this.#registry.has(theme)),
-      takeUntilDestroyed(this.#destroyRef),
-      )
-      .subscribe((theme) => {
-        this.#tracker.setCurrentTheme(theme);
-      });
-  }
+    router.events
+      .pipe(
+        filter(isNavigationEnd),
+        map(() => this.#themeFromRoute),
+        filter(isNotNull),
+        filter(theme => this.#registry.has(theme)),
+        distinctUntilChanged(),
+        takeUntilDestroyed(this.#destroyRef),
+      ).subscribe(theme => this.#tracker.setCurrentTheme(theme));
+ }
 
   /**
    * Resolves the initial theme from route, storage and registered metadata.
@@ -300,10 +287,8 @@ export class ThemeService {
     return (
       candidates.find(
         (candidate): candidate is string =>
-          !!candidate &&
-          this.#registry.has(candidate),
-      ) ??
-      null
+          !!candidate && this.#registry.has(candidate),
+      ) ?? null
     );
   }
 
@@ -330,13 +315,16 @@ export class ThemeService {
    */
   get #themeFromRoute(): string | null {
     const queryParam = this.#queryParam;
-    const activatedRoute = this.#activatedRoute;
+    const location = this.#location;
+    const router = this.#router;
 
-    if (!queryParam || !activatedRoute) {
+    if (!queryParam || !location || !router) {
       return null;
     }
 
-    return activatedRoute.snapshot.queryParamMap.get(queryParam);
+    return router
+      .parseUrl(location.path(true))
+      .queryParamMap.get(queryParam);
   }
 
   /**
@@ -350,29 +338,25 @@ export class ThemeService {
    */
   #updateRouteParam(theme: string): void {
     const queryParam = this.#queryParam;
-    const activatedRoute = this.#activatedRoute;
+    const location = this.#location;
     const router = this.#router;
 
-    if (!queryParam || !activatedRoute || !router) {
+    if (!queryParam || !location || !router) {
       return;
     }
 
-    const currentTheme = activatedRoute
-      .snapshot
-      .queryParamMap
-      .get(queryParam);
+    const urlTree = router.parseUrl(location.path(true));
 
-    if (currentTheme === theme) {
+    if (urlTree.queryParamMap.get(queryParam) === theme) {
       return;
     }
 
-    void router.navigate([], {
-      relativeTo: activatedRoute,
-      queryParams: {
-        [queryParam]: theme,
-      },
-      queryParamsHandling: 'merge',
-      preserveFragment: true,
+    urlTree.queryParams = {
+      ...urlTree.queryParams,
+      [queryParam]: theme,
+    };
+
+    void router.navigateByUrl(urlTree, {
       replaceUrl: true,
     });
   }
@@ -403,4 +387,8 @@ export class ThemeService {
  */
 function isNotNull<T>(value: T | null): value is T {
   return value !== null;
+}
+
+function isNavigationEnd(event: unknown): event is NavigationEnd {
+  return event instanceof NavigationEnd;
 }
