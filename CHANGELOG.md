@@ -1,3 +1,10 @@
+## [21.1.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v21.1.0...v21.1.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* **theme-manager:** preserve deep links during theme sync ([520746e](https://github.com/rb-mwindh/ngx-theme-manager/commit/520746ea556943720b33cb638a2ad436892a6610))
+
 # [21.1.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v21.0.0...v21.1.0) (2026-07-14)
 
 
