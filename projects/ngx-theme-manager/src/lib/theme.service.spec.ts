@@ -1,6 +1,7 @@
+import { Location } from "@angular/common";
 import { TestBed } from "@angular/core/testing";
-import { ActivatedRoute, convertToParamMap, ParamMap, Router } from "@angular/router";
-import { BehaviorSubject, Subject, Subscription } from "rxjs";
+import { DefaultUrlSerializer, NavigationEnd, Router } from "@angular/router";
+import { Subject, Subscription } from "rxjs";
 import {
   StorageChangeEvent,
   StorageService,
@@ -37,7 +38,8 @@ describe('ThemeService', () => {
 
   let subscription: Subscription;
   let storageChanges$: Subject<StorageChangeEvent>;
-  let routeParams$: BehaviorSubject<ParamMap>;
+  let routerEvents$: Subject<NavigationEnd>;
+  let currentUrl: string;
 
   let storage: {
     changes$: Subject<StorageChangeEvent>;
@@ -50,23 +52,21 @@ describe('ThemeService', () => {
   };
 
   let router: {
-    navigate: jest.Mock;
+    events: Subject<NavigationEnd>;
+    parseUrl: jest.Mock;
+    navigateByUrl: jest.Mock;
   };
 
-  let activatedRoute: {
-    snapshot: {
-      queryParamMap: ParamMap;
-    };
-    queryParamMap: BehaviorSubject<ParamMap>;
+  let location: {
+    path: jest.Mock;
   };
 
   beforeEach(() => {
     subscription = new Subscription();
 
     storageChanges$ = new Subject<StorageChangeEvent>();
-    routeParams$ = new BehaviorSubject<ParamMap>(
-      convertToParamMap({}),
-    );
+    routerEvents$ = new Subject<NavigationEnd>();
+    currentUrl = '/';
 
     storage = {
       changes$: storageChanges$,
@@ -78,15 +78,16 @@ describe('ThemeService', () => {
       use: jest.fn(),
     };
 
+    const urlSerializer = new DefaultUrlSerializer();
+
     router = {
-      navigate: jest.fn().mockResolvedValue(true),
+      events: routerEvents$,
+      parseUrl: jest.fn((url: string) => urlSerializer.parse(url)),
+      navigateByUrl: jest.fn().mockResolvedValue(true),
     };
 
-    activatedRoute = {
-      snapshot: {
-        queryParamMap: convertToParamMap({}),
-      },
-      queryParamMap: routeParams$,
+    location = {
+      path: jest.fn(() => currentUrl),
     };
 
     TestBed.configureTestingModule({
@@ -99,7 +100,7 @@ describe('ThemeService', () => {
         { provide: STORAGE_KEY, useValue: storageKey },
         { provide: QUERY_PARAM, useValue: queryParam },
         { provide: Router, useValue: router },
-        { provide: ActivatedRoute, useValue: activatedRoute },
+        { provide: Location, useValue: location },
       ],
     });
   });
@@ -107,11 +108,16 @@ describe('ThemeService', () => {
   afterEach(() => {
     subscription.unsubscribe();
     storageChanges$.complete();
-    routeParams$.complete();
+    routerEvents$.complete();
   });
 
   function flush(): void {
     TestBed.tick();
+  }
+
+  function navigateTo(url: string): void {
+    currentUrl = url;
+    routerEvents$.next(new NavigationEnd(1, url, url));
   }
 
   describe('public state', () => {
@@ -228,10 +234,7 @@ describe('ThemeService', () => {
     });
 
     it('should prefer the route theme', () => {
-      activatedRoute.snapshot.queryParamMap =
-        convertToParamMap({
-          [queryParam]: 'light',
-        });
+      currentUrl = `/?${queryParam}=light`;
 
       storage.getItem.mockReturnValue('dark');
 
@@ -284,10 +287,7 @@ describe('ThemeService', () => {
     });
 
     it('should ignore unknown route and storage themes', () => {
-      activatedRoute.snapshot.queryParamMap =
-        convertToParamMap({
-          [queryParam]: 'unknown-route-theme',
-        });
+      currentUrl = `/?${queryParam}=unknown-route-theme`;
 
       storage.getItem.mockReturnValue(
         'unknown-storage-theme',
@@ -359,7 +359,7 @@ describe('ThemeService', () => {
 
       manager.use.mockClear();
       storage.setItem.mockClear();
-      router.navigate.mockClear();
+      router.navigateByUrl.mockClear();
     });
 
     it('should select a registered theme', () => {
@@ -394,29 +394,23 @@ describe('ThemeService', () => {
 
       flush();
 
-      expect(router.navigate).toHaveBeenCalledWith([], {
-        relativeTo: activatedRoute,
-        queryParams: {
-          [queryParam]: 'light',
-        },
-        queryParamsHandling: 'merge',
-        preserveFragment: true,
-        replaceUrl: true,
-      });
+      expect(router.navigateByUrl).toHaveBeenCalledWith(
+        expect.objectContaining({
+          queryParams: { [queryParam]: 'light' },
+        }),
+        { replaceUrl: true },
+      );
     });
 
     it('should not navigate when the route already contains the selected theme', () => {
-      activatedRoute.snapshot.queryParamMap =
-        convertToParamMap({
-          [queryParam]: 'light',
-        });
+      currentUrl = `/?${queryParam}=light`;
 
       service.selectTheme('light');
 
       flush();
 
       expect(service.currentTheme()).toBe('light');
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should ignore unknown themes', () => {
@@ -427,7 +421,7 @@ describe('ThemeService', () => {
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should not repeat visible synchronization when the current theme is selected again', () => {
@@ -438,7 +432,7 @@ describe('ThemeService', () => {
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should clear the current selection', () => {
@@ -449,7 +443,7 @@ describe('ThemeService', () => {
       expect(service.currentTheme()).toBeNull();
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
   });
 
@@ -469,7 +463,7 @@ describe('ThemeService', () => {
 
       manager.use.mockClear();
       storage.setItem.mockClear();
-      router.navigate.mockClear();
+      router.navigateByUrl.mockClear();
     });
 
     it('should select a registered theme received from storage', () => {
@@ -496,7 +490,7 @@ describe('ThemeService', () => {
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should ignore unknown stored themes', () => {
@@ -511,7 +505,7 @@ describe('ThemeService', () => {
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should clear the selection when the stored value is removed', () => {
@@ -526,7 +520,7 @@ describe('ThemeService', () => {
       expect(service.currentTheme()).toBeNull();
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should synchronize a valid stored theme with the style manager and route', () => {
@@ -543,15 +537,12 @@ describe('ThemeService', () => {
         storageKey,
         'light',
       );
-      expect(router.navigate).toHaveBeenCalledWith([], {
-        relativeTo: activatedRoute,
-        queryParams: {
-          [queryParam]: 'light',
-        },
-        queryParamsHandling: 'merge',
-        preserveFragment: true,
-        replaceUrl: true,
-      });
+      expect(router.navigateByUrl).toHaveBeenCalledWith(
+        expect.objectContaining({
+          queryParams: { [queryParam]: 'light' },
+        }),
+        { replaceUrl: true },
+      );
     });
   });
 
@@ -571,16 +562,11 @@ describe('ThemeService', () => {
 
       manager.use.mockClear();
       storage.setItem.mockClear();
-      router.navigate.mockClear();
+      router.navigateByUrl.mockClear();
     });
 
     it('should select a registered route theme', () => {
-      const params = convertToParamMap({
-        [queryParam]: 'light',
-      });
-
-      activatedRoute.snapshot.queryParamMap = params;
-      routeParams$.next(params);
+      navigateTo(`/?${queryParam}=light`);
 
       flush();
 
@@ -588,12 +574,7 @@ describe('ThemeService', () => {
     });
 
     it('should activate and persist a registered route theme', () => {
-      const params = convertToParamMap({
-        [queryParam]: 'light',
-      });
-
-      activatedRoute.snapshot.queryParamMap = params;
-      routeParams$.next(params);
+      navigateTo(`/?${queryParam}=light`);
 
       flush();
 
@@ -605,47 +586,34 @@ describe('ThemeService', () => {
     });
 
     it('should not navigate when the theme change originates from the route', () => {
-      const params = convertToParamMap({
-        [queryParam]: 'light',
-      });
-
-      activatedRoute.snapshot.queryParamMap = params;
-      routeParams$.next(params);
+      navigateTo(`/?${queryParam}=light`);
 
       flush();
 
       expect(service.currentTheme()).toBe('light');
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should ignore an unknown route theme', () => {
-      const params = convertToParamMap({
-        [queryParam]: 'unknown',
-      });
-
-      activatedRoute.snapshot.queryParamMap = params;
-      routeParams$.next(params);
+      navigateTo(`/?${queryParam}=unknown`);
 
       flush();
 
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
 
     it('should ignore a missing route theme', () => {
-      const params = convertToParamMap({});
-
-      activatedRoute.snapshot.queryParamMap = params;
-      routeParams$.next(params);
+      navigateTo('/');
 
       flush();
 
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
   });
 
@@ -671,7 +639,7 @@ describe('ThemeService', () => {
 
         manager.use.mockClear();
         storage.setItem.mockClear();
-        router.navigate.mockClear();
+        router.navigateByUrl.mockClear();
 
         service.selectTheme('light');
 
@@ -714,7 +682,7 @@ describe('ThemeService', () => {
 
         manager.use.mockClear();
         storage.setItem.mockClear();
-        router.navigate.mockClear();
+        router.navigateByUrl.mockClear();
 
         service.selectTheme('light');
 
@@ -726,14 +694,8 @@ describe('ThemeService', () => {
           storageKey,
           'light',
         );
-        expect(router.navigate).not.toHaveBeenCalled();
-
-        const params = convertToParamMap({
-          [queryParam]: 'dark',
-        });
-
-        activatedRoute.snapshot.queryParamMap = params;
-        routeParams$.next(params);
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
+      navigateTo(`/?${queryParam}=dark`);
 
         flush();
 
@@ -776,9 +738,9 @@ describe('ThemeService', () => {
       });
     });
 
-    describe('without ActivatedRoute', () => {
+    describe('without Location', () => {
       beforeEach(() => {
-        TestBed.overrideProvider(ActivatedRoute, {
+        TestBed.overrideProvider(Location, {
           useValue: null,
         });
 
@@ -803,17 +765,17 @@ describe('ThemeService', () => {
           storageKey,
           'light',
         );
-        expect(router.navigate).not.toHaveBeenCalled();
+        expect(router.navigateByUrl).not.toHaveBeenCalled();
       });
     });
 
-    describe('without Router and ActivatedRoute', () => {
+    describe('without Router and Location', () => {
       beforeEach(() => {
         TestBed.overrideProvider(Router, {
           useValue: null,
         });
 
-        TestBed.overrideProvider(ActivatedRoute, {
+        TestBed.overrideProvider(Location, {
           useValue: null,
         });
 
@@ -873,7 +835,7 @@ describe('ThemeService', () => {
 
       manager.use.mockClear();
       storage.setItem.mockClear();
-      router.navigate.mockClear();
+      router.navigateByUrl.mockClear();
 
       TestBed.resetTestingModule();
 
@@ -882,18 +844,12 @@ describe('ThemeService', () => {
         oldValue: 'dark',
         newValue: 'light',
       });
-
-      const params = convertToParamMap({
-        [queryParam]: 'light',
-      });
-
-      activatedRoute.snapshot.queryParamMap = params;
-      routeParams$.next(params);
+      navigateTo(`/?${queryParam}=light`);
 
       expect(service.currentTheme()).toBe('dark');
       expect(manager.use).not.toHaveBeenCalled();
       expect(storage.setItem).not.toHaveBeenCalled();
-      expect(router.navigate).not.toHaveBeenCalled();
+      expect(router.navigateByUrl).not.toHaveBeenCalled();
     });
   });
 });

@@ -1,3 +1,10 @@
+## [22.0.1](https://github.com/rb-mwindh/ngx-theme-manager/compare/v22.0.0...v22.0.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* **theme-manager:** preserve deep links during theme sync ([c34b367](https://github.com/rb-mwindh/ngx-theme-manager/commit/c34b367e66787d98edd606670e0856717f76348a))
+
 # [22.0.0](https://github.com/rb-mwindh/ngx-theme-manager/compare/v21.1.0...v22.0.0) (2026-07-14)
 
 
