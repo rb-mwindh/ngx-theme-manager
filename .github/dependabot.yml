@@ -1,80 +1,94 @@
 version: 2
 
-multi-ecosystem-groups:
-  maintenance:
-    schedule:
-      interval: monthly
-
 updates:
   - package-ecosystem: npm
     directory: /
     target-branch: main
-    multi-ecosystem-group: maintenance
+
+    schedule:
+      interval: monthly
+
     open-pull-requests-limit: 5
+
     cooldown:
       semver-patch-days: 7
       semver-minor-days: 14
       semver-major-days: 60
+
     ignore:
-      - dependency-name: "*"
+      - dependency-name: '*'
         update-types:
-          - "version-update:semver-major"
+          - version-update:semver-major
 
     groups:
       angular:
         patterns:
-          - "@angular/*"
-          - "@angular-builders/*"
-          - "@angular-devkit/*"
-          - "@angular-eslint/*"
-          - "ng-packagr"
-          - "typescript"
-          - "rxjs"
-          - "zone.js"
+          - '@angular/*'
+          - '@angular-builders/*'
+          - '@angular-devkit/*'
+          - '@angular-eslint/*'
+          - 'ng-packagr'
+          - 'typescript'
+          - 'rxjs'
+          - 'zone.js'
 
       linting:
         patterns:
-          - "eslint"
-          - "@typescript-eslint/*"
-          - "prettier"
-          - "lint-staged"
+          - 'eslint'
+          - '@typescript-eslint/*'
+          - 'prettier'
+          - 'lint-staged'
 
       testing:
         patterns:
-          - "jest"
-          - "jest-*"
-          - "@types/jest"
-          - "@types/jsdom"
+          - 'jest'
+          - 'jest-*'
+          - '@types/jest'
+          - '@types/jsdom'
 
       release:
         patterns:
-          - "semantic-release"
-          - "@semantic-release/*"
-          - "commitizen"
-          - "cz-conventional-changelog"
-          - "@commitlint/*"
+          - 'semantic-release'
+          - '@semantic-release/*'
+          - 'commitizen'
+          - 'cz-conventional-changelog'
+          - '@commitlint/*'
 
       build-tools:
         patterns:
-          - "tsx"
-          - "typedoc"
-          - "license-checker"
-          - "@types/license-checker"
-          - "npm-run-all"
-          - "rimraf"
-          - "husky"
-          - "prompt"
+          - 'tsx'
+          - 'typedoc'
+          - 'license-checker'
+          - '@types/license-checker'
+          - 'npm-run-all'
+          - 'rimraf'
+          - 'husky'
+          - 'prompt'
 
       runtime-misc:
         dependency-type: production
         patterns:
-          - "material-icons"
-          - "tslib"
+          - 'material-icons'
+          - 'tslib'
+
+      development-misc:
+        dependency-type: development
+        patterns:
+          - '*'
 
   - package-ecosystem: github-actions
     directory: /
     target-branch: main
-    multi-ecosystem-group: maintenance
-    open-pull-requests-limit: 5
+
+    schedule:
+      interval: monthly
+
+    open-pull-requests-limit: 1
+
     cooldown:
       default-days: 14
+
+    groups:
+      github-actions:
+        patterns:
+          - '*'
